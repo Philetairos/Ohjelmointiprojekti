@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RogueSharp;
 using RLNET;
 
 //Ohjelman päätiedosto, Daniel Juola 
 //Perustuu Faron Bracyn esimerkkikoodiin
 //Projektissa käytetyt kirjastot: RLNet (Travis M. Clark, 2014) ja RogueSharp (Faron Bracy, 2014-2019), MIT-lisenssi
 
-namespace Ohjelmointiprojekti
-{
-    class Program
-    {
+namespace Ohjelmointiprojekti {
+    class Program {
         //Pääkonsolin koko tiileinä, ei pikseleinä
         private static readonly int konsolileveys = 160;
         private static readonly int konsolikorkeus = 80;
@@ -30,8 +29,9 @@ namespace Ohjelmointiprojekti
         private static RLConsole inventaarioKonsoli;
         private static RLConsole statsiKonsoli;
 
-        public static void Main()
-        {
+        public static GameMap peliKartta;
+
+        public static void Main() {
             //Fontti jota tiilit ja teksti käyttävät
             string fonttiTiedosto = "terminal8x8.png";
             string konsoliNimi = "Paragon of Virtue";
@@ -45,29 +45,26 @@ namespace Ohjelmointiprojekti
             inventaarioKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
             //Luo statistiikkakonsoli joka näyttää pelaajan hahmo(je)n tilan
             statsiKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
+            MapGenerator karttaGeneroija = new MapGenerator(karttaleveys,karttakorkeus);
+            peliKartta = karttaGeneroija.TestiKartta();
             paaKonsoli.Update += PaivitaKonsoli;
             paaKonsoli.Render += PiirraKonsoli;
             paaKonsoli.Run();
         }
         
-        private static void PaivitaKonsoli(object sender, UpdateEventArgs e)
-        {
+        private static void PaivitaKonsoli(object sender, UpdateEventArgs e) {
             karttaKonsoli.SetBackColor(0, 0, karttaleveys, karttakorkeus, RLColor.Black);
-            karttaKonsoli.Print(0,0,"testiKartta", RLColor.White);
             dialogiKonsoli.SetBackColor(0, 0, karttaleveys, dialogikonsolikorkeus, RLColor.Blue);
-            dialogiKonsoli.Print(0, 0, "testiDialogi", RLColor.White);
             inventaarioKonsoli.SetBackColor(0, 0, sivukonsolileveys, konsolikorkeuspuolet, RLColor.Blue);
-            inventaarioKonsoli.Print(0, 0, "testiInventaario", RLColor.White);
             statsiKonsoli.SetBackColor(0, 0, sivukonsolileveys, konsolikorkeuspuolet, RLColor.Blue);
-            statsiKonsoli.Print(0, 0, "testiStatsit", RLColor.White);
         }
         
-        private static void PiirraKonsoli(object sender, UpdateEventArgs e)
-        {
+        private static void PiirraKonsoli(object sender, UpdateEventArgs e) {
             RLConsole.Blit(karttaKonsoli, 0, 0, karttaleveys, karttakorkeus, paaKonsoli, 0, 0);
             RLConsole.Blit(dialogiKonsoli, 0, 0, karttaleveys, dialogikonsolikorkeus, paaKonsoli, 0, karttakorkeus);
             RLConsole.Blit(inventaarioKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, konsolikorkeuspuolet);
             RLConsole.Blit(statsiKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, 0);
+            peliKartta.PiirraKartta(karttaKonsoli);
             paaKonsoli.Draw();
         }
     }
