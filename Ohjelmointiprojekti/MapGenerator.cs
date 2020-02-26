@@ -20,11 +20,16 @@ namespace Ohjelmointiprojekti {
             karttaKorkeus = korkeus;
             kartta = new GameMap();
         }
+        //Aloituskartta
         public GameMap TestiKartta() {
             kartta.Initialize(karttaLeveys, karttaKorkeus);
             foreach (Cell solu in kartta.GetAllCells())
             {
-                kartta.SetCellProperties(solu.X, solu.Y, true, true, true);
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+            }
+            foreach (Cell solu in kartta.GetBorderCellsInSquare(karttaLeveys/2, karttaKorkeus-2, 12))
+            {
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, true);
             }
             return kartta;
         }

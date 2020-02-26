@@ -23,11 +23,44 @@ namespace Ohjelmointiprojekti {
             }
             //Piirrä solu jonka pelaaja näkee
             if (IsInFov(solu.X, solu.Y)) {
-                karttaKonsoli.Set(solu.X, solu.Y, RLColor.LightGray, RLColor.Black, '.');
+                //Lattia
+                if (solu.IsWalkable)
+                {
+                    karttaKonsoli.Set(solu.X, solu.Y, RLColor.LightGray, RLColor.Black, '.');
+                }
+                //Seinä
+                else
+                {
+                    karttaKonsoli.Set(solu.X, solu.Y, RLColor.LightGray, RLColor.Black, '#');
+                }
+                
             }
             //Piirrä solu jota pelaaja ei näe, mutta jonka on nähnyt aikaisemmin
             else {
-                karttaKonsoli.Set(solu.X, solu.Y, RLColor.Gray, RLColor.Black, '.');
+                //Lattia
+                if (solu.IsWalkable)
+                {
+                    karttaKonsoli.Set(solu.X, solu.Y, RLColor.Gray, RLColor.Black, '.');
+                }
+                //Seinä
+                else
+                {
+                    karttaKonsoli.Set(solu.X, solu.Y, RLColor.Gray, RLColor.Black, '#');
+                }
+                
+            }
+        }
+        //Päivitä, mitä tiileja pelaaja näkee
+        public void PaivitaNakoKentta() {
+            Player pelaaja = Program.Pelaaja;
+            ComputeFov(pelaaja.X, pelaaja.Y, pelaaja.Nakoetaisyys, true);
+            // Mark all cells in field-of-view as having been explored
+            foreach (Cell solu in GetAllCells())
+            {
+                if (IsInFov(solu.X, solu.Y))
+                {
+                    SetCellProperties(solu.X, solu.Y, solu.IsTransparent, solu.IsWalkable, true);
+                }
             }
         }
     }

@@ -30,6 +30,10 @@ namespace Ohjelmointiprojekti {
         private static RLConsole statsiKonsoli;
 
         public static GameMap peliKartta;
+        public static Player Pelaaja {
+            get;
+            set;
+        }
 
         public static void Main() {
             //Fontti jota tiilit ja teksti käyttävät
@@ -46,7 +50,10 @@ namespace Ohjelmointiprojekti {
             //Luo statistiikkakonsoli joka näyttää pelaajan hahmo(je)n tilan
             statsiKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
             MapGenerator karttaGeneroija = new MapGenerator(karttaleveys,karttakorkeus);
+            //Luo pelaajan hahmo
+            Pelaaja = new Player(karttaleveys/2, karttakorkeus-6);
             peliKartta = karttaGeneroija.TestiKartta();
+            peliKartta.PaivitaNakoKentta();
             paaKonsoli.Update += PaivitaKonsoli;
             paaKonsoli.Render += PiirraKonsoli;
             paaKonsoli.Run();
@@ -65,6 +72,7 @@ namespace Ohjelmointiprojekti {
             RLConsole.Blit(inventaarioKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, konsolikorkeuspuolet);
             RLConsole.Blit(statsiKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, 0);
             peliKartta.PiirraKartta(karttaKonsoli);
+            Pelaaja.Piirra(karttaKonsoli, peliKartta);
             paaKonsoli.Draw();
         }
     }
