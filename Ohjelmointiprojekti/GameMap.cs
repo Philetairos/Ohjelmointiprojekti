@@ -63,5 +63,24 @@ namespace Ohjelmointiprojekti {
                 }
             }
         }
+        //Aseta hahmon sijainti, jos sijantiin voi liikkua (isWalkable)
+        public bool AsetaSijainti(Hahmo hahmo, int x, int y) {
+            if (GetCell(x, y).IsWalkable) {
+                AsetaWalkable(hahmo.X, hahmo.Y, true);
+                hahmo.X = x;
+                hahmo.Y = y;
+                AsetaWalkable(hahmo.X, hahmo.Y, false);
+                if (hahmo is Player) {
+                    PaivitaNakoKentta();
+                }
+                return true;
+            }
+            return false;
+        }
+        //
+        public void AsetaWalkable(int x, int y, bool isWalkable) {
+            ICell solu = GetCell(x, y);
+            SetCellProperties(solu.X, solu.Y, solu.IsTransparent, isWalkable, solu.IsExplored);
+        }
     }
 }

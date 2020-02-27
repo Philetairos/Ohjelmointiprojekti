@@ -34,6 +34,10 @@ namespace Ohjelmointiprojekti {
             get;
             set;
         }
+        public static CommandSystem KomentoKasittelija {
+            get;
+            private set;
+        }
 
         public static void Main() {
             //Fontti jota tiilit ja teksti käyttävät
@@ -43,15 +47,20 @@ namespace Ohjelmointiprojekti {
             paaKonsoli = new RLRootConsole(fonttiTiedosto, konsolileveys, konsolikorkeus, 8, 8, 1, konsoliNimi);
             //Luo karttakonsoli joka toimii pelimaailman näkymänä
             karttaKonsoli = new RLConsole(karttaleveys, karttakorkeus);
+            karttaKonsoli.SetBackColor(0, 0, karttaleveys, karttakorkeus, RLColor.Black);
             //Luo dialogikonsoli joka näyttää pelin viestit ja keskustelun dialogin
             dialogiKonsoli = new RLConsole(karttaleveys, dialogikonsolikorkeus);
+            dialogiKonsoli.SetBackColor(0, 0, karttaleveys, dialogikonsolikorkeus, RLColor.Blue);
             //Luo inventaatiokonsoli joka näyttää pelaajan esineet
             inventaarioKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
+            inventaarioKonsoli.SetBackColor(0, 0, sivukonsolileveys, konsolikorkeuspuolet, RLColor.Blue);
             //Luo statistiikkakonsoli joka näyttää pelaajan hahmo(je)n tilan
             statsiKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
+            statsiKonsoli.SetBackColor(0, 0, sivukonsolileveys, konsolikorkeuspuolet, RLColor.Blue);
             MapGenerator karttaGeneroija = new MapGenerator(karttaleveys,karttakorkeus);
             //Luo pelaajan hahmo
             Pelaaja = new Player(karttaleveys/2, karttakorkeus-6);
+            KomentoKasittelija = new CommandSystem();
             peliKartta = karttaGeneroija.TestiKartta();
             peliKartta.PaivitaNakoKentta();
             paaKonsoli.Update += PaivitaKonsoli;
@@ -60,10 +69,24 @@ namespace Ohjelmointiprojekti {
         }
         
         private static void PaivitaKonsoli(object sender, UpdateEventArgs e) {
-            karttaKonsoli.SetBackColor(0, 0, karttaleveys, karttakorkeus, RLColor.Black);
-            dialogiKonsoli.SetBackColor(0, 0, karttaleveys, dialogikonsolikorkeus, RLColor.Blue);
-            inventaarioKonsoli.SetBackColor(0, 0, sivukonsolileveys, konsolikorkeuspuolet, RLColor.Blue);
-            statsiKonsoli.SetBackColor(0, 0, sivukonsolileveys, konsolikorkeuspuolet, RLColor.Blue);
+            RLKeyPress nappain = paaKonsoli.Keyboard.GetKeyPress();
+            if (nappain != null) {
+                if (nappain.Key == RLKey.Up) {
+                    bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Ylos);
+                }
+                else if (nappain.Key == RLKey.Down) {
+                    bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Alas);
+                }
+                else if (nappain.Key == RLKey.Left) {
+                    bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Vasen);
+                }
+                else if (nappain.Key == RLKey.Right) {
+                    bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Oikea);
+                }
+                else if (nappain.Key == RLKey.Escape) {
+                    paaKonsoli.Close();
+                }
+            }
         }
         
         private static void PiirraKonsoli(object sender, UpdateEventArgs e) {

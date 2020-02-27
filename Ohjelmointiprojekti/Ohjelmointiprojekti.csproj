@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandSystem.cs" />
     <Compile Include="GameMap.cs" />
     <Compile Include="Characters.cs" />
     <Compile Include="Interfaces.cs" />
