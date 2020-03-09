@@ -54,9 +54,11 @@
   <ItemGroup>
     <Compile Include="CommandSystem.cs" />
     <Compile Include="GameMap.cs" />
-    <Compile Include="Characters.cs" />
+    <Compile Include="Character.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="MapGenerator.cs" />
+    <Compile Include="MessageLog.cs" />
+    <Compile Include="NPC.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -38,6 +38,10 @@ namespace Ohjelmointiprojekti {
             get;
             private set;
         }
+        public static MessageLog ViestiLoki {
+            get;
+            private set;
+        }
 
         public static void Main() {
             //Fontti jota tiilit ja teksti käyttävät
@@ -50,24 +54,26 @@ namespace Ohjelmointiprojekti {
             karttaKonsoli.SetBackColor(0, 0, karttaleveys, karttakorkeus, RLColor.Black);
             //Luo dialogikonsoli joka näyttää pelin viestit ja keskustelun dialogin
             dialogiKonsoli = new RLConsole(karttaleveys, dialogikonsolikorkeus);
-            dialogiKonsoli.SetBackColor(0, 0, karttaleveys, dialogikonsolikorkeus, RLColor.Blue);
             //Luo inventaatiokonsoli joka näyttää pelaajan esineet
             inventaarioKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
             inventaarioKonsoli.SetBackColor(0, 0, sivukonsolileveys, konsolikorkeuspuolet, RLColor.Blue);
             //Luo statistiikkakonsoli joka näyttää pelaajan hahmo(je)n tilan
             statsiKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
-            statsiKonsoli.SetBackColor(0, 0, sivukonsolileveys, konsolikorkeuspuolet, RLColor.Blue);
             MapGenerator karttaGeneroija = new MapGenerator(karttaleveys,karttakorkeus);
             //Luo pelaajan hahmo
             Pelaaja = new Player(karttaleveys/2, karttakorkeus-6);
             KomentoKasittelija = new CommandSystem();
+            //Luo viestiloki
+            ViestiLoki = new MessageLog();
+            ViestiLoki.Lisaa("Testiviesti");
+            //Luo aloituskartta
             peliKartta = karttaGeneroija.TestiKartta();
             peliKartta.PaivitaNakoKentta();
             paaKonsoli.Update += PaivitaKonsoli;
             paaKonsoli.Render += PiirraKonsoli;
             paaKonsoli.Run();
         }
-        
+        //Päivitä konsoleiden data
         private static void PaivitaKonsoli(object sender, UpdateEventArgs e) {
             RLKeyPress nappain = paaKonsoli.Keyboard.GetKeyPress();
             if (nappain != null) {
@@ -88,14 +94,16 @@ namespace Ohjelmointiprojekti {
                 }
             }
         }
-        
+        //Piirrä kaikki ruudulle
         private static void PiirraKonsoli(object sender, UpdateEventArgs e) {
             RLConsole.Blit(karttaKonsoli, 0, 0, karttaleveys, karttakorkeus, paaKonsoli, 0, 0);
             RLConsole.Blit(dialogiKonsoli, 0, 0, karttaleveys, dialogikonsolikorkeus, paaKonsoli, 0, karttakorkeus);
             RLConsole.Blit(inventaarioKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, konsolikorkeuspuolet);
             RLConsole.Blit(statsiKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, 0);
-            peliKartta.PiirraKartta(karttaKonsoli);
+            peliKartta.PiirraKartta(karttaKonsoli,statsiKonsoli);
+            ViestiLoki.Piirra(dialogiKonsoli);
             Pelaaja.Piirra(karttaKonsoli, peliKartta);
+            Pelaaja.PiirraStatsit(statsiKonsoli);
             paaKonsoli.Draw();
         }
     }

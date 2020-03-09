@@ -31,6 +31,8 @@ namespace Ohjelmointiprojekti {
             {
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, true);
             }
+            NPC testihahmo = new NPC((karttaLeveys / 2)-3, karttaKorkeus - 2, "testihahmo",'T',RLColor.Blue);
+            kartta.LisaaNPC(testihahmo);
             return kartta;
         }
     }

@@ -6,14 +6,33 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-//Tämä on luokka pelin kartoille, joilla pelaaja liikkuu
+//Tämä on luokka pelin karttojen luomiseen, joilla pelaaja liikkuu
 
 namespace Ohjelmointiprojekti {
     public class GameMap : Map {
-        public void PiirraKartta(RLConsole karttaKonsoli) {
+        private readonly List<NPC> NPCs;
+        public GameMap() {
+            NPCs = new List<NPC>();
+        }
+        public void LisaaNPC(NPC npc) {
+            NPCs.Add(npc);
+            AsetaWalkable(npc.X, npc.Y, false);
+        }
+        public NPC NPCSijainti(int x, int y) {
+            return NPCs.FirstOrDefault(m => m.X == x && m.Y == y);
+        }
+        public void PiirraKartta(RLConsole karttaKonsoli, RLConsole statsiKonsoli) {
             karttaKonsoli.Clear();
             foreach (Cell solu in GetAllCells()) {
                 AsetaSymboli(karttaKonsoli, solu);
+            }
+            int i = 0;
+            foreach (NPC npc in NPCs) {
+                npc.Piirra(karttaKonsoli, this);
+                if (IsInFov(npc.X, npc.Y)) {
+                    npc.PiirraStatsit(statsiKonsoli, i);
+                    i++;
+                }
             }
         }
         private void AsetaSymboli(RLConsole karttaKonsoli, Cell solu) {

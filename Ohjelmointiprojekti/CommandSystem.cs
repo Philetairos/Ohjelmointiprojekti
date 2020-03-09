@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
+//Luokka pelaajan toiminnoille, kuten liikumiselle ja interaktiolle
+
 namespace Ohjelmointiprojekti {
     public enum Suunta
     {
@@ -52,11 +54,14 @@ namespace Ohjelmointiprojekti {
                     }
             }
 
-            if (Program.peliKartta.AsetaSijainti(Program.Pelaaja, x, y))
-            {
+            if (Program.peliKartta.AsetaSijainti(Program.Pelaaja, x, y)) {
                 return true;
             }
+            NPC npc = Program.peliKartta.NPCSijainti(x, y);
+            if (npc != null) {
 
+                return true;
+            }
             return false;
         }
     }
