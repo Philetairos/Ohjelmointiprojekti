@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandSystem.cs" />
+    <Compile Include="DialogueNode.cs" />
     <Compile Include="GameMap.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Interfaces.cs" />

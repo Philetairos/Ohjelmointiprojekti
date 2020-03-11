@@ -31,8 +31,11 @@ namespace Ohjelmointiprojekti {
             {
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, true);
             }
-            string[] testidialogi = { "Hei, mitä kuuluu|1. Hyvää 2. Pahaa"};
-            NPC testihahmo = new NPC((karttaLeveys / 2)-3, karttaKorkeus - 2, "testihahmo",'T',RLColor.Blue, testidialogi);
+            DialogueNode testidialogi1 = new DialogueNode("Hei mitä kuuluu", "1. Hyvää 2. Pahaa", new int[] { 1,2 });
+            DialogueNode testidialogi2 = new DialogueNode("No hyvä.", "1. Näkemiin", new int[] { -1 });
+            DialogueNode testidialogi3 = new DialogueNode("No voi harmin paikka.", "1. Näkemiin", new int[] { -1 });
+            DialogueNode[] testidialogitaulukko = new DialogueNode [] { testidialogi1, testidialogi2, testidialogi3 };
+            NPC testihahmo = new NPC((karttaLeveys / 2)-3, karttaKorkeus - 2, "testihahmo",'T',RLColor.Blue, testidialogitaulukko);
             kartta.LisaaNPC(testihahmo);
             return kartta;
         }

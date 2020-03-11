@@ -87,7 +87,8 @@ namespace Ohjelmointiprojekti {
                         dialoginpc = KomentoKasittelija.Interaktio(Suunta.Ylos, ViestiLoki);
                         if (dialoginpc != null) {
                             dialogi = true;
-                            dialoginpc.Dialogi(ViestiLoki, 0);
+                            ViestiLoki.Lisaa(dialoginpc.hahmonDialogi[0].dialogi);
+                            ViestiLoki.Lisaa(dialoginpc.hahmonDialogi[0].vastaukset);
                         }
                         talkmoodi = false;
                     }
@@ -100,7 +101,8 @@ namespace Ohjelmointiprojekti {
                         dialoginpc = KomentoKasittelija.Interaktio(Suunta.Alas, ViestiLoki);
                         if (dialoginpc != null) {
                             dialogi = true;
-                            dialoginpc.Dialogi(ViestiLoki, 0);
+                            ViestiLoki.Lisaa(dialoginpc.hahmonDialogi[0].dialogi);
+                            ViestiLoki.Lisaa(dialoginpc.hahmonDialogi[0].vastaukset);
                         }
                         talkmoodi = false;
                     }
@@ -113,7 +115,8 @@ namespace Ohjelmointiprojekti {
                         dialoginpc = KomentoKasittelija.Interaktio(Suunta.Vasen, ViestiLoki);
                         if (dialoginpc != null) {
                             dialogi = true;
-                            dialoginpc.Dialogi(ViestiLoki, 0);
+                            ViestiLoki.Lisaa(dialoginpc.hahmonDialogi[0].dialogi);
+                            ViestiLoki.Lisaa(dialoginpc.hahmonDialogi[0].vastaukset);
                         }
                         talkmoodi = false;
                     }
@@ -126,7 +129,8 @@ namespace Ohjelmointiprojekti {
                         dialoginpc = KomentoKasittelija.Interaktio(Suunta.Oikea, ViestiLoki);
                         if (dialoginpc != null) {
                             dialogi = true;
-                            dialoginpc.Dialogi(ViestiLoki, 0);
+                            ViestiLoki.Lisaa(dialoginpc.hahmonDialogi[0].dialogi);
+                            ViestiLoki.Lisaa(dialoginpc.hahmonDialogi[0].vastaukset);
                         }
                         talkmoodi = false;
                     }
@@ -136,7 +140,7 @@ namespace Ohjelmointiprojekti {
                 }
                 else if (nappain.Key == RLKey.T) {
                     talkmoodi = true;
-                    ViestiLoki.Lisaa("Puhu: Paina nuolinäppäintä");
+                    ViestiLoki.Lisaa("Puhu: Paina nuolinappainta");
                 }
                 else if (nappain.Key == RLKey.Escape) {
                     paaKonsoli.Close();

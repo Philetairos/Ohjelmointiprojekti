@@ -10,19 +10,19 @@ using RLNET;
 
 namespace Ohjelmointiprojekti {
     public class NPC : Hahmo {
-        public string[] dialogiTaulukko;
-        private readonly int dialogiID;
+        public DialogueNode[] hahmonDialogi;
+        private int dialogiID;
         public NPC() {
 
         }
-        public NPC(int x, int y, string nimi, char merkki, RLColor vari, string[] dialogi) {
+        public NPC(int x, int y, string nimi, char merkki, RLColor vari, DialogueNode[] dialogi) {
             Nimi = nimi;
             Nakoetaisyys = 100;
             Vari = vari;
             Merkki = merkki;
             X = x;
             Y = y;
-            dialogiTaulukko = dialogi;
+            hahmonDialogi = dialogi;
             dialogiID = 0;
         }
         public void PiirraStatsit(RLConsole statsiKonsoli, int sijainti) {
@@ -30,11 +30,16 @@ namespace Ohjelmointiprojekti {
             statsiKonsoli.Print(2, 13 + (sijainti * 2), $": {Nimi}", RLColor.White);
         }
         public bool Dialogi(MessageLog viestiloki, int syote) {
-            string[] viestit = dialogiTaulukko[dialogiID].Split('|');
-            foreach (string viesti in viestit)
-            {
-                viestiloki.Lisaa(viesti);
+            foreach (int i in hahmonDialogi[dialogiID].linkit) {
+                if(i == syote)
+                {
+                    dialogiID = i;
+                    viestiloki.Lisaa(hahmonDialogi[dialogiID].dialogi);
+                    viestiloki.Lisaa(hahmonDialogi[dialogiID].vastaukset);
+                    return true;
+                }
             }
+            dialogiID = 0;
             return false;
         }
     }
