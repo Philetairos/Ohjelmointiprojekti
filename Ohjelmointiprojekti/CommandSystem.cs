@@ -28,41 +28,58 @@ namespace Ohjelmointiprojekti {
             int x = Program.Pelaaja.X;
             int y = Program.Pelaaja.Y;
             switch (suunta) {
-                case Suunta.Ylos:
-                    {
-                        y = Program.Pelaaja.Y - 1;
-                        break;
-                    }
-                case Suunta.Alas:
-                    {
-                        y = Program.Pelaaja.Y + 1;
-                        break;
-                    }
-                case Suunta.Vasen:
-                    {
-                        x = Program.Pelaaja.X - 1;
-                        break;
-                    }
-                case Suunta.Oikea:
-                    {
-                        x = Program.Pelaaja.X + 1;
-                        break;
-                    }
-                default:
-                    {
-                        return false;
-                    }
+                case Suunta.Ylos:{
+                    y = Program.Pelaaja.Y - 1;
+                    break;
+                }
+                case Suunta.Alas:{
+                    y = Program.Pelaaja.Y + 1;
+                    break;
+                }
+                case Suunta.Vasen:{
+                    x = Program.Pelaaja.X - 1;
+                    break;
+                }
+                case Suunta.Oikea:{
+                    x = Program.Pelaaja.X + 1;
+                    break;
+                }
+                default:{
+                    return false;
+                }
             }
 
             if (Program.peliKartta.AsetaSijainti(Program.Pelaaja, x, y)) {
                 return true;
             }
-            NPC npc = Program.peliKartta.NPCSijainti(x, y);
-            if (npc != null) {
-
-                return true;
-            }
             return false;
+        }
+        public NPC Interaktio(Suunta suunta, MessageLog viestiloki) {
+            int x = Program.Pelaaja.X;
+            int y = Program.Pelaaja.Y;
+            switch (suunta) {
+                case Suunta.Ylos:{
+                    y = Program.Pelaaja.Y - 1;
+                    break;
+                }
+                case Suunta.Alas:{
+                    y = Program.Pelaaja.Y + 1;
+                    break;
+                }
+                case Suunta.Vasen:{
+                    x = Program.Pelaaja.X - 1;
+                    break;
+                }
+                case Suunta.Oikea:{
+                    x = Program.Pelaaja.X + 1;
+                    break;
+                }
+                default:{
+                    return null;
+                }
+            }
+            NPC npc = Program.peliKartta.NPCSijainti(x, y);
+            return npc;
         }
     }
 }

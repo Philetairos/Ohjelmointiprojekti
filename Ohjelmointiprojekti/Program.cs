@@ -29,6 +29,11 @@ namespace Ohjelmointiprojekti {
         private static RLConsole inventaarioKonsoli;
         private static RLConsole statsiKonsoli;
 
+        //Dialogia varten
+        private static bool talkmoodi = false;
+        private static NPC dialoginpc = new NPC();
+        private static bool dialogi = false;
+
         public static GameMap peliKartta;
         public static Player Pelaaja {
             get;
@@ -65,7 +70,7 @@ namespace Ohjelmointiprojekti {
             KomentoKasittelija = new CommandSystem();
             //Luo viestiloki
             ViestiLoki = new MessageLog();
-            ViestiLoki.Lisaa("Testiviesti");
+            ViestiLoki.Lisaa("Nappaimet: T - Puhu, Nuolinappaimet - Liiku, Esc - Sulje");
             //Luo aloituskartta
             peliKartta = karttaGeneroija.TestiKartta();
             peliKartta.PaivitaNakoKentta();
@@ -73,24 +78,73 @@ namespace Ohjelmointiprojekti {
             paaKonsoli.Render += PiirraKonsoli;
             paaKonsoli.Run();
         }
-        //Päivitä konsoleiden data
+        //Käsittele syöte
         private static void PaivitaKonsoli(object sender, UpdateEventArgs e) {
             RLKeyPress nappain = paaKonsoli.Keyboard.GetKeyPress();
-            if (nappain != null) {
+            if (nappain != null && dialogi == false) {
                 if (nappain.Key == RLKey.Up) {
-                    bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Ylos);
+                    if (talkmoodi == true) {
+                        dialoginpc = KomentoKasittelija.Interaktio(Suunta.Ylos, ViestiLoki);
+                        if (dialoginpc != null) {
+                            dialogi = true;
+                            dialoginpc.Dialogi(ViestiLoki, 0);
+                        }
+                        talkmoodi = false;
+                    }
+                    else {
+                        bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Ylos);
+                    }
                 }
                 else if (nappain.Key == RLKey.Down) {
-                    bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Alas);
+                    if (talkmoodi == true) {
+                        dialoginpc = KomentoKasittelija.Interaktio(Suunta.Alas, ViestiLoki);
+                        if (dialoginpc != null) {
+                            dialogi = true;
+                            dialoginpc.Dialogi(ViestiLoki, 0);
+                        }
+                        talkmoodi = false;
+                    }
+                    else {
+                        bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Alas);
+                    }
                 }
                 else if (nappain.Key == RLKey.Left) {
-                    bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Vasen);
+                    if (talkmoodi == true) {
+                        dialoginpc = KomentoKasittelija.Interaktio(Suunta.Vasen, ViestiLoki);
+                        if (dialoginpc != null) {
+                            dialogi = true;
+                            dialoginpc.Dialogi(ViestiLoki, 0);
+                        }
+                        talkmoodi = false;
+                    }
+                    else {
+                        bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Vasen);
+                    }
                 }
                 else if (nappain.Key == RLKey.Right) {
-                    bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Oikea);
+                    if (talkmoodi == true) {
+                        dialoginpc = KomentoKasittelija.Interaktio(Suunta.Oikea, ViestiLoki);
+                        if (dialoginpc != null) {
+                            dialogi = true;
+                            dialoginpc.Dialogi(ViestiLoki, 0);
+                        }
+                        talkmoodi = false;
+                    }
+                    else {
+                        bool siirtyma = KomentoKasittelija.SiirraPelaaja(Suunta.Oikea);
+                    }
+                }
+                else if (nappain.Key == RLKey.T) {
+                    talkmoodi = true;
+                    ViestiLoki.Lisaa("Puhu: Paina nuolinäppäintä");
                 }
                 else if (nappain.Key == RLKey.Escape) {
                     paaKonsoli.Close();
+                }
+            }
+            else if (nappain != null && dialogi == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
+                    dialogi = dialoginpc.Dialogi(ViestiLoki, Int32.Parse(nappain.Char.ToString()));
                 }
             }
         }
