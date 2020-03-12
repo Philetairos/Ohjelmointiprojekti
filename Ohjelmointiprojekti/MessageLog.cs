@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-//Luokka viestien lisäämiselle ja piirtämiselle dialogikonsoliin
-
 namespace Ohjelmointiprojekti {
+    /// <summary>
+    /// //Luokka viestien lisäämiselle ja piirtämiselle dialogikonsoliin
+    /// </summary>
     public class MessageLog {
         private readonly Queue<string> rivit;
         public MessageLog()

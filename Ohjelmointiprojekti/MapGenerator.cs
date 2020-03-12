@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-//Tämä luokka luo erilaisia karttoja, käyttäen GameMap-luokkaa
-
 namespace Ohjelmointiprojekti {
+    /// <summary>
+    /// Tämä luokka luo erilaisia karttoja, käyttäen GameMap-luokkaa
+    /// </summary>
     public class MapGenerator {
         private readonly int karttaLeveys;
         private readonly int karttaKorkeus;
@@ -31,11 +32,13 @@ namespace Ohjelmointiprojekti {
             {
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, true);
             }
+            kartta.SetCellProperties(karttaLeveys / 2, karttaKorkeus-14, false, false, true);
+            kartta.Ovet.Add(new Door { X = karttaLeveys / 2 , Y = karttaKorkeus-14, Auki = false});
             DialogueNode testidialogi1 = new DialogueNode("Hei mitä kuuluu", "1. Hyvää 2. Pahaa", new int[] { 1,2 });
             DialogueNode testidialogi2 = new DialogueNode("No hyvä.", "1. Näkemiin", new int[] { -1 });
             DialogueNode testidialogi3 = new DialogueNode("No voi harmin paikka.", "1. Näkemiin", new int[] { -1 });
             DialogueNode[] testidialogitaulukko = new DialogueNode [] { testidialogi1, testidialogi2, testidialogi3 };
-            NPC testihahmo = new NPC((karttaLeveys / 2)-3, karttaKorkeus - 2, "testihahmo",'T',RLColor.Blue, testidialogitaulukko);
+            NPC testihahmo = new NPC((karttaLeveys / 2)-3, karttaKorkeus - 2, "testihahmo",'T',RLColor.Blue, testidialogitaulukko, true);
             kartta.LisaaNPC(testihahmo);
             return kartta;
         }

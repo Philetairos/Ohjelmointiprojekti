@@ -3,22 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RogueSharp;
 using RLNET;
+using RogueSharp;
 
-namespace Ohjelmointiprojekti {
+namespace Ohjelmointiprojekti
+{
     /// <summary>
-    /// Hahmo-luokka, jota kaikki pelin hahmot käyttävät. Hyödyntää hahmo- ja piirrä-rajapintoja
+    /// Luokka oville, joita hahmot voivat aukaista
+    /// TODO: lukitut ovet
     /// </summary>
-    public class Hahmo : IHahmo, IPiirra {
-        public string Nimi {
-            get;
-            set;
-        }
-        public int Nakoetaisyys {
-            get;
-            set;
-        }
+    public class Door : IPiirra {
+        public bool Auki;
         public RLColor Vari {
             get;
             set;
@@ -35,14 +30,20 @@ namespace Ohjelmointiprojekti {
             get;
             set;
         }
+        public Door() {
+            Merkki = '|';
+            Vari = RLColor.LightGray;
+        }
         public void Piirra(RLConsole konsoli, IMap kartta) {
             if (!kartta.GetCell(X, Y).IsExplored) {
                 return;
             }
+            Merkki = Auki ? '.' : '|';
             if (kartta.IsInFov(X, Y)) {
                 konsoli.Set(X, Y, Vari, RLColor.Black, Merkki);
             }
-            else {
+            else
+            {
                 konsoli.Set(X, Y, RLColor.Gray, RLColor.Black, '.');
             }
         }

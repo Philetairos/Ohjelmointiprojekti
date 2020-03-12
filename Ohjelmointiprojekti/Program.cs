@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-//Ohjelman päätiedosto, Daniel Juola 
-//Perustuu Faron Bracyn esimerkkikoodiin
-//Projektissa käytetyt kirjastot: RLNet (Travis M. Clark, 2014) ja RogueSharp (Faron Bracy, 2014-2019), MIT-lisenssi
-
 namespace Ohjelmointiprojekti {
+    /// <summary>
+    ///  Ohjelman päätiedosto. Ohjelman tekijä: Daniel Juola 
+    ///  Perustuu Faron Bracyn esimerkkikoodiin
+    ///  Projektissa käytetyt kirjastot: RLNet (Travis M. Clark, 2014) ja RogueSharp (Faron Bracy, 2014-2019), MIT-lisenssi
+    /// </summary>
     class Program {
         //Pääkonsolin koko tiileinä, ei pikseleinä
         private static readonly int konsolileveys = 160;
@@ -33,6 +34,9 @@ namespace Ohjelmointiprojekti {
         private static bool talkmoodi = false;
         private static NPC dialoginpc = new NPC();
         private static bool dialogi = false;
+
+        readonly static MoveChar liikuttaja = new MoveChar();
+        private static int liikkumislaskuri = 0;
 
         public static GameMap peliKartta;
         public static Player Pelaaja {
@@ -145,10 +149,22 @@ namespace Ohjelmointiprojekti {
                 else if (nappain.Key == RLKey.Escape) {
                     paaKonsoli.Close();
                 }
+                liikkumislaskuri++;
+                if (liikkumislaskuri == 3)
+                {
+                    foreach (NPC hahmo in peliKartta.NPCs)
+                    {
+                        if (hahmo.liikkuu == true && dialogi == false)
+                        {
+                            liikuttaja.LiikuRandom(hahmo, KomentoKasittelija);
+                        }
+                    }
+                    liikkumislaskuri = 0;
+                }
             }
             else if (nappain != null && dialogi == true) {
                 if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
-                    dialogi = dialoginpc.Dialogi(ViestiLoki, Int32.Parse(nappain.Char.ToString()));
+                    dialogi = dialoginpc.Dialogi(Int32.Parse(nappain.Char.ToString()));
                 }
             }
         }

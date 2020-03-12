@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-//Luokka pelaajan hahmolle, jonka kautta pelaaja pelaa peliä
-
 namespace Ohjelmointiprojekti
 {
+    /// <summary>
+    /// Luokka pelaajan hahmolle, jonka kautta pelaaja pelaa peliä
+    /// </summary>
     public class Player : Hahmo {
         public Player(int x, int y) {
             Nimi = "Pelaaja";

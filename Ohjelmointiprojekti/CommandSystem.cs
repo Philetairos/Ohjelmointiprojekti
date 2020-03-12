@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-//Luokka pelaajan toiminnoille, kuten liikumiselle ja interaktiolle
-
 namespace Ohjelmointiprojekti {
     public enum Suunta
     {
@@ -22,6 +20,9 @@ namespace Ohjelmointiprojekti {
         Ylos = 8,
         YlaOikea = 9
     }
+    /// <summary>
+    /// Luokka pelaajan toiminnoille, kuten liikumiselle ja interaktiolle
+    /// </summary>
     public class CommandSystem {
         public bool SiirraPelaaja(Suunta suunta)
         {
@@ -80,6 +81,9 @@ namespace Ohjelmointiprojekti {
             }
             NPC npc = Program.peliKartta.NPCSijainti(x, y);
             return npc;
+        }
+        public void SiirraHahmo(Hahmo hahmo, ICell solu) {
+            bool siirtyma = Program.peliKartta.AsetaSijainti(hahmo, solu.X, solu.Y);
         }
     }
 }

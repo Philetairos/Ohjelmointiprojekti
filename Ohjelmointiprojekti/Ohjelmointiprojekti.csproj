@@ -54,11 +54,13 @@
   <ItemGroup>
     <Compile Include="CommandSystem.cs" />
     <Compile Include="DialogueNode.cs" />
+    <Compile Include="Door.cs" />
     <Compile Include="GameMap.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="MapGenerator.cs" />
     <Compile Include="MessageLog.cs" />
+    <Compile Include="MoveChar.cs" />
     <Compile Include="NPC.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-//Dialogin osio, hahmon dialogi koostuu näistä
-
 namespace Ohjelmointiprojekti
 {
+    /// <summary>
+    /// Dialogin osio, hahmon dialogi koostuu näistä
+    /// </summary>
     public class DialogueNode {
         public readonly string dialogi;
         public readonly string vastaukset;

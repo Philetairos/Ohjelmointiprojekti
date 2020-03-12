@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-//Ohjelman rajapinnat
-
 namespace Ohjelmointiprojekti {
     //Hahmojen rajapinta, sisältää nimen ja näköetäisyyden (kuinka monen ruudun päähän hahmo näkee)
     public interface IHahmo {
@@ -22,8 +20,7 @@ namespace Ohjelmointiprojekti {
         }
     }
     //Rajapinta joka sisältää kaiken piirtämistä varten: Värin, merkin, koordinaattisijainnin ja metodin itse piirtämiselle
-    public interface IPiirra
-    {
+    public interface IPiirra {
         RLColor Vari {
             get; set;
         }

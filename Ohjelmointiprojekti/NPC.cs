@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-//Hahmot, joita vastaan pelaaja ei voi taistella, mutta joiden kanssa pelaaja voi keskustella
-
 namespace Ohjelmointiprojekti {
+    /// <summary>
+    /// Luokka pelin hahmoille, joita vastaan pelaaja ei voi taistella, mutta joiden kanssa pelaaja voi keskustella
+    /// TODO: kaupankäynti
+    /// </summary>
     public class NPC : Hahmo {
         public DialogueNode[] hahmonDialogi;
         private int dialogiID;
+        public readonly bool liikkuu;
         public NPC() {
 
         }
-        public NPC(int x, int y, string nimi, char merkki, RLColor vari, DialogueNode[] dialogi) {
+        public NPC(int x, int y, string nimi, char merkki, RLColor vari, DialogueNode[] dialogi, bool liikkuukko) {
             Nimi = nimi;
             Nakoetaisyys = 100;
             Vari = vari;
@@ -24,18 +27,19 @@ namespace Ohjelmointiprojekti {
             Y = y;
             hahmonDialogi = dialogi;
             dialogiID = 0;
+            liikkuu = liikkuukko;
         }
         public void PiirraStatsit(RLConsole statsiKonsoli, int sijainti) {
             statsiKonsoli.Print(1, 13+(sijainti*2), Merkki.ToString(), Vari);
             statsiKonsoli.Print(2, 13 + (sijainti * 2), $": {Nimi}", RLColor.White);
         }
-        public bool Dialogi(MessageLog viestiloki, int syote) {
+        public bool Dialogi(int syote) {
             foreach (int i in hahmonDialogi[dialogiID].linkit) {
                 if(i == syote)
                 {
                     dialogiID = i;
-                    viestiloki.Lisaa(hahmonDialogi[dialogiID].dialogi);
-                    viestiloki.Lisaa(hahmonDialogi[dialogiID].vastaukset);
+                    Program.ViestiLoki.Lisaa(hahmonDialogi[dialogiID].dialogi);
+                    Program.ViestiLoki.Lisaa(hahmonDialogi[dialogiID].vastaukset);
                     return true;
                 }
             }

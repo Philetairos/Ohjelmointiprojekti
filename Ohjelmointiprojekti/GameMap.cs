@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-//Tämä on luokka pelin karttojen luomiseen, joilla pelaaja liikkuu
-
 namespace Ohjelmointiprojekti {
+    /// <summary>
+    /// Tämä on luokka pelin karttojen luomiseen, joilla pelaaja liikkuu
+    /// </summary>
     public class GameMap : Map {
-        private readonly List<NPC> NPCs;
+        public readonly List<NPC> NPCs;
+        public List<Door> Ovet;
         public GameMap() {
             NPCs = new List<NPC>();
+            Ovet = new List<Door>();
         }
         public void LisaaNPC(NPC npc) {
             NPCs.Add(npc);
@@ -36,44 +39,38 @@ namespace Ohjelmointiprojekti {
             }
         }
         private void AsetaSymboli(RLConsole karttaKonsoli, Cell solu) {
-            //Älä piirrä mitään jos pelaaja ei ole nähnyt solua
             if (!solu.IsExplored) {
                 return;
             }
-            //Piirrä solu jonka pelaaja näkee
             if (IsInFov(solu.X, solu.Y)) {
-                //Lattia
                 if (solu.IsWalkable)
                 {
                     karttaKonsoli.Set(solu.X, solu.Y, RLColor.LightGray, RLColor.Black, '.');
                 }
-                //Seinä
                 else
                 {
                     karttaKonsoli.Set(solu.X, solu.Y, RLColor.LightGray, RLColor.Black, '#');
                 }
                 
             }
-            //Piirrä solu jota pelaaja ei näe, mutta jonka on nähnyt aikaisemmin
             else {
-                //Lattia
                 if (solu.IsWalkable)
                 {
                     karttaKonsoli.Set(solu.X, solu.Y, RLColor.Gray, RLColor.Black, '.');
                 }
-                //Seinä
                 else
                 {
                     karttaKonsoli.Set(solu.X, solu.Y, RLColor.Gray, RLColor.Black, '#');
                 }
-                
+            }
+            foreach (Door ovi in Ovet) {
+                ovi.Piirra(karttaKonsoli, this);
             }
         }
-        //Päivitä, mitä tiileja pelaaja näkee
+        //Päivitä, mitä tiilejä pelaaja näkee
         public void PaivitaNakoKentta() {
             Player pelaaja = Program.Pelaaja;
             ComputeFov(pelaaja.X, pelaaja.Y, pelaaja.Nakoetaisyys, true);
-            // Mark all cells in field-of-view as having been explored
             foreach (Cell solu in GetAllCells())
             {
                 if (IsInFov(solu.X, solu.Y))
@@ -94,12 +91,27 @@ namespace Ohjelmointiprojekti {
                 }
                 return true;
             }
+            AvaaOvi(hahmo, x, y);
             return false;
         }
-        //
         public void AsetaWalkable(int x, int y, bool isWalkable) {
             ICell solu = GetCell(x, y);
             SetCellProperties(solu.X, solu.Y, solu.IsTransparent, isWalkable, solu.IsExplored);
+        }
+        public Door PalautaOvi(int x, int y)
+        {
+            return Ovet.SingleOrDefault(d => d.X == x && d.Y == y);
+        }
+        private void AvaaOvi (Hahmo hahmo, int x, int y)
+        {
+            Door door = PalautaOvi(x, y);
+            if (door != null && !door.Auki)
+            {
+                door.Auki = true;
+                var solu = GetCell(x, y);
+                SetCellProperties(x, y, true, true, solu.IsExplored);
+                Program.ViestiLoki.Lisaa($"{hahmo.Nimi} avasi oven.");
+            }
         }
     }
 }
