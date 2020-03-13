@@ -34,6 +34,7 @@ namespace Ohjelmointiprojekti {
             }
             kartta.SetCellProperties(karttaLeveys / 2, karttaKorkeus-14, false, false, true);
             kartta.Ovet.Add(new Door { X = karttaLeveys / 2 , Y = karttaKorkeus-14, Auki = false});
+            kartta.Esineet.Add(new Coin(1, (karttaLeveys / 2)-3, karttaKorkeus - 7));
             DialogueNode testidialogi1 = new DialogueNode("Hei mitä kuuluu", "1. Hyvää 2. Pahaa", new int[] { 1,2 });
             DialogueNode testidialogi2 = new DialogueNode("No hyvä.", "1. Näkemiin", new int[] { -1 });
             DialogueNode testidialogi3 = new DialogueNode("No voi harmin paikka.", "1. Näkemiin", new int[] { -1 });

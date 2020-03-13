@@ -36,4 +36,17 @@ namespace Ohjelmointiprojekti {
 
         void Piirra(RLConsole konsoli, IMap kartta);
     }
+    //Rajapinta esineitä varten, joita hahmot voivat kertätä ja käyttää
+    public interface IEsine {
+        string Nimi {
+            get;
+            set;
+        }
+        int Maara {
+            get;
+            set;
+        }
+        bool KaytaEsine();
+        bool OtaEsine(Player pelaaja);
+    }
 }

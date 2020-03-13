@@ -13,9 +13,11 @@ namespace Ohjelmointiprojekti {
     public class GameMap : Map {
         public readonly List<NPC> NPCs;
         public List<Door> Ovet;
+        public List<Item> Esineet;
         public GameMap() {
             NPCs = new List<NPC>();
             Ovet = new List<Door>();
+            Esineet = new List<Item>();
         }
         public void LisaaNPC(NPC npc) {
             NPCs.Add(npc);
@@ -24,7 +26,11 @@ namespace Ohjelmointiprojekti {
         public NPC NPCSijainti(int x, int y) {
             return NPCs.FirstOrDefault(m => m.X == x && m.Y == y);
         }
-        public void PiirraKartta(RLConsole karttaKonsoli, RLConsole statsiKonsoli) {
+        public Item EsineSijainti(int x, int y)
+        {
+            return Esineet.FirstOrDefault(m => m.X == x && m.Y == y);
+        }
+        public void PiirraKartta(RLConsole karttaKonsoli, RLConsole statsiKonsoli, RLConsole inventaarioKonsoli) {
             karttaKonsoli.Clear();
             foreach (Cell solu in GetAllCells()) {
                 AsetaSymboli(karttaKonsoli, solu);
@@ -37,6 +43,10 @@ namespace Ohjelmointiprojekti {
                     i++;
                 }
             }
+            foreach (Item esine in Esineet) {
+                esine.Piirra(karttaKonsoli, this);
+            }
+            Program.Pelaaja.PiirraInventaario(inventaarioKonsoli);
         }
         private void AsetaSymboli(RLConsole karttaKonsoli, Cell solu) {
             if (!solu.IsExplored) {
@@ -65,6 +75,10 @@ namespace Ohjelmointiprojekti {
             }
             foreach (Door ovi in Ovet) {
                 ovi.Piirra(karttaKonsoli, this);
+            }
+            foreach (Item esine in Esineet)
+            {
+                esine.Piirra(karttaKonsoli, this);
             }
         }
         //Päivitä, mitä tiilejä pelaaja näkee

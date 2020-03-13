@@ -26,7 +26,6 @@ namespace Ohjelmointiprojekti
         }
         public bool LiikuKohteeseen(ICell kohde, Hahmo hahmo, CommandSystem komennot) {
             GameMap kartta = Program.peliKartta;
-            DotNetRandom satunnaisluku = new DotNetRandom();
             kartta.AsetaWalkable(hahmo.X, hahmo.Y, true);
             PathFinder polkuEtsija = new PathFinder(kartta);
             Path polku = null;

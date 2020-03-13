@@ -52,12 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coin.cs" />
     <Compile Include="CommandSystem.cs" />
     <Compile Include="DialogueNode.cs" />
     <Compile Include="Door.cs" />
     <Compile Include="GameMap.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Interfaces.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="MapGenerator.cs" />
     <Compile Include="MessageLog.cs" />
     <Compile Include="MoveChar.cs" />

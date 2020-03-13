@@ -29,25 +29,25 @@ namespace Ohjelmointiprojekti {
             int x = Program.Pelaaja.X;
             int y = Program.Pelaaja.Y;
             switch (suunta) {
-                case Suunta.Ylos:{
-                    y = Program.Pelaaja.Y - 1;
-                    break;
-                }
-                case Suunta.Alas:{
-                    y = Program.Pelaaja.Y + 1;
-                    break;
-                }
-                case Suunta.Vasen:{
-                    x = Program.Pelaaja.X - 1;
-                    break;
-                }
-                case Suunta.Oikea:{
-                    x = Program.Pelaaja.X + 1;
-                    break;
-                }
-                default:{
-                    return false;
-                }
+                case Suunta.Ylos: {
+                        y = Program.Pelaaja.Y - 1;
+                        break;
+                    }
+                case Suunta.Alas: {
+                        y = Program.Pelaaja.Y + 1;
+                        break;
+                    }
+                case Suunta.Vasen: {
+                        x = Program.Pelaaja.X - 1;
+                        break;
+                    }
+                case Suunta.Oikea: {
+                        x = Program.Pelaaja.X + 1;
+                        break;
+                    }
+                default: {
+                        return false;
+                    }
             }
 
             if (Program.peliKartta.AsetaSijainti(Program.Pelaaja, x, y)) {
@@ -55,35 +55,68 @@ namespace Ohjelmointiprojekti {
             }
             return false;
         }
-        public NPC Interaktio(Suunta suunta, MessageLog viestiloki) {
+        public NPC Interaktio(Suunta suunta) {
             int x = Program.Pelaaja.X;
             int y = Program.Pelaaja.Y;
             switch (suunta) {
-                case Suunta.Ylos:{
-                    y = Program.Pelaaja.Y - 1;
-                    break;
-                }
-                case Suunta.Alas:{
-                    y = Program.Pelaaja.Y + 1;
-                    break;
-                }
-                case Suunta.Vasen:{
-                    x = Program.Pelaaja.X - 1;
-                    break;
-                }
-                case Suunta.Oikea:{
-                    x = Program.Pelaaja.X + 1;
-                    break;
-                }
-                default:{
-                    return null;
-                }
+                case Suunta.Ylos: {
+                        y = Program.Pelaaja.Y - 1;
+                        break;
+                    }
+                case Suunta.Alas: {
+                        y = Program.Pelaaja.Y + 1;
+                        break;
+                    }
+                case Suunta.Vasen: {
+                        x = Program.Pelaaja.X - 1;
+                        break;
+                    }
+                case Suunta.Oikea: {
+                        x = Program.Pelaaja.X + 1;
+                        break;
+                    }
+                default: {
+                        return null;
+                    }
             }
             NPC npc = Program.peliKartta.NPCSijainti(x, y);
             return npc;
         }
         public void SiirraHahmo(Hahmo hahmo, ICell solu) {
             bool siirtyma = Program.peliKartta.AsetaSijainti(hahmo, solu.X, solu.Y);
+        }
+        public Item Ota(Suunta suunta) {
+            int x = Program.Pelaaja.X;
+            int y = Program.Pelaaja.Y;
+            switch (suunta)
+            {
+                case Suunta.Ylos:
+                    {
+                        y = Program.Pelaaja.Y - 1;
+                        break;
+                    }
+                case Suunta.Alas:
+                    {
+                        y = Program.Pelaaja.Y + 1;
+                        break;
+                    }
+                case Suunta.Vasen:
+                    {
+                        x = Program.Pelaaja.X - 1;
+                        break;
+                    }
+                case Suunta.Oikea:
+                    {
+                        x = Program.Pelaaja.X + 1;
+                        break;
+                    }
+                default:
+                    {
+                        return null;
+                    }
+            }
+            Item esine = Program.peliKartta.EsineSijainti(x, y);
+            return esine;
         }
     }
 }
