@@ -10,19 +10,19 @@ namespace Ohjelmointiprojekti {
     /// <summary>
     /// Tämä luokka luo erilaisia karttoja, käyttäen GameMap-luokkaa
     /// </summary>
-    public class MapGenerator {
+    public class KarttaGeneroija {
         private readonly int karttaLeveys;
         private readonly int karttaKorkeus;
-        private readonly GameMap kartta;
+        private readonly PeliKartta kartta;
 
         //konstruktori
-        public MapGenerator(int leveys, int korkeus) {
+        public KarttaGeneroija(int leveys, int korkeus) {
             karttaLeveys = leveys;
             karttaKorkeus = korkeus;
-            kartta = new GameMap();
+            kartta = new PeliKartta();
         }
         //Aloituskartta
-        public GameMap TestiKartta() {
+        public PeliKartta TestiKartta() {
             kartta.Initialize(karttaLeveys, karttaKorkeus);
             foreach (Cell solu in kartta.GetAllCells())
             {
@@ -33,13 +33,13 @@ namespace Ohjelmointiprojekti {
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, true);
             }
             kartta.SetCellProperties(karttaLeveys / 2, karttaKorkeus-14, false, false, true);
-            kartta.Ovet.Add(new Door { X = karttaLeveys / 2 , Y = karttaKorkeus-14, Auki = false});
-            kartta.Esineet.Add(new Coin(1, (karttaLeveys / 2)-3, karttaKorkeus - 7));
-            DialogueNode testidialogi1 = new DialogueNode("Hei mitä kuuluu", "1. Hyvää 2. Pahaa", new int[] { 1,2 });
-            DialogueNode testidialogi2 = new DialogueNode("No hyvä.", "1. Näkemiin", new int[] { -1 });
-            DialogueNode testidialogi3 = new DialogueNode("No voi harmin paikka.", "1. Näkemiin", new int[] { -1 });
-            DialogueNode[] testidialogitaulukko = new DialogueNode [] { testidialogi1, testidialogi2, testidialogi3 };
-            NPC testihahmo = new NPC((karttaLeveys / 2)-3, karttaKorkeus - 2, "testihahmo",'T',RLColor.Blue, testidialogitaulukko, true);
+            kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 , Y = karttaKorkeus-14, Auki = false});
+            kartta.Esineet.Add(new Kolikko(1, (karttaLeveys / 2)-3, karttaKorkeus - 7));
+            DialogiNoodi testidialogi1 = new DialogiNoodi("Hello how are you", "1. I am fine 2. I am not fine", new int[] { 1,2 });
+            DialogiNoodi testidialogi2 = new DialogiNoodi("Well good.", "1. Good bye.", new int[] { -1 });
+            DialogiNoodi testidialogi3 = new DialogiNoodi("Well that's unfortunate.", "1. Good bye", new int[] { -1 });
+            DialogiNoodi[] testidialogitaulukko = new DialogiNoodi [] { testidialogi1, testidialogi2, testidialogi3 };
+            NPC testihahmo = new NPC((karttaLeveys / 2)-3, karttaKorkeus - 2, "test",'T',RLColor.Blue, testidialogitaulukko, true);
             kartta.LisaaNPC(testihahmo);
             return kartta;
         }

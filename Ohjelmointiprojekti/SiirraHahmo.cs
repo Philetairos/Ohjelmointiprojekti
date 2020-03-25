@@ -12,9 +12,9 @@ namespace Ohjelmointiprojekti
     /// <summary>
     /// Tämä luokka siirtää hahmoa, välttäen seiniin törmäämistä
     /// </summary>
-    public class MoveChar {
-        public bool LiikuRandom(Hahmo hahmo, CommandSystem komennot) {
-            GameMap kartta = Program.peliKartta;
+    public class SiirraHahmo {
+        public bool LiikuRandom(Hahmo hahmo, KomentoKasittelija komennot) {
+            PeliKartta kartta = Ohjelma.peliKartta;
             DotNetRandom satunnaisluku = new DotNetRandom();
             kartta.AsetaWalkable(hahmo.X, hahmo.Y, true); 
             int suunta1 = satunnaisluku.Next(-1,1);
@@ -24,8 +24,8 @@ namespace Ohjelmointiprojekti
             }
             return true;
         }
-        public bool LiikuKohteeseen(ICell kohde, Hahmo hahmo, CommandSystem komennot) {
-            GameMap kartta = Program.peliKartta;
+        public bool LiikuKohteeseen(ICell kohde, Hahmo hahmo, KomentoKasittelija komennot) {
+            PeliKartta kartta = Ohjelma.peliKartta;
             kartta.AsetaWalkable(hahmo.X, hahmo.Y, true);
             PathFinder polkuEtsija = new PathFinder(kartta);
             Path polku = null;
@@ -46,9 +46,9 @@ namespace Ohjelmointiprojekti
             }
             return true;
         }
-        public bool LiikuKohtiPelaajaa(Hahmo hahmo, CommandSystem komennot) {
-            Player pelaaja = Program.Pelaaja;
-            GameMap kartta = Program.peliKartta;
+        public bool LiikuKohtiPelaajaa(Hahmo hahmo, KomentoKasittelija komennot) {
+            Pelaaja pelaaja = Ohjelma.Pelaaja;
+            PeliKartta kartta = Ohjelma.peliKartta;
             FieldOfView hahmoFoV = new FieldOfView(kartta);
             hahmoFoV.ComputeFov(hahmo.X, hahmo.Y,hahmo.Nakoetaisyys, true);
             if (hahmoFoV.IsInFov(pelaaja.X, pelaaja.Y)) {

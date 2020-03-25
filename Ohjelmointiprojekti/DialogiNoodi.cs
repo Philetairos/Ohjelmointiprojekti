@@ -11,12 +11,12 @@ namespace Ohjelmointiprojekti
     /// <summary>
     /// Dialogin osio, hahmon dialogi koostuu näistä
     /// </summary>
-    public class DialogueNode {
+    public class DialogiNoodi {
         public readonly string dialogi;
         public readonly string vastaukset;
         public readonly int[] linkit;
 
-        public DialogueNode(string d, string v, int[] l) {
+        public DialogiNoodi(string d, string v, int[] l) {
             dialogi = d;
             vastaukset = v;
             linkit = l;

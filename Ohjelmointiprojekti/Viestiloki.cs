@@ -10,9 +10,9 @@ namespace Ohjelmointiprojekti {
     /// <summary>
     /// //Luokka viestien lisäämiselle ja piirtämiselle dialogikonsoliin
     /// </summary>
-    public class MessageLog {
+    public class Viestiloki {
         private readonly Queue<string> rivit;
-        public MessageLog()
+        public Viestiloki()
         {
             rivit = new Queue<string>();
         }

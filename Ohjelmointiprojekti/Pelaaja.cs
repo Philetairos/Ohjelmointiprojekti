@@ -11,41 +11,52 @@ namespace Ohjelmointiprojekti
     /// <summary>
     /// Luokka pelaajan hahmolle, jonka kautta pelaaja pelaa peliä
     /// </summary>
-    public class Player : Hahmo {
-        public Item[] Inventaario {
+    public class Pelaaja : Hahmo {
+        public Esine[] Inventaario {
             get;
             set;
         }
-        public Player(int x, int y) {
-            Nimi = "Pelaaja";
+        public Esine Paahine {
+            get;
+            set;
+        }
+        public Pelaaja(int x, int y) {
+            Nimi = "Player";
             Nakoetaisyys = 100;
             Vari = RLColor.White;
             Merkki = '@';
             X = x;
             Y = y;
-            Inventaario = new Item[4];
+            Inventaario = new Esine[4];
         }
         public void PiirraStatsit(RLConsole statsiKonsoli) {
-            statsiKonsoli.Print(1, 1, $"Nimi:    {Nimi}", RLColor.White);
+            statsiKonsoli.Print(1, 1, $"Name:    {Nimi}", RLColor.White);
         }
-        public bool LisaaEsine(Item esine) {
+        public bool LisaaEsine(Esine esine) {
             for (int i = 0; i < Inventaario.Length; i++) {
                 if (Inventaario[i] is null) {
                     Inventaario[i] = esine;
-                    Program.peliKartta.Esineet.Remove(esine);
+                    Ohjelma.peliKartta.Esineet.Remove(esine);
                     return true;
                 }
             }
-            Program.ViestiLoki.Lisaa("Inventaario on täynnä!");
+            Ohjelma.ViestiLoki.Lisaa("Inventory is full!");
             return false;
         }
         public void PiirraInventaario(RLConsole inventaarioKonsoli) {
-            inventaarioKonsoli.Print(1,1, "Inventaario:", RLColor.White);
-            for (int i = 0; i < Inventaario.Length; i++)  {
+            inventaarioKonsoli.Print(1,1, "Inventory:", RLColor.White);
+            int i;
+            for (i = 0; i < Inventaario.Length; i++)  {
                 if (!(Inventaario[i] is null)) {
                     inventaarioKonsoli.Print(1, 2+i, Inventaario[i].Merkki.ToString(), Inventaario[i].Vari);
                     inventaarioKonsoli.Print(3, 2+i, $"{Inventaario[i].Nimi}  {Inventaario[i].Maara}", RLColor.White);
                 }
+            }
+            inventaarioKonsoli.Print(1, i, "Equipment:", RLColor.White);
+            inventaarioKonsoli.Print(3, i + 1, "Head:", RLColor.White);
+            if (!(Paahine is null)) {
+                inventaarioKonsoli.Print(4, i + 1, Paahine.Merkki.ToString(), Paahine.Vari);
+                inventaarioKonsoli.Print(5, i + 1, Paahine.Nimi, RLColor.White);
             }
         }
     }

@@ -52,20 +52,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coin.cs" />
-    <Compile Include="CommandSystem.cs" />
-    <Compile Include="DialogueNode.cs" />
-    <Compile Include="Door.cs" />
-    <Compile Include="GameMap.cs" />
-    <Compile Include="Character.cs" />
-    <Compile Include="Interfaces.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="MapGenerator.cs" />
-    <Compile Include="MessageLog.cs" />
-    <Compile Include="MoveChar.cs" />
+    <Compile Include="Kolikko.cs" />
+    <Compile Include="KomentoKasittelija.cs" />
+    <Compile Include="DialogiNoodi.cs" />
+    <Compile Include="Ovi.cs" />
+    <Compile Include="PeliKartta.cs" />
+    <Compile Include="Hahmo.cs" />
+    <Compile Include="Rajapinnat.cs" />
+    <Compile Include="Esine.cs" />
+    <Compile Include="KarttaGeneroija.cs" />
+    <Compile Include="Viestiloki.cs" />
+    <Compile Include="SiirraHahmo.cs" />
     <Compile Include="NPC.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Pelaaja.cs" />
+    <Compile Include="Ohjelma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

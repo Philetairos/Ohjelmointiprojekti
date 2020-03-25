@@ -10,24 +10,24 @@ namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka kolikko-esinettä varten. Kolikoita voi käyttää kaupankäynnissä, ja sen voi myös heittää.
     /// </summary>
-    public class Coin : Item {
-        public Coin(int maara, int x, int y) {
+    public class Kolikko : Esine {
+        public Kolikko(int maara, int x, int y) {
             X = x;
             Y = y;
-            Nimi = "Kolikko";
+            Nimi = "Coin";
             Maara = maara;
             Vari = RLColor.Yellow;
             Merkki = 'o';
         }
         public override bool KaytaEsine() {
-            Program.ViestiLoki.Lisaa("Heität kolikkoa.");
+            Ohjelma.ViestiLoki.Lisaa("You flip the coin.");
             DotNetRandom satunnaisluku = new DotNetRandom();
             int heitto = satunnaisluku.Next(0, 1);
             if (heitto == 0) {
-                Program.ViestiLoki.Lisaa("Klaava.");
+                Ohjelma.ViestiLoki.Lisaa("Heads.");
             }
             else {
-                Program.ViestiLoki.Lisaa("Kruuna.");
+                Ohjelma.ViestiLoki.Lisaa("Tails.");
             }
             return false;
         }

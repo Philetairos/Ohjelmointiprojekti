@@ -12,7 +12,7 @@ namespace Ohjelmointiprojekti {
     ///  Perustuu Faron Bracyn esimerkkikoodiin
     ///  Projektissa käytetyt kirjastot: RLNet (Travis M. Clark, 2014) ja RogueSharp (Faron Bracy, 2014-2019), MIT-lisenssi
     /// </summary>
-    class Program {
+    class Ohjelma {
         //Pääkonsolin koko tiileinä, ei pikseleinä
         private static readonly int konsolileveys = 160;
         private static readonly int konsolikorkeus = 80;
@@ -38,19 +38,19 @@ namespace Ohjelmointiprojekti {
         private static bool getmoodi = false;
         private static bool kaytaEsine = false;
 
-        readonly static MoveChar liikuttaja = new MoveChar();
+        readonly static SiirraHahmo liikuttaja = new SiirraHahmo();
         private static int liikkumislaskuri = 0;
 
-        public static GameMap peliKartta;
-        public static Player Pelaaja {
+        public static PeliKartta peliKartta;
+        public static Pelaaja Pelaaja {
             get;
             set;
         }
-        public static CommandSystem KomentoKasittelija {
+        public static KomentoKasittelija KomentoKasittelija {
             get;
             private set;
         }
-        public static MessageLog ViestiLoki {
+        public static Viestiloki ViestiLoki {
             get;
             private set;
         }
@@ -69,13 +69,13 @@ namespace Ohjelmointiprojekti {
             inventaarioKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
             //Luo statistiikkakonsoli joka näyttää pelaajan hahmo(je)n tilan
             statsiKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
-            MapGenerator karttaGeneroija = new MapGenerator(karttaleveys,karttakorkeus);
+            KarttaGeneroija karttaGeneroija = new KarttaGeneroija(karttaleveys,karttakorkeus);
             //Luo pelaajan hahmo
-            Pelaaja = new Player(karttaleveys/2, karttakorkeus-6);
-            KomentoKasittelija = new CommandSystem();
+            Pelaaja = new Pelaaja(karttaleveys/2, karttakorkeus-6);
+            KomentoKasittelija = new KomentoKasittelija();
             //Luo viestiloki
-            ViestiLoki = new MessageLog();
-            ViestiLoki.Lisaa("Nappaimet: Nuolinappaimet - Liiku, T - Puhu, G - Ota, U - Kayta, Esc - Sulje");
+            ViestiLoki = new Viestiloki();
+            ViestiLoki.Lisaa("Controls: Arrow Keys - Move, T - Talk, G - Get, U - Use, Esc - Exit game");
             //Luo aloituskartta
             peliKartta = karttaGeneroija.TestiKartta();
             peliKartta.PaivitaNakoKentta();
@@ -98,7 +98,7 @@ namespace Ohjelmointiprojekti {
             }
             else if (getmoodi == true)
             {
-                Item otettavaEsine = KomentoKasittelija.Ota(suunta);
+                Esine otettavaEsine = KomentoKasittelija.Ota(suunta);
                 if (otettavaEsine != null)
                 {
                     Pelaaja.LisaaEsine(otettavaEsine);
@@ -128,16 +128,16 @@ namespace Ohjelmointiprojekti {
                 }
                 else if (nappain.Key == RLKey.G) {
                     getmoodi = true;
-                    ViestiLoki.Lisaa("Ota: Paina nuolinappainta");
+                    ViestiLoki.Lisaa("Get: Press an arrow key");
                 }
                 else if (nappain.Key == RLKey.T) {
                     talkmoodi = true;
-                    ViestiLoki.Lisaa("Puhu: Paina nuolinappainta");
+                    ViestiLoki.Lisaa("Talk: Press an arrow key");
                 }
                 else if (nappain.Key == RLKey.U)
                 {
                     kaytaEsine = true;
-                    ViestiLoki.Lisaa("Kayta: Valitse esine");
+                    ViestiLoki.Lisaa("Use: Press a number key");
                 }
                 else if (nappain.Key == RLKey.Escape) {
                     paaKonsoli.Close();

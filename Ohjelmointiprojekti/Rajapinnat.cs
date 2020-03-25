@@ -47,6 +47,6 @@ namespace Ohjelmointiprojekti {
             set;
         }
         bool KaytaEsine();
-        bool OtaEsine(Player pelaaja);
+        bool OtaEsine(Pelaaja pelaaja);
     }
 }

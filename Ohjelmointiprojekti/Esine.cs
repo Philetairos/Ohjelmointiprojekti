@@ -6,19 +6,24 @@ using System.Threading.Tasks;
 using RLNET;
 using RogueSharp;
 
-namespace Ohjelmointiprojekti
-{
+namespace Ohjelmointiprojekti {
     /// <summary>
-    /// Luokka oville, joita hahmot voivat aukaista
-    /// TODO: lukitut ovet
+    /// Luokka pelin esineitä varten. Pelaaja voi kerätä ja käyttää esineitä.
     /// </summary>
-    public class Door : IPiirra {
-        public bool Auki;
-        public RLColor Vari {
+    public class Esine : IEsine, IPiirra {
+        public string Nimi {
             get;
             set;
         }
         public char Merkki {
+            get;
+            set;
+        }
+        public RLColor Vari {
+            get;
+            set;
+        }
+        public int Maara {
             get;
             set;
         }
@@ -30,20 +35,24 @@ namespace Ohjelmointiprojekti
             get;
             set;
         }
-        public Door() {
-            Merkki = '|';
-            Vari = RLColor.LightGray;
+        public virtual bool KaytaEsine() {
+            Ohjelma.ViestiLoki.Lisaa("Mitään ei tapahdu.");
+            return false;
+        }
+        public bool OtaEsine(Pelaaja pelaaja) {
+            if (pelaaja.LisaaEsine(this)) {
+                Ohjelma.ViestiLoki.Lisaa($"{Nimi} ({Maara}) lisatty inventaarioon.");
+            }
+            return true;
         }
         public void Piirra(RLConsole konsoli, IMap kartta) {
             if (!kartta.GetCell(X, Y).IsExplored) {
                 return;
             }
-            Merkki = Auki ? '.' : '|';
             if (kartta.IsInFov(X, Y)) {
                 konsoli.Set(X, Y, Vari, RLColor.Black, Merkki);
             }
-            else
-            {
+            else {
                 konsoli.Set(X, Y, RLColor.Gray, RLColor.Black, '.');
             }
         }

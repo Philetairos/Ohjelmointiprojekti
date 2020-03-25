@@ -12,13 +12,13 @@ namespace Ohjelmointiprojekti {
     /// TODO: kaupankäynti
     /// </summary>
     public class NPC : Hahmo {
-        public DialogueNode[] hahmonDialogi;
+        public DialogiNoodi[] hahmonDialogi;
         private int dialogiID;
         public readonly bool liikkuu;
         public NPC() {
 
         }
-        public NPC(int x, int y, string nimi, char merkki, RLColor vari, DialogueNode[] dialogi, bool liikkuukko) {
+        public NPC(int x, int y, string nimi, char merkki, RLColor vari, DialogiNoodi[] dialogi, bool liikkuukko) {
             Nimi = nimi;
             Nakoetaisyys = 100;
             Vari = vari;
@@ -38,8 +38,8 @@ namespace Ohjelmointiprojekti {
                 if(i == syote)
                 {
                     dialogiID = i;
-                    Program.ViestiLoki.Lisaa(hahmonDialogi[dialogiID].dialogi);
-                    Program.ViestiLoki.Lisaa(hahmonDialogi[dialogiID].vastaukset);
+                    Ohjelma.ViestiLoki.Lisaa(hahmonDialogi[dialogiID].dialogi);
+                    Ohjelma.ViestiLoki.Lisaa(hahmonDialogi[dialogiID].vastaukset);
                     return true;
                 }
             }
