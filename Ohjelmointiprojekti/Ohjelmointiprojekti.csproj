@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Huppu.cs" />
     <Compile Include="Kolikko.cs" />
     <Compile Include="KomentoKasittelija.cs" />
     <Compile Include="DialogiNoodi.cs" />
