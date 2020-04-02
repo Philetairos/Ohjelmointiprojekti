@@ -20,6 +20,14 @@ namespace Ohjelmointiprojekti
             get;
             set;
         }
+        public int Nalka {
+            get;
+            set;
+        }
+        public int Elama {
+            get;
+            set;
+        }
         public Pelaaja(int x, int y) {
             Nimi = "Player";
             Nakoetaisyys = 100;
@@ -27,12 +35,17 @@ namespace Ohjelmointiprojekti
             Merkki = '@';
             X = x;
             Y = y;
+            Nalka = 25;
+            Elama = 100;
             Inventaario = new List<Esine> {
                 Capacity = 4
             };
         }
         public void PiirraStatsit(RLConsole statsiKonsoli) {
+            statsiKonsoli.Clear();
             statsiKonsoli.Print(1, 1, $"Name:    {Nimi}", RLColor.White);
+            statsiKonsoli.Print(1, 2, $"Health:    {Elama}", RLColor.White);
+            statsiKonsoli.Print(1, 3, $"Hunger:    {Nalka}", RLColor.White);
         }
         public bool LisaaEsine(Esine esine) {
             if (Inventaario.Count < Inventaario.Capacity) {

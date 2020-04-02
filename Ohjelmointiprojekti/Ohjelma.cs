@@ -41,6 +41,7 @@ namespace Ohjelmointiprojekti {
         readonly static SiirraHahmo liikuttaja = new SiirraHahmo();
         private static int liikkumislaskuri = 0;
 
+        public static KarttaGeneroija karttaGeneroija;
         public static PeliKartta peliKartta;
         public static Pelaaja Pelaaja {
             get;
@@ -69,7 +70,7 @@ namespace Ohjelmointiprojekti {
             inventaarioKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
             //Luo statistiikkakonsoli joka näyttää pelaajan hahmo(je)n tilan
             statsiKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
-            KarttaGeneroija karttaGeneroija = new KarttaGeneroija(karttaleveys,karttakorkeus);
+            karttaGeneroija = new KarttaGeneroija(karttaleveys,karttakorkeus);
             //Luo pelaajan hahmo
             Pelaaja = new Pelaaja(karttaleveys/2, karttakorkeus-6);
             KomentoKasittelija = new KomentoKasittelija();
@@ -143,12 +144,20 @@ namespace Ohjelmointiprojekti {
                     paaKonsoli.Close();
                 }
                 liikkumislaskuri++;
-                if (liikkumislaskuri == 3)
-                {
-                    foreach (NPC hahmo in peliKartta.NPCs)
-                    {
-                        if (hahmo.liikkuu == true && dialogi == false)
-                        {
+                if (liikkumislaskuri == 3) {
+                    Pelaaja.Nalka--;
+                    if (Pelaaja.Nalka <= 0) {
+                        ViestiLoki.Lisaa("You are starving!");
+                        Pelaaja.Elama-= 5;
+                        if(Pelaaja.Elama <= 0) {
+                            ViestiLoki.Lisaa("You have died!");
+                            peliKartta = karttaGeneroija.TyhjaKartta();
+                            //Lisää kunnon käsittely kuolemalle kun valikot lisätään
+                            paaKonsoli.Update -= PaivitaKonsoli;
+                        }
+                    }
+                    foreach (NPC hahmo in peliKartta.NPCs) {
+                        if (hahmo.liikkuu == true && dialogi == false) {
                             liikuttaja.LiikuRandom(hahmo, KomentoKasittelija);
                         }
                     }

@@ -44,5 +44,14 @@ namespace Ohjelmointiprojekti {
             kartta.LisaaNPC(testihahmo);
             return kartta;
         }
+        //Kartta jos pelaaja kuolee
+        public PeliKartta TyhjaKartta() {
+            kartta.Initialize(karttaLeveys, karttaKorkeus);
+            foreach (Cell solu in kartta.GetAllCells())
+            {
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            return kartta;
+        }
     }
 }
