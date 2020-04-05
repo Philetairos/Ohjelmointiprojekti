@@ -56,6 +56,7 @@
     <Compile Include="Kolikko.cs" />
     <Compile Include="KomentoKasittelija.cs" />
     <Compile Include="DialogiNoodi.cs" />
+    <Compile Include="Leipa.cs" />
     <Compile Include="Ovi.cs" />
     <Compile Include="PeliKartta.cs" />
     <Compile Include="Hahmo.cs" />

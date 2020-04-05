@@ -36,6 +36,7 @@ namespace Ohjelmointiprojekti {
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 , Y = karttaKorkeus-14, Auki = false});
             kartta.Esineet.Add(new Kolikko(1, (karttaLeveys / 2)-3, karttaKorkeus - 7));
             kartta.Esineet.Add(new Huppu(1, (karttaLeveys / 2) + 3, karttaKorkeus - 7));
+            kartta.Esineet.Add(new Leipa(1, (karttaLeveys / 2) + 5, karttaKorkeus - 5));
             DialogiNoodi testidialogi1 = new DialogiNoodi("Hello how are you", "1. I am fine 2. I am not fine", new int[] { 1,2 });
             DialogiNoodi testidialogi2 = new DialogiNoodi("Well good.", "1. Good bye.", new int[] { -1 });
             DialogiNoodi testidialogi3 = new DialogiNoodi("Well that's unfortunate.", "1. Good bye", new int[] { -1 });
