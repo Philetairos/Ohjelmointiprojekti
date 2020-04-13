@@ -7,6 +7,9 @@ using RLNET;
 using RogueSharp;
 
 namespace Ohjelmointiprojekti {
+    /// <summary>
+    /// Luokka huppu-esinettä varten, jonka voi pukea
+    /// </summary>
     public class Huppu : Esine {
         public Huppu(int maara, int x, int y) {
             X = x;

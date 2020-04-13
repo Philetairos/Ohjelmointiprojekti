@@ -31,12 +31,14 @@ namespace Ohjelmointiprojekti {
         private static RLConsole statsiKonsoli;
 
         //Dialogia varten
-        private static bool talkmoodi = false;
-        private static NPC dialoginpc = new NPC();
+        private static bool talkMoodi = false;
+        private static NPC dialogiNPC = new NPC();
+        private static Vastustaja vihollinen = new Vastustaja();
         private static bool dialogi = false;
 
-        private static bool getmoodi = false;
+        private static bool getMoodi = false;
         private static bool kaytaEsine = false;
+        private static bool attackMoodi = false;
 
         readonly static SiirraHahmo liikuttaja = new SiirraHahmo();
         private static int liikkumislaskuri = 0;
@@ -76,7 +78,7 @@ namespace Ohjelmointiprojekti {
             KomentoKasittelija = new KomentoKasittelija();
             //Luo viestiloki
             ViestiLoki = new Viestiloki();
-            ViestiLoki.Lisaa("Controls: Arrow Keys - Move, T - Talk, G - Get, U - Use, Esc - Exit game");
+            ViestiLoki.Lisaa("Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, U - Use, Esc - Exit game");
             //Luo aloituskartta
             peliKartta = karttaGeneroija.TestiKartta();
             peliKartta.PaivitaNakoKentta();
@@ -86,25 +88,31 @@ namespace Ohjelmointiprojekti {
         }
         //Suorita suunnasta riippuvat komennot
         private static void Suorita(Suunta suunta) {
-            if (talkmoodi == true)
+            if (talkMoodi == true)
             {
-                dialoginpc = KomentoKasittelija.Interaktio(suunta);
-                if (dialoginpc != null)
+                dialogiNPC = KomentoKasittelija.Interaktio(suunta);
+                if (dialogiNPC != null)
                 {
                     dialogi = true;
-                    ViestiLoki.Lisaa(dialoginpc.hahmonDialogi[0].dialogi);
-                    ViestiLoki.Lisaa(dialoginpc.hahmonDialogi[0].vastaukset);
+                    ViestiLoki.Lisaa(dialogiNPC.HahmonDialogi[0].dialogi);
+                    ViestiLoki.Lisaa(dialogiNPC.HahmonDialogi[0].vastaukset);
                 }
-                talkmoodi = false;
+                talkMoodi = false;
             }
-            else if (getmoodi == true)
+            else if (attackMoodi == true)
+            {
+                vihollinen = KomentoKasittelija.Hyokkays(suunta);
+                KomentoKasittelija.Hyokkaa(Pelaaja, vihollinen);
+                attackMoodi = false;
+            }
+            else if (getMoodi == true)
             {
                 Esine otettavaEsine = KomentoKasittelija.Ota(suunta);
                 if (otettavaEsine != null)
                 {
                     Pelaaja.LisaaEsine(otettavaEsine);
                 }
-                getmoodi = false;
+                getMoodi = false;
             }
             else
             {
@@ -114,7 +122,7 @@ namespace Ohjelmointiprojekti {
         //Käsittele syöte
         private static void PaivitaKonsoli(object sender, UpdateEventArgs e) {
             RLKeyPress nappain = paaKonsoli.Keyboard.GetKeyPress();
-            if (nappain != null && dialogi == false && kaytaEsine == false) {
+            if (nappain != null && dialogi == false && kaytaEsine == false && attackMoodi == false) {
                 if (nappain.Key == RLKey.Up) {
                     Suorita(Suunta.Ylos);
                 }
@@ -128,12 +136,17 @@ namespace Ohjelmointiprojekti {
                     Suorita(Suunta.Oikea);
                 }
                 else if (nappain.Key == RLKey.G) {
-                    getmoodi = true;
+                    getMoodi = true;
                     ViestiLoki.Lisaa("Get: Press an arrow key");
                 }
                 else if (nappain.Key == RLKey.T) {
-                    talkmoodi = true;
+                    talkMoodi = true;
                     ViestiLoki.Lisaa("Talk: Press an arrow key");
+                }
+                else if (nappain.Key == RLKey.A)
+                {
+                    attackMoodi = true;
+                    ViestiLoki.Lisaa("Attack: Press an arrow key");
                 }
                 else if (nappain.Key == RLKey.U)
                 {
@@ -157,8 +170,15 @@ namespace Ohjelmointiprojekti {
                         }
                     }
                     foreach (NPC hahmo in peliKartta.NPCs) {
-                        if (hahmo.liikkuu == true && dialogi == false) {
-                            liikuttaja.LiikuRandom(hahmo, KomentoKasittelija);
+                        if (hahmo.Liikkuu == true && dialogi == false) {
+                            liikuttaja.LiikuRandom(hahmo);
+                        }
+                    }
+                    foreach (Vastustaja vastustaja in peliKartta.Vastustajat)
+                    {
+                        if (vastustaja.Liikkuu == true)
+                        {
+                            liikuttaja.LiikuKohtiPelaajaa(vastustaja);
                         }
                     }
                     liikkumislaskuri = 0;
@@ -166,7 +186,7 @@ namespace Ohjelmointiprojekti {
             }
             else if (nappain != null && dialogi == true) {
                 if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
-                    dialogi = dialoginpc.Dialogi(Int32.Parse(nappain.Char.ToString()));
+                    dialogi = dialogiNPC.Dialogi(Int32.Parse(nappain.Char.ToString()));
                 }
             }
             else if (nappain != null && kaytaEsine == true)

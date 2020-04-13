@@ -20,14 +20,9 @@ namespace Ohjelmointiprojekti
             get;
             set;
         }
-        public int Nalka {
-            get;
-            set;
-        }
-        public int Elama {
-            get;
-            set;
-        }
+        public int Nalka;
+        public int Elama;
+
         public Pelaaja(int x, int y) {
             Nimi = "Player";
             Nakoetaisyys = 100;

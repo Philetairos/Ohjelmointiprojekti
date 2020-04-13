@@ -12,9 +12,9 @@ namespace Ohjelmointiprojekti {
     /// TODO: kaupankäynti
     /// </summary>
     public class NPC : Hahmo {
-        public DialogiNoodi[] hahmonDialogi;
-        private int dialogiID;
-        public readonly bool liikkuu;
+        public DialogiNoodi[] HahmonDialogi;
+        private int DialogiID;
+        public readonly bool Liikkuu;
         public NPC() {
 
         }
@@ -25,25 +25,21 @@ namespace Ohjelmointiprojekti {
             Merkki = merkki;
             X = x;
             Y = y;
-            hahmonDialogi = dialogi;
-            dialogiID = 0;
-            liikkuu = liikkuukko;
-        }
-        public void PiirraStatsit(RLConsole statsiKonsoli, int sijainti) {
-            statsiKonsoli.Print(1, 13+(sijainti*2), Merkki.ToString(), Vari);
-            statsiKonsoli.Print(2, 13 + (sijainti * 2), $": {Nimi}", RLColor.White);
+            HahmonDialogi = dialogi;
+            DialogiID = 0;
+            Liikkuu = liikkuukko;
         }
         public bool Dialogi(int syote) {
-            foreach (int i in hahmonDialogi[dialogiID].linkit) {
+            foreach (int i in HahmonDialogi[DialogiID].linkit) {
                 if(i == syote)
                 {
-                    dialogiID = i;
-                    Ohjelma.ViestiLoki.Lisaa(hahmonDialogi[dialogiID].dialogi);
-                    Ohjelma.ViestiLoki.Lisaa(hahmonDialogi[dialogiID].vastaukset);
+                    DialogiID = i;
+                    Ohjelma.ViestiLoki.Lisaa(HahmonDialogi[DialogiID].dialogi);
+                    Ohjelma.ViestiLoki.Lisaa(HahmonDialogi[DialogiID].vastaukset);
                     return true;
                 }
             }
-            dialogiID = 0;
+            DialogiID = 0;
             return false;
         }
     }

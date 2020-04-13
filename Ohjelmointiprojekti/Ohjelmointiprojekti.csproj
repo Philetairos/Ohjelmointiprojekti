@@ -63,6 +63,7 @@
     <Compile Include="Rajapinnat.cs" />
     <Compile Include="Esine.cs" />
     <Compile Include="KarttaGeneroija.cs" />
+    <Compile Include="Vastustaja.cs" />
     <Compile Include="Viestiloki.cs" />
     <Compile Include="SiirraHahmo.cs" />
     <Compile Include="NPC.cs" />

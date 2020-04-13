@@ -46,5 +46,9 @@ namespace Ohjelmointiprojekti {
                 konsoli.Set(X, Y, RLColor.Gray, RLColor.Black, '.');
             }
         }
+        public void PiirraStatsit(RLConsole statsiKonsoli, int sijainti) {
+            statsiKonsoli.Print(1, 13 + (sijainti * 2), Merkki.ToString(), Vari);
+            statsiKonsoli.Print(2, 13 + (sijainti * 2), $": {Nimi}", RLColor.White);
+        }
     }
 }

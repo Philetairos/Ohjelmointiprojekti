@@ -82,8 +82,39 @@ namespace Ohjelmointiprojekti {
             NPC npc = Ohjelma.peliKartta.NPCSijainti(x, y);
             return npc;
         }
-        public void SiirraHahmo(Hahmo hahmo, ICell solu) {
-            bool siirtyma = Ohjelma.peliKartta.AsetaSijainti(hahmo, solu.X, solu.Y);
+        public Vastustaja Hyokkays(Suunta suunta)
+        {
+            int x = Ohjelma.Pelaaja.X;
+            int y = Ohjelma.Pelaaja.Y;
+            switch (suunta)
+            {
+                case Suunta.Ylos:
+                    {
+                        y = Ohjelma.Pelaaja.Y - 1;
+                        break;
+                    }
+                case Suunta.Alas:
+                    {
+                        y = Ohjelma.Pelaaja.Y + 1;
+                        break;
+                    }
+                case Suunta.Vasen:
+                    {
+                        x = Ohjelma.Pelaaja.X - 1;
+                        break;
+                    }
+                case Suunta.Oikea:
+                    {
+                        x = Ohjelma.Pelaaja.X + 1;
+                        break;
+                    }
+                default:
+                    {
+                        return null;
+                    }
+            }
+            Vastustaja vihollinen = Ohjelma.peliKartta.VastustajaSijainti(x, y);
+            return vihollinen;
         }
         public Esine Ota(Suunta suunta) {
             int x = Ohjelma.Pelaaja.X;
@@ -117,6 +148,9 @@ namespace Ohjelmointiprojekti {
             }
             Esine esine = Ohjelma.peliKartta.EsineSijainti(x, y);
             return esine;
+        }
+        public void Hyokkaa(Hahmo hyokkaaja, Hahmo puolustaja) {
+
         }
     }
 }

@@ -11,11 +11,13 @@ namespace Ohjelmointiprojekti {
     /// Tämä on luokka pelin karttojen luomiseen, joilla pelaaja liikkuu
     /// </summary>
     public class PeliKartta : Map {
-        public readonly List<NPC> NPCs;
+        public List<NPC> NPCs;
+        public List<Vastustaja> Vastustajat;
         public List<Ovi> Ovet;
         public List<Esine> Esineet;
         public PeliKartta() {
             NPCs = new List<NPC>();
+            Vastustajat = new List<Vastustaja>();
             Ovet = new List<Ovi>();
             Esineet = new List<Esine>();
         }
@@ -23,8 +25,17 @@ namespace Ohjelmointiprojekti {
             NPCs.Add(npc);
             AsetaWalkable(npc.X, npc.Y, false);
         }
+        public void LisaaVastustaja(Vastustaja vastustaja)
+        {
+            Vastustajat.Add(vastustaja);
+            AsetaWalkable(vastustaja.X, vastustaja.Y, false);
+        }
         public NPC NPCSijainti(int x, int y) {
             return NPCs.FirstOrDefault(m => m.X == x && m.Y == y);
+        }
+        public Vastustaja VastustajaSijainti(int x, int y)
+        {
+            return Vastustajat.FirstOrDefault(m => m.X == x && m.Y == y);
         }
         public Esine EsineSijainti(int x, int y)
         {

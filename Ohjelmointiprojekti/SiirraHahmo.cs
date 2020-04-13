@@ -7,13 +7,12 @@ using RLNET;
 using RogueSharp;
 using RogueSharp.Random;
 
-namespace Ohjelmointiprojekti
-{
+namespace Ohjelmointiprojekti {
     /// <summary>
     /// Tämä luokka siirtää hahmoa, välttäen seiniin törmäämistä
     /// </summary>
     public class SiirraHahmo {
-        public bool LiikuRandom(Hahmo hahmo, KomentoKasittelija komennot) {
+        public bool LiikuRandom(Hahmo hahmo) {
             PeliKartta kartta = Ohjelma.peliKartta;
             DotNetRandom satunnaisluku = new DotNetRandom();
             kartta.AsetaWalkable(hahmo.X, hahmo.Y, true); 
@@ -24,7 +23,7 @@ namespace Ohjelmointiprojekti
             }
             return true;
         }
-        public bool LiikuKohteeseen(ICell kohde, Hahmo hahmo, KomentoKasittelija komennot) {
+        public bool LiikuKohteeseen(ICell kohde, Hahmo hahmo) {
             PeliKartta kartta = Ohjelma.peliKartta;
             kartta.AsetaWalkable(hahmo.X, hahmo.Y, true);
             PathFinder polkuEtsija = new PathFinder(kartta);
@@ -38,7 +37,7 @@ namespace Ohjelmointiprojekti
             kartta.AsetaWalkable(hahmo.X, hahmo.Y, false);
             if (polku != null) {
                 try {
-                    komennot.SiirraHahmo(hahmo, polku.StepForward());
+                    LiikutaHahmo(hahmo, polku.StepForward());
                 }
                 catch (NoMoreStepsException) {
 
@@ -46,15 +45,22 @@ namespace Ohjelmointiprojekti
             }
             return true;
         }
-        public bool LiikuKohtiPelaajaa(Hahmo hahmo, KomentoKasittelija komennot) {
+        public bool LiikuKohtiPelaajaa(Hahmo hahmo) {
             Pelaaja pelaaja = Ohjelma.Pelaaja;
             PeliKartta kartta = Ohjelma.peliKartta;
             FieldOfView hahmoFoV = new FieldOfView(kartta);
             hahmoFoV.ComputeFov(hahmo.X, hahmo.Y,hahmo.Nakoetaisyys, true);
             if (hahmoFoV.IsInFov(pelaaja.X, pelaaja.Y)) {
-                LiikuKohteeseen(kartta.GetCell(pelaaja.X, pelaaja.Y), hahmo, komennot);
+                LiikuKohteeseen(kartta.GetCell(pelaaja.X, pelaaja.Y), hahmo);
             }
             return true;
+        }
+        public void LiikutaHahmo(Hahmo hahmo, ICell solu) {
+            if (!Ohjelma.peliKartta.AsetaSijainti(hahmo, solu.X, solu.Y)) {
+                if (hahmo.GetType() == typeof(Vastustaja) && Ohjelma.Pelaaja.X == solu.X && Ohjelma.Pelaaja.Y == solu.Y) {
+                    Ohjelma.KomentoKasittelija.Hyokkaa(hahmo, Ohjelma.Pelaaja);
+                }
+            }
         }
     }
 }
