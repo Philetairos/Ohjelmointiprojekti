@@ -14,7 +14,7 @@ namespace Ohjelmointiprojekti
         {
             X = x;
             Y = y;
-            Nimi = "Bread";
+            Nimi = "Loaf of bread";
             Maara = maara;
             Vari = RLColor.Brown;
             Merkki = 'b';

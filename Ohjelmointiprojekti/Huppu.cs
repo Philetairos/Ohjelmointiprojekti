@@ -14,7 +14,7 @@ namespace Ohjelmointiprojekti {
         public Huppu(int maara, int x, int y) {
             X = x;
             Y = y;
-            Nimi = "Woolen Hood";
+            Nimi = "Woolen hood";
             Maara = maara;
             Vari = RLColor.Brown;
             Merkki = 'n';

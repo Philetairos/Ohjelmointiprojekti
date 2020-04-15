@@ -39,6 +39,7 @@ namespace Ohjelmointiprojekti {
         private static bool getMoodi = false;
         private static bool kaytaEsine = false;
         private static bool attackMoodi = false;
+        private static bool lookMoodi = false;
 
         readonly static SiirraHahmo liikuttaja = new SiirraHahmo();
         private static int liikkumislaskuri = 0;
@@ -78,7 +79,7 @@ namespace Ohjelmointiprojekti {
             KomentoKasittelija = new KomentoKasittelija();
             //Luo viestiloki
             ViestiLoki = new Viestiloki();
-            ViestiLoki.Lisaa("Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, U - Use, Esc - Exit game");
+            ViestiLoki.Lisaa("Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, U - Use, L - Look, Esc - Exit game");
             //Luo aloituskartta
             peliKartta = karttaGeneroija.TestiKartta();
             peliKartta.PaivitaNakoKentta();
@@ -107,12 +108,23 @@ namespace Ohjelmointiprojekti {
             }
             else if (getMoodi == true)
             {
-                Esine otettavaEsine = KomentoKasittelija.Ota(suunta);
+                Esine otettavaEsine = KomentoKasittelija.GetEsine(suunta);
                 if (otettavaEsine != null)
                 {
                     Pelaaja.LisaaEsine(otettavaEsine);
                 }
                 getMoodi = false;
+            }
+            else if (lookMoodi == true)
+            {
+                Esine katsottavaEsine = KomentoKasittelija.GetEsine(suunta);
+                if (katsottavaEsine != null) {
+                    ViestiLoki.Lisaa($"You see a {katsottavaEsine.Nimi}.");
+                }
+                else {
+                    ViestiLoki.Lisaa($"You see nothing of note.");
+                }
+                lookMoodi = false;
             }
             else
             {
@@ -122,53 +134,48 @@ namespace Ohjelmointiprojekti {
         //Käsittele syöte
         private static void PaivitaKonsoli(object sender, UpdateEventArgs e) {
             RLKeyPress nappain = paaKonsoli.Keyboard.GetKeyPress();
-            if (nappain != null && dialogi == false && kaytaEsine == false && attackMoodi == false) {
-                if (nappain.Key == RLKey.Up) {
-                    Suorita(Suunta.Ylos);
-                }
-                else if (nappain.Key == RLKey.Down) {
-                    Suorita(Suunta.Alas);
-                }
-                else if (nappain.Key == RLKey.Left) {
-                    Suorita(Suunta.Vasen);
-                }
-                else if (nappain.Key == RLKey.Right) {
-                    Suorita(Suunta.Oikea);
-                }
-                else if (nappain.Key == RLKey.G) {
-                    getMoodi = true;
-                    ViestiLoki.Lisaa("Get: Press an arrow key");
-                }
-                else if (nappain.Key == RLKey.T) {
-                    talkMoodi = true;
-                    ViestiLoki.Lisaa("Talk: Press an arrow key");
-                }
-                else if (nappain.Key == RLKey.A)
-                {
-                    attackMoodi = true;
-                    ViestiLoki.Lisaa("Attack: Press an arrow key");
-                }
-                else if (nappain.Key == RLKey.U)
-                {
-                    kaytaEsine = true;
-                    ViestiLoki.Lisaa("Use: Press a number key");
-                }
-                else if (nappain.Key == RLKey.Escape) {
-                    paaKonsoli.Close();
+            if (nappain != null && dialogi == false && kaytaEsine == false) {
+                switch (nappain.Key) {
+                    case RLKey.Up:
+                        Suorita(Suunta.Ylos);
+                        break;
+                    case RLKey.Down:
+                        Suorita(Suunta.Alas);
+                        break;
+                    case RLKey.Left:
+                        Suorita(Suunta.Vasen);
+                        break;
+                    case RLKey.Right:
+                        Suorita(Suunta.Oikea);
+                        break;
+                    case RLKey.L:
+                        lookMoodi = true;
+                        ViestiLoki.Lisaa("Look: Press an arrow key");
+                        break;
+                    case RLKey.G:
+                        getMoodi = true;
+                        ViestiLoki.Lisaa("Get: Press an arrow key");
+                        break;
+                    case RLKey.T:
+                        talkMoodi = true;
+                        ViestiLoki.Lisaa("Talk: Press an arrow key");
+                        break;
+                    case RLKey.A:
+                        attackMoodi = true;
+                        ViestiLoki.Lisaa("Attack: Press an arrow key");
+                        break;
+                    case RLKey.U:
+                        kaytaEsine = true;
+                        ViestiLoki.Lisaa("Use: Press a number key");
+                        break;
+                    case RLKey.Escape:
+                        paaKonsoli.Close();
+                        break;
+                    default:
+                        break;
                 }
                 liikkumislaskuri++;
-                if (liikkumislaskuri == 3) {
-                    Pelaaja.Nalka--;
-                    if (Pelaaja.Nalka <= 0) {
-                        ViestiLoki.Lisaa("You are starving!");
-                        Pelaaja.Elama-= 5;
-                        if(Pelaaja.Elama <= 0) {
-                            ViestiLoki.Lisaa("You have died!");
-                            peliKartta = karttaGeneroija.TyhjaKartta();
-                            //Lisää kunnon käsittely kuolemalle kun valikot lisätään
-                            paaKonsoli.Update -= PaivitaKonsoli;
-                        }
-                    }
+                if (liikkumislaskuri%3 == 0) {
                     foreach (NPC hahmo in peliKartta.NPCs) {
                         if (hahmo.Liikkuu == true && dialogi == false) {
                             liikuttaja.LiikuRandom(hahmo);
@@ -181,6 +188,21 @@ namespace Ohjelmointiprojekti {
                             liikuttaja.LiikuKohtiPelaajaa(vastustaja);
                         }
                     }
+                }
+                else if (liikkumislaskuri == 25) {
+                    Pelaaja.Nalka--;
+                    if (Pelaaja.Nalka <= 0)
+                    {
+                        ViestiLoki.Lisaa("You are starving!");
+                        Pelaaja.Elama -= 5;
+                        if (Pelaaja.Elama <= 0)
+                        {
+                            ViestiLoki.Lisaa("You have died!");
+                            peliKartta = karttaGeneroija.TyhjaKartta();
+                            //Lisää kunnon käsittely kuolemalle
+                            paaKonsoli.Update -= PaivitaKonsoli;
+                        }
+                    }
                     liikkumislaskuri = 0;
                 }
             }
@@ -189,12 +211,17 @@ namespace Ohjelmointiprojekti {
                     dialogi = dialogiNPC.Dialogi(Int32.Parse(nappain.Char.ToString()));
                 }
             }
-            else if (nappain != null && kaytaEsine == true)
-            {
-                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4)
-                {
-                    kaytaEsine = Pelaaja.Inventaario[Int32.Parse(nappain.Char.ToString())-1].KaytaEsine();
+            else if (nappain != null && kaytaEsine == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
+                    int num = Int32.Parse(nappain.Char.ToString());
+                    if (num > Pelaaja.Inventaario.Count) {
+                        ViestiLoki.Lisaa("No item in that slot!");
+                    }
+                    else {
+                        kaytaEsine = Pelaaja.Inventaario[num].KaytaEsine();
+                    }
                 }
+                kaytaEsine = false;
             }
         }
         //Piirrä kaikki ruudulle

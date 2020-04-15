@@ -9,7 +9,7 @@ using RLNET;
 namespace Ohjelmointiprojekti
 {
     /// <summary>
-    /// Luokka pelaajan hahmolle, jonka kautta pelaaja pelaa peliä
+    /// Luokka pelaajan hahmolle, jota hän hallitsee
     /// </summary>
     public class Pelaaja : Hahmo {
         public List<Esine> Inventaario {
@@ -22,6 +22,10 @@ namespace Ohjelmointiprojekti
         }
         public int Nalka;
         public int Elama;
+        public int Voimakkuus;
+        public int Napparyys;
+        public int Alykkyys;
+        public int Puolustus;
 
         public Pelaaja(int x, int y) {
             Nimi = "Player";
@@ -32,15 +36,23 @@ namespace Ohjelmointiprojekti
             Y = y;
             Nalka = 25;
             Elama = 100;
+            Voimakkuus = 1;
+            Napparyys = 1;
+            Alykkyys = 1;
+            Puolustus = 1;
             Inventaario = new List<Esine> {
                 Capacity = 4
             };
         }
         public void PiirraStatsit(RLConsole statsiKonsoli) {
             statsiKonsoli.Clear();
-            statsiKonsoli.Print(1, 1, $"Name:    {Nimi}", RLColor.White);
-            statsiKonsoli.Print(1, 2, $"Health:    {Elama}", RLColor.White);
-            statsiKonsoli.Print(1, 3, $"Hunger:    {Nalka}", RLColor.White);
+            statsiKonsoli.Print(1, 1, $"Name:         {Nimi}", RLColor.White);
+            statsiKonsoli.Print(1, 2, $"Health:       {Elama}", RLColor.White);
+            statsiKonsoli.Print(1, 3, $"Hunger:       {Nalka}", RLColor.White);
+            statsiKonsoli.Print(1, 4, $"Defence:      {Puolustus}", RLColor.White);
+            statsiKonsoli.Print(1, 5, $"Strength:     {Voimakkuus}", RLColor.White);
+            statsiKonsoli.Print(1, 6, $"Intelligence: {Alykkyys}", RLColor.White);
+            statsiKonsoli.Print(1, 7, $"Dexterity:    {Napparyys}", RLColor.White);
         }
         public bool LisaaEsine(Esine esine) {
             if (Inventaario.Count < Inventaario.Capacity) {
