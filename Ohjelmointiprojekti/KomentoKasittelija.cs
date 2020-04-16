@@ -32,12 +32,12 @@ namespace Ohjelmointiprojekti {
             }
             return false;
         }
-        public NPC Interaktio(Suunta suunta) {
+        public NPC GetNPC(Suunta suunta) {
             Tuple<int, int> koord = GetSuunta(suunta);
             NPC npc = Ohjelma.peliKartta.NPCSijainti(koord.Item1, koord.Item2);
             return npc;
         }
-        public Vastustaja Hyokkays(Suunta suunta)
+        public Vastustaja GetVastustaja(Suunta suunta)
         {
             Tuple<int, int> koord = GetSuunta(suunta);
             Vastustaja vihollinen = Ohjelma.peliKartta.VastustajaSijainti(koord.Item1, koord.Item2);

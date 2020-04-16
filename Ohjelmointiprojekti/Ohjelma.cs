@@ -91,7 +91,7 @@ namespace Ohjelmointiprojekti {
         private static void Suorita(Suunta suunta) {
             if (talkMoodi == true)
             {
-                dialogiNPC = KomentoKasittelija.Interaktio(suunta);
+                dialogiNPC = KomentoKasittelija.GetNPC(suunta);
                 if (dialogiNPC != null)
                 {
                     dialogi = true;
@@ -102,7 +102,7 @@ namespace Ohjelmointiprojekti {
             }
             else if (attackMoodi == true)
             {
-                vihollinen = KomentoKasittelija.Hyokkays(suunta);
+                vihollinen = KomentoKasittelija.GetVastustaja(suunta);
                 KomentoKasittelija.Hyokkaa(Pelaaja, vihollinen);
                 attackMoodi = false;
             }
@@ -120,6 +120,12 @@ namespace Ohjelmointiprojekti {
                 Esine katsottavaEsine = KomentoKasittelija.GetEsine(suunta);
                 if (katsottavaEsine != null) {
                     ViestiLoki.Lisaa($"You see a {katsottavaEsine.Nimi}.");
+                }
+                else if (KomentoKasittelija.GetNPC(suunta) != null) {
+                    ViestiLoki.Lisaa($"You see {KomentoKasittelija.GetNPC(suunta).Nimi}.");
+                }
+                else if (KomentoKasittelija.GetVastustaja(suunta) != null) {
+                    ViestiLoki.Lisaa($"You see a {KomentoKasittelija.GetVastustaja(suunta).Nimi}.");
                 }
                 else {
                     ViestiLoki.Lisaa($"You see nothing of note.");
