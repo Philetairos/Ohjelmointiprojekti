@@ -35,6 +35,22 @@ namespace Ohjelmointiprojekti {
             get;
             set;
         }
+        public int Napparyys {
+            get;
+            set;
+        }
+        public int Voimakkuus {
+            get;
+            set;
+        }
+        public int Puolustus {
+            get;
+            set;
+        }
+        public int Elama {
+            get;
+            set;
+        }
         public void Piirra(RLConsole konsoli, IMap kartta) {
             if (!kartta.GetCell(X, Y).IsExplored) {
                 return;

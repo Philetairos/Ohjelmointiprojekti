@@ -46,6 +46,9 @@ namespace Ohjelmointiprojekti {
             foreach (Cell solu in GetAllCells()) {
                 AsetaSymboli(karttaKonsoli, solu);
             }
+            foreach (Esine esine in Esineet) {
+                esine.Piirra(karttaKonsoli, this);
+            }
             int i = 0;
             foreach (NPC npc in NPCs) {
                 npc.Piirra(karttaKonsoli, this);
@@ -54,8 +57,12 @@ namespace Ohjelmointiprojekti {
                     i++;
                 }
             }
-            foreach (Esine esine in Esineet) {
-                esine.Piirra(karttaKonsoli, this);
+            foreach (Vastustaja vastustaja in Vastustajat) {
+                vastustaja.Piirra(karttaKonsoli, this);
+                if (IsInFov(vastustaja.X, vastustaja.Y)) {
+                    vastustaja.PiirraStatsit(statsiKonsoli, i);
+                    i++;
+                }
             }
             Ohjelma.Pelaaja.PiirraInventaario(inventaarioKonsoli);
         }

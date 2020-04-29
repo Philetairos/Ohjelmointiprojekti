@@ -21,11 +21,7 @@ namespace Ohjelmointiprojekti
             set;
         }
         public int Nalka;
-        public int Elama;
-        public int Voimakkuus;
-        public int Napparyys;
         public int Alykkyys;
-        public int Puolustus;
 
         public Pelaaja(int x, int y) {
             Nimi = "Player";
@@ -34,8 +30,8 @@ namespace Ohjelmointiprojekti
             Merkki = '@';
             X = x;
             Y = y;
-            Nalka = 25;
-            Elama = 100;
+            Nalka = 100;
+            Elama = 20;
             Voimakkuus = 1;
             Napparyys = 1;
             Alykkyys = 1;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RogueSharp;
+using RogueSharp.DiceNotation;
 using RLNET;
 
 namespace Ohjelmointiprojekti {
@@ -49,7 +50,25 @@ namespace Ohjelmointiprojekti {
             return esine;
         }
         public void Hyokkaa(Hahmo hyokkaaja, Hahmo puolustaja) {
-
+            DiceExpression noppa = new DiceExpression().Die(6);
+            DiceResult noppatulos = noppa.Roll();
+            if (noppatulos.Value + hyokkaaja.Napparyys - puolustaja.Napparyys >= 3) {
+                noppatulos = noppa.Roll();
+                if (noppatulos.Value + hyokkaaja.Voimakkuus - puolustaja.Puolustus >= 3) {
+                    puolustaja.Elama -= hyokkaaja.Voimakkuus;
+                    Ohjelma.ViestiLoki.Lisaa($"{hyokkaaja.Nimi} hits {puolustaja.Nimi} for {hyokkaaja.Voimakkuus} damage!");
+                    if (puolustaja.Elama == 0) {
+                        Ohjelma.ViestiLoki.Lisaa($"{puolustaja.Nimi} has been struck down.");
+                        //Lisää kunnon käsittely kuolemalle
+                    }
+                }
+                else {
+                    Ohjelma.ViestiLoki.Lisaa($"{hyokkaaja.Nimi} hits {puolustaja.Nimi}, but the blow is deflected!");
+                }
+            }
+            else {
+                Ohjelma.ViestiLoki.Lisaa($"{hyokkaaja.Nimi} misses {puolustaja.Nimi}!");
+            }
         }
         public Tuple<int,int> GetSuunta(Suunta suunta) {
             int x = Ohjelma.Pelaaja.X;

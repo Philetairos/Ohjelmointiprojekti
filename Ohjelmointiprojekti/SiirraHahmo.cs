@@ -26,6 +26,7 @@ namespace Ohjelmointiprojekti {
         public bool LiikuKohteeseen(ICell kohde, Hahmo hahmo) {
             PeliKartta kartta = Ohjelma.peliKartta;
             kartta.AsetaWalkable(hahmo.X, hahmo.Y, true);
+            kartta.AsetaWalkable(kohde.X, kohde.Y, true);
             PathFinder polkuEtsija = new PathFinder(kartta);
             Path polku = null;
             try {
@@ -35,6 +36,7 @@ namespace Ohjelmointiprojekti {
                 
             }
             kartta.AsetaWalkable(hahmo.X, hahmo.Y, false);
+            kartta.AsetaWalkable(kohde.X, kohde.Y, false);
             if (polku != null) {
                 try {
                     LiikutaHahmo(hahmo, polku.StepForward());

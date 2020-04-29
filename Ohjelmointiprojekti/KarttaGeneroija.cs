@@ -41,8 +41,8 @@ namespace Ohjelmointiprojekti {
             DialogiNoodi testidialogi2 = new DialogiNoodi("Well good.", "1. Good bye.", new int[] { -1 });
             DialogiNoodi testidialogi3 = new DialogiNoodi("Well that's unfortunate.", "1. Good bye", new int[] { -1 });
             DialogiNoodi[] testidialogitaulukko = new DialogiNoodi [] { testidialogi1, testidialogi2, testidialogi3 };
-            NPC testihahmo = new NPC((karttaLeveys / 2)-3, karttaKorkeus - 2, "test",'T',RLColor.Blue, testidialogitaulukko, true);
-            kartta.LisaaNPC(testihahmo);
+            kartta.LisaaNPC(new NPC((karttaLeveys / 2) - 3, karttaKorkeus - 2, "test", 'T', RLColor.Blue, testidialogitaulukko, true));
+            kartta.LisaaVastustaja(new Vastustaja((karttaLeveys / 2) + 3, karttaKorkeus - 6, "enemy", 'E', RLColor.Red, 1,1,1,1,true));
             return kartta;
         }
         //Kartta jos pelaaja kuolee

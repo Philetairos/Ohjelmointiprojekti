@@ -180,18 +180,18 @@ namespace Ohjelmointiprojekti {
                     default:
                         break;
                 }
+                foreach (Vastustaja vastustaja in peliKartta.Vastustajat)
+                {
+                    if (vastustaja.Liikkuu == true)
+                    {
+                        liikuttaja.LiikuKohtiPelaajaa(vastustaja);
+                    }
+                }
                 liikkumislaskuri++;
                 if (liikkumislaskuri%3 == 0) {
                     foreach (NPC hahmo in peliKartta.NPCs) {
                         if (hahmo.Liikkuu == true && dialogi == false) {
                             liikuttaja.LiikuRandom(hahmo);
-                        }
-                    }
-                    foreach (Vastustaja vastustaja in peliKartta.Vastustajat)
-                    {
-                        if (vastustaja.Liikkuu == true)
-                        {
-                            liikuttaja.LiikuKohtiPelaajaa(vastustaja);
                         }
                     }
                 }
@@ -200,7 +200,7 @@ namespace Ohjelmointiprojekti {
                     if (Pelaaja.Nalka <= 0)
                     {
                         ViestiLoki.Lisaa("You are starving!");
-                        Pelaaja.Elama -= 5;
+                        Pelaaja.Elama -= 1;
                         if (Pelaaja.Elama <= 0)
                         {
                             ViestiLoki.Lisaa("You have died!");
