@@ -3,35 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RLNET;
 using RogueSharp;
+using RLNET;
 
-namespace Ohjelmointiprojekti
-{
+namespace Ohjelmointiprojekti {
     /// <summary>
-    /// Luokka oville, joita hahmot voivat aukaista
-    /// TODO: lukitut ovet
+    /// Cell-luokan laajennos joka sisältää värin ja merkin
     /// </summary>
-    public class Ovi : IPiirra {
-        public bool Auki;
+    public class Solu : Cell, IPiirra {
         public RLColor Vari { get; set; }
         public char Merkki { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public Ovi() {
-            Merkki = '|';
-            Vari = RLColor.LightGray;
+
+        public Solu() {
+
         }
-        public void Piirra(RLConsole konsoli, IMap kartta) {
+
+        public Solu(int x, int y, bool isTransparent, bool isWalkable, bool isInFov, RLColor vari, char merkki) : base(x,y,isTransparent,isWalkable,isInFov) {
+            Vari = vari;
+            Merkki = merkki;
+        }
+
+        public void Piirra(RLConsole konsoli, IMap kartta)
+        {
             if (!kartta.GetCell(X, Y).IsExplored) {
                 return;
             }
-            Merkki = Auki ? '.' : '|';
             if (kartta.IsInFov(X, Y)) {
                 konsoli.Set(X, Y, Vari, RLColor.Black, Merkki);
             }
-            else
-            {
+            else {
                 konsoli.Set(X, Y, RLColor.Gray, RLColor.Black, '.');
             }
         }

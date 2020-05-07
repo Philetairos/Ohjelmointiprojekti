@@ -15,30 +15,30 @@ namespace Ohjelmointiprojekti {
         public List<Vastustaja> Vastustajat;
         public List<Ovi> Ovet;
         public List<Esine> Esineet;
+        public List<Solu> Solut;
+
         public PeliKartta() {
             NPCs = new List<NPC>();
             Vastustajat = new List<Vastustaja>();
             Ovet = new List<Ovi>();
             Esineet = new List<Esine>();
+            Solut = new List<Solu>();
         }
         public void LisaaNPC(NPC npc) {
             NPCs.Add(npc);
             AsetaWalkable(npc.X, npc.Y, false);
         }
-        public void LisaaVastustaja(Vastustaja vastustaja)
-        {
+        public void LisaaVastustaja(Vastustaja vastustaja) {
             Vastustajat.Add(vastustaja);
             AsetaWalkable(vastustaja.X, vastustaja.Y, false);
         }
         public NPC NPCSijainti(int x, int y) {
             return NPCs.FirstOrDefault(m => m.X == x && m.Y == y);
         }
-        public Vastustaja VastustajaSijainti(int x, int y)
-        {
+        public Vastustaja VastustajaSijainti(int x, int y) {
             return Vastustajat.FirstOrDefault(m => m.X == x && m.Y == y);
         }
-        public Esine EsineSijainti(int x, int y)
-        {
+        public Esine EsineSijainti(int x, int y) {
             return Esineet.FirstOrDefault(m => m.X == x && m.Y == y);
         }
         public void PiirraKartta(RLConsole karttaKonsoli, RLConsole statsiKonsoli, RLConsole inventaarioKonsoli) {
@@ -71,42 +71,38 @@ namespace Ohjelmointiprojekti {
                 return;
             }
             if (IsInFov(solu.X, solu.Y)) {
-                if (solu.IsWalkable)
-                {
-                    karttaKonsoli.Set(solu.X, solu.Y, RLColor.LightGray, RLColor.Black, '.');
+                if (solu.IsWalkable) {
+                    karttaKonsoli.Set(solu.X, solu.Y,RLColor.Green, RLColor.Black, '\'');
                 }
-                else
-                {
+                else {
                     karttaKonsoli.Set(solu.X, solu.Y, RLColor.LightGray, RLColor.Black, '#');
                 }
                 
             }
             else {
-                if (solu.IsWalkable)
-                {
-                    karttaKonsoli.Set(solu.X, solu.Y, RLColor.Gray, RLColor.Black, '.');
+                if (solu.IsWalkable) {
+                    karttaKonsoli.Set(solu.X, solu.Y, RLColor.Gray, RLColor.Black, '\'');
                 }
-                else
-                {
+                else {
                     karttaKonsoli.Set(solu.X, solu.Y, RLColor.Gray, RLColor.Black, '#');
                 }
             }
             foreach (Ovi ovi in Ovet) {
                 ovi.Piirra(karttaKonsoli, this);
             }
-            foreach (Esine esine in Esineet)
-            {
+            foreach (Esine esine in Esineet) {
                 esine.Piirra(karttaKonsoli, this);
+            }
+            foreach (Solu solu2 in Solut) {
+                solu2.Piirra(karttaKonsoli, this);
             }
         }
         //Päivitä, mitä tiilejä pelaaja näkee
         public void PaivitaNakoKentta() {
             Pelaaja pelaaja = Ohjelma.Pelaaja;
             ComputeFov(pelaaja.X, pelaaja.Y, pelaaja.Nakoetaisyys, true);
-            foreach (Cell solu in GetAllCells())
-            {
-                if (IsInFov(solu.X, solu.Y))
-                {
+            foreach (Cell solu in GetAllCells()) {
+                if (IsInFov(solu.X, solu.Y)) {
                     SetCellProperties(solu.X, solu.Y, solu.IsTransparent, solu.IsWalkable, true);
                 }
             }

@@ -12,14 +12,8 @@ namespace Ohjelmointiprojekti
     /// Luokka pelaajan hahmolle, jota hän hallitsee
     /// </summary>
     public class Pelaaja : Hahmo {
-        public List<Esine> Inventaario {
-            get;
-            set;
-        }
-        public Esine Paahine {
-            get;
-            set;
-        }
+        public List<Esine> Inventaario { get; set; }
+        public Esine Paahine { get; set; }
         public int Nalka;
         public int Alykkyys;
 

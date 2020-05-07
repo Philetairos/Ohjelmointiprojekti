@@ -11,46 +11,16 @@ namespace Ohjelmointiprojekti {
     /// Hahmo-luokka, jota kaikki pelin hahmot käyttävät. Hyödyntää hahmo- ja piirrä-rajapintoja
     /// </summary>
     public class Hahmo : IHahmo, IPiirra {
-        public string Nimi {
-            get;
-            set;
-        }
-        public int Nakoetaisyys {
-            get;
-            set;
-        }
-        public RLColor Vari {
-            get;
-            set;
-        }
-        public char Merkki {
-            get;
-            set;
-        }
-        public int X {
-            get;
-            set;
-        }
-        public int Y {
-            get;
-            set;
-        }
-        public int Napparyys {
-            get;
-            set;
-        }
-        public int Voimakkuus {
-            get;
-            set;
-        }
-        public int Puolustus {
-            get;
-            set;
-        }
-        public int Elama {
-            get;
-            set;
-        }
+        public string Nimi { get; set; }
+        public int Nakoetaisyys { get; set; }
+        public RLColor Vari { get; set; }
+        public char Merkki { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Napparyys { get; set; }
+        public int Voimakkuus { get; set; }
+        public int Puolustus { get; set; }
+        public int Elama { get; set; }
         public void Piirra(RLConsole konsoli, IMap kartta) {
             if (!kartta.GetCell(X, Y).IsExplored) {
                 return;

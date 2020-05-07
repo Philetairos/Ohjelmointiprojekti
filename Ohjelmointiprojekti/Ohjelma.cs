@@ -46,18 +46,9 @@ namespace Ohjelmointiprojekti {
 
         public static KarttaGeneroija karttaGeneroija;
         public static PeliKartta peliKartta;
-        public static Pelaaja Pelaaja {
-            get;
-            set;
-        }
-        public static KomentoKasittelija KomentoKasittelija {
-            get;
-            private set;
-        }
-        public static Viestiloki ViestiLoki {
-            get;
-            private set;
-        }
+        public static Pelaaja Pelaaja { get; set; }
+        public static KomentoKasittelija KomentoKasittelija { get; private set; }
+        public static Viestiloki ViestiLoki { get; private set; }
 
         public static void Main() {
             //Fontti jota tiilit ja teksti käyttävät
@@ -75,7 +66,7 @@ namespace Ohjelmointiprojekti {
             statsiKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
             karttaGeneroija = new KarttaGeneroija(karttaleveys,karttakorkeus);
             //Luo pelaajan hahmo
-            Pelaaja = new Pelaaja(karttaleveys/2, karttakorkeus-6);
+            Pelaaja = new Pelaaja(karttaleveys/2, karttakorkeus/2);
             KomentoKasittelija = new KomentoKasittelija();
             //Luo viestiloki
             ViestiLoki = new Viestiloki();
@@ -89,34 +80,28 @@ namespace Ohjelmointiprojekti {
         }
         //Suorita suunnasta riippuvat komennot
         private static void Suorita(Suunta suunta) {
-            if (talkMoodi == true)
-            {
+            if (talkMoodi == true) {
                 dialogiNPC = KomentoKasittelija.GetNPC(suunta);
-                if (dialogiNPC != null)
-                {
+                if (dialogiNPC != null) {
                     dialogi = true;
                     ViestiLoki.Lisaa(dialogiNPC.HahmonDialogi[0].dialogi);
                     ViestiLoki.Lisaa(dialogiNPC.HahmonDialogi[0].vastaukset);
                 }
                 talkMoodi = false;
             }
-            else if (attackMoodi == true)
-            {
+            else if (attackMoodi == true) {
                 vihollinen = KomentoKasittelija.GetVastustaja(suunta);
                 KomentoKasittelija.Hyokkaa(Pelaaja, vihollinen);
                 attackMoodi = false;
             }
-            else if (getMoodi == true)
-            {
+            else if (getMoodi == true) {
                 Esine otettavaEsine = KomentoKasittelija.GetEsine(suunta);
-                if (otettavaEsine != null)
-                {
+                if (otettavaEsine != null) {
                     Pelaaja.LisaaEsine(otettavaEsine);
                 }
                 getMoodi = false;
             }
-            else if (lookMoodi == true)
-            {
+            else if (lookMoodi == true) {
                 Esine katsottavaEsine = KomentoKasittelija.GetEsine(suunta);
                 if (katsottavaEsine != null) {
                     ViestiLoki.Lisaa($"You see a {katsottavaEsine.Nimi}.");
@@ -132,8 +117,7 @@ namespace Ohjelmointiprojekti {
                 }
                 lookMoodi = false;
             }
-            else
-            {
+            else {
                 bool siirtyma = KomentoKasittelija.SiirraPelaaja(suunta);
             }
         }
@@ -180,10 +164,8 @@ namespace Ohjelmointiprojekti {
                     default:
                         break;
                 }
-                foreach (Vastustaja vastustaja in peliKartta.Vastustajat)
-                {
-                    if (vastustaja.Liikkuu == true)
-                    {
+                foreach (Vastustaja vastustaja in peliKartta.Vastustajat) {
+                    if (vastustaja.Liikkuu == true) {
                         liikuttaja.LiikuKohtiPelaajaa(vastustaja);
                     }
                 }
@@ -197,12 +179,10 @@ namespace Ohjelmointiprojekti {
                 }
                 else if (liikkumislaskuri == 25) {
                     Pelaaja.Nalka--;
-                    if (Pelaaja.Nalka <= 0)
-                    {
+                    if (Pelaaja.Nalka <= 0) {
                         ViestiLoki.Lisaa("You are starving!");
                         Pelaaja.Elama -= 1;
-                        if (Pelaaja.Elama <= 0)
-                        {
+                        if (Pelaaja.Elama <= 0) {
                             ViestiLoki.Lisaa("You have died!");
                             peliKartta = karttaGeneroija.TyhjaKartta();
                             //Lisää kunnon käsittely kuolemalle
@@ -236,6 +216,7 @@ namespace Ohjelmointiprojekti {
             RLConsole.Blit(dialogiKonsoli, 0, 0, karttaleveys, dialogikonsolikorkeus, paaKonsoli, 0, karttakorkeus);
             RLConsole.Blit(inventaarioKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, konsolikorkeuspuolet);
             RLConsole.Blit(statsiKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, 0);
+            
             peliKartta.PiirraKartta(karttaKonsoli,statsiKonsoli,inventaarioKonsoli);
             ViestiLoki.Piirra(dialogiKonsoli);
             Pelaaja.Piirra(karttaKonsoli, peliKartta);

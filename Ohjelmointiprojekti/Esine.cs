@@ -11,30 +11,12 @@ namespace Ohjelmointiprojekti {
     /// Luokka pelin esineitä varten. Pelaaja voi kerätä ja käyttää esineitä.
     /// </summary>
     public class Esine : IEsine, IPiirra {
-        public string Nimi {
-            get;
-            set;
-        }
-        public char Merkki {
-            get;
-            set;
-        }
-        public RLColor Vari {
-            get;
-            set;
-        }
-        public int Maara {
-            get;
-            set;
-        }
-        public int X {
-            get;
-            set;
-        }
-        public int Y {
-            get;
-            set;
-        }
+        public string Nimi { get; set; }
+        public char Merkki { get; set; }
+        public RLColor Vari { get; set; }
+        public int Maara { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
         public virtual bool KaytaEsine() {
             Ohjelma.ViestiLoki.Lisaa("Mitään ei tapahdu.");
             return false;
