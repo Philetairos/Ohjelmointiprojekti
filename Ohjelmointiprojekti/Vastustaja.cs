@@ -17,7 +17,7 @@ namespace Ohjelmointiprojekti {
         }
         public Vastustaja(int x, int y, string nimi, char merkki, RLColor vari, int elama, int voimakkuus, int napparyys, int puolustus, bool liikkuukko) {
             Nimi = nimi;
-            Nakoetaisyys = 100;
+            Nakoetaisyys = 15;
             Vari = vari;
             Merkki = merkki;
             X = x;
@@ -27,6 +27,11 @@ namespace Ohjelmointiprojekti {
             Voimakkuus = voimakkuus;
             Napparyys = napparyys;
             Puolustus = puolustus;
+        }
+        public override void KasitteleKuolema(PeliKartta kartta) {
+            kartta.Vastustajat.Remove(this);
+            kartta.AsetaWalkable(X, Y, true);
+            kartta.Solut.Add(new Solu(X, Y, true, true, true, RLColor.Black, RLColor.Red, Merkki));
         }
     }
 }

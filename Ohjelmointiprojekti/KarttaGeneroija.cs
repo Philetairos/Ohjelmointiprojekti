@@ -31,7 +31,7 @@ namespace Ohjelmointiprojekti {
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, true);
             }
             foreach (Cell solu in kartta.GetCellsInSquare(karttaLeveys / 2, karttaKorkeus / 2, 11)) {
-                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, '.'));
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
             }
             kartta.SetCellProperties(karttaLeveys / 2, karttaKorkeus-14, false, false, true);
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 , Y = ((karttaKorkeus / 2) - 12), Auki = false});

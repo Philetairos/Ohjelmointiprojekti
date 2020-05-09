@@ -19,7 +19,7 @@ namespace Ohjelmointiprojekti
 
         public Pelaaja(int x, int y) {
             Nimi = "Player";
-            Nakoetaisyys = 100;
+            Nakoetaisyys = 25;
             Vari = RLColor.White;
             Merkki = '@';
             X = x;
@@ -69,6 +69,10 @@ namespace Ohjelmointiprojekti
                 inventaarioKonsoli.Print(8, 4+i, Paahine.Merkki.ToString(), Paahine.Vari);
                 inventaarioKonsoli.Print(9, 4 + i, Paahine.Nimi, RLColor.White);
             }
+        }
+        public override void KasitteleKuolema(PeliKartta kartta) {
+            Ohjelma.ViestiLoki.Lisaa("You have died!");
+            kartta = Ohjelma.karttaGeneroija.TyhjaKartta();
         }
     }
 }

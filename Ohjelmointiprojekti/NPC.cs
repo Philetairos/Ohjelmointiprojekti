@@ -20,7 +20,7 @@ namespace Ohjelmointiprojekti {
         }
         public NPC(int x, int y, string nimi, char merkki, RLColor vari, DialogiNoodi[] dialogi, bool liikkuukko) {
             Nimi = nimi;
-            Nakoetaisyys = 100;
+            Nakoetaisyys = 15;
             Vari = vari;
             Merkki = merkki;
             X = x;
@@ -31,8 +31,7 @@ namespace Ohjelmointiprojekti {
         }
         public bool Dialogi(int syote) {
             foreach (int i in HahmonDialogi[DialogiID].linkit) {
-                if(i == syote)
-                {
+                if(i == syote) {
                     DialogiID = i;
                     Ohjelma.ViestiLoki.Lisaa(HahmonDialogi[DialogiID].dialogi);
                     Ohjelma.ViestiLoki.Lisaa(HahmonDialogi[DialogiID].vastaukset);
@@ -40,6 +39,7 @@ namespace Ohjelmointiprojekti {
                 }
             }
             DialogiID = 0;
+            Ohjelma.ViestiLoki.Lisaa("You end the conversation.");
             return false;
         }
     }

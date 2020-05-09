@@ -141,23 +141,23 @@ namespace Ohjelmointiprojekti {
                     case RLKey.L:
                         lookMoodi = true;
                         ViestiLoki.Lisaa("Look: Press an arrow key");
-                        break;
+                        return;
                     case RLKey.G:
                         getMoodi = true;
                         ViestiLoki.Lisaa("Get: Press an arrow key");
-                        break;
+                        return;
                     case RLKey.T:
                         talkMoodi = true;
                         ViestiLoki.Lisaa("Talk: Press an arrow key");
-                        break;
+                        return;
                     case RLKey.A:
                         attackMoodi = true;
                         ViestiLoki.Lisaa("Attack: Press an arrow key");
-                        break;
+                        return;
                     case RLKey.U:
                         kaytaEsine = true;
                         ViestiLoki.Lisaa("Use: Press a number key");
-                        break;
+                        return;
                     case RLKey.Escape:
                         paaKonsoli.Close();
                         break;
@@ -183,10 +183,7 @@ namespace Ohjelmointiprojekti {
                         ViestiLoki.Lisaa("You are starving!");
                         Pelaaja.Elama -= 1;
                         if (Pelaaja.Elama <= 0) {
-                            ViestiLoki.Lisaa("You have died!");
-                            peliKartta = karttaGeneroija.TyhjaKartta();
-                            //Lisää kunnon käsittely kuolemalle
-                            paaKonsoli.Update -= PaivitaKonsoli;
+                            Pelaaja.KasitteleKuolema(peliKartta);
                         }
                     }
                     liikkumislaskuri = 0;
@@ -216,11 +213,11 @@ namespace Ohjelmointiprojekti {
             RLConsole.Blit(dialogiKonsoli, 0, 0, karttaleveys, dialogikonsolikorkeus, paaKonsoli, 0, karttakorkeus);
             RLConsole.Blit(inventaarioKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, konsolikorkeuspuolet);
             RLConsole.Blit(statsiKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, 0);
-            
+
+            Pelaaja.PiirraStatsit(statsiKonsoli);
             peliKartta.PiirraKartta(karttaKonsoli,statsiKonsoli,inventaarioKonsoli);
             ViestiLoki.Piirra(dialogiKonsoli);
             Pelaaja.Piirra(karttaKonsoli, peliKartta);
-            Pelaaja.PiirraStatsit(statsiKonsoli);
             paaKonsoli.Draw();
         }
     }

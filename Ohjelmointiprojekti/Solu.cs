@@ -12,15 +12,17 @@ namespace Ohjelmointiprojekti {
     /// </summary>
     public class Solu : Cell, IPiirra {
         public RLColor Vari { get; set; }
+        public RLColor Taustavari { get; set; }
         public char Merkki { get; set; }
 
         public Solu() {
 
         }
 
-        public Solu(int x, int y, bool isTransparent, bool isWalkable, bool isInFov, RLColor vari, char merkki) : base(x,y,isTransparent,isWalkable,isInFov) {
+        public Solu(int x, int y, bool isTransparent, bool isWalkable, bool isInFov, RLColor vari, RLColor taustavari, char merkki) : base(x,y,isTransparent,isWalkable,isInFov) {
             Vari = vari;
             Merkki = merkki;
+            Taustavari = taustavari;
         }
 
         public void Piirra(RLConsole konsoli, IMap kartta)
@@ -29,10 +31,10 @@ namespace Ohjelmointiprojekti {
                 return;
             }
             if (kartta.IsInFov(X, Y)) {
-                konsoli.Set(X, Y, Vari, RLColor.Black, Merkki);
+                konsoli.Set(X, Y, Vari, Taustavari, Merkki);
             }
             else {
-                konsoli.Set(X, Y, RLColor.Gray, RLColor.Black, '.');
+                konsoli.Set(X, Y, RLColor.Gray, Taustavari, '.');
             }
         }
     }

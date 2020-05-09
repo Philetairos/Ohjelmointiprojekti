@@ -36,5 +36,8 @@ namespace Ohjelmointiprojekti {
             statsiKonsoli.Print(1, 13 + (sijainti * 2), Merkki.ToString(), Vari);
             statsiKonsoli.Print(2, 13 + (sijainti * 2), $": {Nimi}", RLColor.White);
         }
+        public virtual void KasitteleKuolema(PeliKartta kartta) {
+            //erillinen toteutus luokan periville
+        }
     }
 }

@@ -77,7 +77,6 @@ namespace Ohjelmointiprojekti {
                 else {
                     karttaKonsoli.Set(solu.X, solu.Y, RLColor.LightGray, RLColor.Black, '#');
                 }
-                
             }
             else {
                 if (solu.IsWalkable) {
@@ -126,15 +125,12 @@ namespace Ohjelmointiprojekti {
             ICell solu = GetCell(x, y);
             SetCellProperties(solu.X, solu.Y, solu.IsTransparent, isWalkable, solu.IsExplored);
         }
-        public Ovi PalautaOvi(int x, int y)
-        {
+        public Ovi PalautaOvi(int x, int y) {
             return Ovet.SingleOrDefault(d => d.X == x && d.Y == y);
         }
-        private void AvaaOvi (Hahmo hahmo, int x, int y)
-        {
+        private void AvaaOvi (Hahmo hahmo, int x, int y) {
             Ovi door = PalautaOvi(x, y);
-            if (door != null && !door.Auki)
-            {
+            if (door != null && !door.Auki) {
                 door.Auki = true;
                 var solu = GetCell(x, y);
                 SetCellProperties(x, y, true, true, solu.IsExplored);

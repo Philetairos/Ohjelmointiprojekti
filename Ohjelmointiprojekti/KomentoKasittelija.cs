@@ -59,7 +59,7 @@ namespace Ohjelmointiprojekti {
                     Ohjelma.ViestiLoki.Lisaa($"{hyokkaaja.Nimi} hits {puolustaja.Nimi} for {hyokkaaja.Voimakkuus} damage!");
                     if (puolustaja.Elama == 0) {
                         Ohjelma.ViestiLoki.Lisaa($"{puolustaja.Nimi} has been struck down.");
-                        //Lisää kunnon käsittely kuolemalle
+                        puolustaja.KasitteleKuolema(Ohjelma.peliKartta);
                     }
                 }
                 else {
