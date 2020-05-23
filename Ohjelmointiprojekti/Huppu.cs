@@ -10,7 +10,7 @@ namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka huppu-esinettä varten, jonka voi pukea
     /// </summary>
-    public class Huppu : Esine {
+    public class Huppu : Varuste {
         public Huppu(int maara, int x, int y) {
             X = x;
             Y = y;
@@ -18,12 +18,20 @@ namespace Ohjelmointiprojekti {
             Maara = maara;
             Vari = RLColor.Brown;
             Merkki = 'n';
+            Puolustus = 1;
+            Lokero = 0;
+            LokeroNimi = "1. Head";
         }
         public override bool KaytaEsine() {
             Ohjelma.ViestiLoki.Lisaa("You wear the hood.");
-            Ohjelma.Pelaaja.Paahine = this;
+            Ohjelma.Pelaaja.Varusteet[Lokero] = this;
+            Ohjelma.Pelaaja.Puolustus += Puolustus;
             Ohjelma.Pelaaja.Inventaario.Remove(this);
             return false;
+        }
+        public override void PoistaVaruste() {
+            Ohjelma.ViestiLoki.Lisaa("You remove the hood.");
+            Ohjelma.Pelaaja.Puolustus -= Puolustus;
         }
     }
 }

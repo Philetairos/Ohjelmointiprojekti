@@ -25,8 +25,7 @@ namespace Ohjelmointiprojekti {
     /// Luokka pelaajan toiminnoille, kuten liikumiselle ja interaktiolle
     /// </summary>
     public class KomentoKasittelija {
-        public bool SiirraPelaaja(Suunta suunta)
-        {
+        public bool SiirraPelaaja(Suunta suunta) {
             Tuple<int, int> koord = GetSuunta(suunta);
             if (Ohjelma.peliKartta.AsetaSijainti(Ohjelma.Pelaaja, koord.Item1, koord.Item2)) {
                 return true;

@@ -27,11 +27,17 @@ namespace Ohjelmointiprojekti {
             Voimakkuus = voimakkuus;
             Napparyys = napparyys;
             Puolustus = puolustus;
+            Inventaario = new List<Esine> {
+                Capacity = 1
+            };
         }
         public override void KasitteleKuolema(PeliKartta kartta) {
             kartta.Vastustajat.Remove(this);
             kartta.AsetaWalkable(X, Y, true);
             kartta.Solut.Add(new Solu(X, Y, true, true, true, RLColor.Black, RLColor.Red, Merkki));
+            foreach (Esine esine in Inventaario) {
+                kartta.Esineet.Add(esine);
+            }
         }
     }
 }

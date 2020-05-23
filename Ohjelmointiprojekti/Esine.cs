@@ -18,12 +18,12 @@ namespace Ohjelmointiprojekti {
         public int X { get; set; }
         public int Y { get; set; }
         public virtual bool KaytaEsine() {
-            Ohjelma.ViestiLoki.Lisaa("Mitään ei tapahdu.");
+            Ohjelma.ViestiLoki.Lisaa("Nothing happens.");
             return false;
         }
         public bool OtaEsine(Pelaaja pelaaja) {
             if (pelaaja.LisaaEsine(this)) {
-                Ohjelma.ViestiLoki.Lisaa($"{Nimi} ({Maara}) lisatty inventaarioon.");
+                Ohjelma.ViestiLoki.Lisaa($"{Nimi} ({Maara}) added to inventory.");
             }
             return true;
         }

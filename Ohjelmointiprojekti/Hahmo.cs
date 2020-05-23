@@ -21,6 +21,7 @@ namespace Ohjelmointiprojekti {
         public int Voimakkuus { get; set; }
         public int Puolustus { get; set; }
         public int Elama { get; set; }
+        public List<Esine> Inventaario { get; set; }
         public void Piirra(RLConsole konsoli, IMap kartta) {
             if (!kartta.GetCell(X, Y).IsExplored) {
                 return;

@@ -22,6 +22,7 @@ namespace Ohjelmointiprojekti {
         private static readonly int sivukonsolileveys = Convert.ToInt32(konsolileveys * 0.25);
         private static readonly int dialogikonsolikorkeus = Convert.ToInt32(konsolikorkeus * 0.2);
         private static readonly int konsolikorkeuspuolet = Convert.ToInt32(konsolikorkeus * 0.5);
+        private static bool render = true;
 
         //Luo kaikki konsolit
         private static RLRootConsole paaKonsoli;
@@ -36,8 +37,11 @@ namespace Ohjelmointiprojekti {
         private static Vastustaja vihollinen = new Vastustaja();
         private static bool dialogi = false;
 
+        //Kontrolleja varten
         private static bool getMoodi = false;
         private static bool kaytaEsine = false;
+        private static bool poistaVaruste = false;
+        private static bool poistaEsine = false;
         private static bool attackMoodi = false;
         private static bool lookMoodi = false;
 
@@ -49,6 +53,8 @@ namespace Ohjelmointiprojekti {
         public static Pelaaja Pelaaja { get; set; }
         public static KomentoKasittelija KomentoKasittelija { get; private set; }
         public static Viestiloki ViestiLoki { get; private set; }
+
+        private readonly static string Kontrollit = "Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, U - Use, L - Look, R - Unequip, D - Drop Item, C - Controls, Esc - Exit game";
 
         public static void Main() {
             //Fontti jota tiilit ja teksti käyttävät
@@ -70,7 +76,7 @@ namespace Ohjelmointiprojekti {
             KomentoKasittelija = new KomentoKasittelija();
             //Luo viestiloki
             ViestiLoki = new Viestiloki();
-            ViestiLoki.Lisaa("Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, U - Use, L - Look, Esc - Exit game");
+            ViestiLoki.Lisaa(Kontrollit);
             //Luo aloituskartta
             peliKartta = karttaGeneroija.TestiKartta();
             peliKartta.PaivitaNakoKentta();
@@ -124,7 +130,13 @@ namespace Ohjelmointiprojekti {
         //Käsittele syöte
         private static void PaivitaKonsoli(object sender, UpdateEventArgs e) {
             RLKeyPress nappain = paaKonsoli.Keyboard.GetKeyPress();
-            if (nappain != null && dialogi == false && kaytaEsine == false) {
+            if (nappain == null) {
+                return;
+            }
+            else {
+                render = true;
+            }
+            if (dialogi == false && kaytaEsine == false && poistaVaruste == false && poistaEsine == false) {
                 switch (nappain.Key) {
                     case RLKey.Up:
                         Suorita(Suunta.Ylos);
@@ -158,6 +170,17 @@ namespace Ohjelmointiprojekti {
                         kaytaEsine = true;
                         ViestiLoki.Lisaa("Use: Press a number key");
                         return;
+                    case RLKey.R:
+                        poistaVaruste = true;
+                        ViestiLoki.Lisaa("Remove Equipment: Press a number key");
+                        return;
+                    case RLKey.D:
+                        poistaEsine = true;
+                        ViestiLoki.Lisaa("Drop: Press a number key");
+                        return;
+                    case RLKey.C:
+                        ViestiLoki.Lisaa(Kontrollit);
+                        return;
                     case RLKey.Escape:
                         paaKonsoli.Close();
                         break;
@@ -189,22 +212,39 @@ namespace Ohjelmointiprojekti {
                     liikkumislaskuri = 0;
                 }
             }
-            else if (nappain != null && dialogi == true) {
+            else if (dialogi == true) {
                 if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
                     dialogi = dialogiNPC.Dialogi(Int32.Parse(nappain.Char.ToString()));
                 }
             }
-            else if (nappain != null && kaytaEsine == true) {
+            else if (kaytaEsine == true) {
                 if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
                     int num = Int32.Parse(nappain.Char.ToString());
                     if (num > Pelaaja.Inventaario.Count) {
                         ViestiLoki.Lisaa("No item in that slot!");
                     }
                     else {
-                        kaytaEsine = Pelaaja.Inventaario[num].KaytaEsine();
+                        kaytaEsine = Pelaaja.Inventaario[num-1].KaytaEsine();
                     }
                 }
                 kaytaEsine = false;
+            }
+            else if (poistaVaruste == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4 || nappain.Key == RLKey.Number5) {
+                    int num = Int32.Parse(nappain.Char.ToString());
+                    poistaEsine = Pelaaja.PoistaVaruste(num);
+                }
+            }
+            else if (poistaEsine == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
+                    int num = Int32.Parse(nappain.Char.ToString());
+                    if (num > Pelaaja.Inventaario.Count) {
+                        ViestiLoki.Lisaa("No item in that slot!");
+                    }
+                    else {
+                        poistaEsine = Pelaaja.PoistaEsine(num-1);
+                    }
+                }
             }
         }
         //Piirrä kaikki ruudulle
@@ -214,11 +254,14 @@ namespace Ohjelmointiprojekti {
             RLConsole.Blit(inventaarioKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, konsolikorkeuspuolet);
             RLConsole.Blit(statsiKonsoli, 0, 0, sivukonsolileveys, konsolikorkeuspuolet, paaKonsoli, karttaleveys, 0);
 
-            Pelaaja.PiirraStatsit(statsiKonsoli);
-            peliKartta.PiirraKartta(karttaKonsoli,statsiKonsoli,inventaarioKonsoli);
-            ViestiLoki.Piirra(dialogiKonsoli);
-            Pelaaja.Piirra(karttaKonsoli, peliKartta);
             paaKonsoli.Draw();
+            if (render) {
+                Pelaaja.PiirraStatsit(statsiKonsoli);
+                peliKartta.PiirraKartta(karttaKonsoli, statsiKonsoli, inventaarioKonsoli);
+                ViestiLoki.Piirra(dialogiKonsoli);
+                Pelaaja.Piirra(karttaKonsoli, peliKartta);
+                render = false;
+            }
         }
     }
 }

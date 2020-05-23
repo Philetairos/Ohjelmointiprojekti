@@ -64,6 +64,7 @@
     <Compile Include="Esine.cs" />
     <Compile Include="KarttaGeneroija.cs" />
     <Compile Include="Solu.cs" />
+    <Compile Include="Varuste.cs" />
     <Compile Include="Vastustaja.cs" />
     <Compile Include="Viestiloki.cs" />
     <Compile Include="SiirraHahmo.cs" />
