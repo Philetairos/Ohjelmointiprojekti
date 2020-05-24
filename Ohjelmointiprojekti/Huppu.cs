@@ -30,7 +30,7 @@ namespace Ohjelmointiprojekti {
             return false;
         }
         public override void PoistaVaruste() {
-            Ohjelma.ViestiLoki.Lisaa("You remove the hood.");
+            Ohjelma.ViestiLoki.Lisaa("You take off the hood.");
             Ohjelma.Pelaaja.Puolustus -= Puolustus;
         }
     }

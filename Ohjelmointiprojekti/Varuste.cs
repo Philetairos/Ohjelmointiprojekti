@@ -16,6 +16,7 @@ namespace Ohjelmointiprojekti {
         public int Alykkyys { get; set; }
         public int Napparyys { get; set; }
         public int Lokero { get; set; }
+        public bool VoiAmpua { get; set; }
         public string LokeroNimi { get; set; }
 
         public virtual void PoistaVaruste () {

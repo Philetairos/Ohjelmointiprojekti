@@ -38,6 +38,8 @@ namespace Ohjelmointiprojekti {
             kartta.Esineet.Add(new Kolikko(1, (karttaLeveys / 2)-3, (karttaKorkeus/2)-3));
             kartta.Esineet.Add(new Huppu(1, (karttaLeveys / 2) + 3, (karttaKorkeus / 2) - 7));
             kartta.Esineet.Add(new Leipa(1, (karttaLeveys / 2) + 5, (karttaKorkeus / 2) - 5));
+            kartta.Esineet.Add(new Jousi(1, (karttaLeveys / 2) - 5, (karttaKorkeus / 2) - 8));
+            kartta.Esineet.Add(new Ammus(1, (karttaLeveys / 2) - 2, (karttaKorkeus / 2) -10, 1, "Arrow", RLColor.Brown, 'I'));
             DialogiNoodi testidialogi1 = new DialogiNoodi("Hello how are you", "1. I am fine 2. I am not fine", new int[] { 1,2 });
             DialogiNoodi testidialogi2 = new DialogiNoodi("Well good.", "1. Good bye.", new int[] { -1 });
             DialogiNoodi testidialogi3 = new DialogiNoodi("Well that's unfortunate.", "1. Good bye", new int[] { -1 });

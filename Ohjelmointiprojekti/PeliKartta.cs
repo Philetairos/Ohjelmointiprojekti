@@ -46,8 +46,14 @@ namespace Ohjelmointiprojekti {
             foreach (Cell solu in GetAllCells()) {
                 AsetaSymboli(karttaKonsoli, solu);
             }
+            foreach (Solu solu2 in Solut) {
+                solu2.Piirra(karttaKonsoli, this);
+            }
             foreach (Esine esine in Esineet) {
                 esine.Piirra(karttaKonsoli, this);
+            }
+            foreach (Ovi ovi in Ovet) {
+                ovi.Piirra(karttaKonsoli, this);
             }
             int i = 0;
             foreach (NPC npc in NPCs) {
@@ -86,21 +92,12 @@ namespace Ohjelmointiprojekti {
                     karttaKonsoli.Set(solu.X, solu.Y, RLColor.Gray, RLColor.Black, '#');
                 }
             }
-            foreach (Ovi ovi in Ovet) {
-                ovi.Piirra(karttaKonsoli, this);
-            }
-            foreach (Esine esine in Esineet) {
-                esine.Piirra(karttaKonsoli, this);
-            }
-            foreach (Solu solu2 in Solut) {
-                solu2.Piirra(karttaKonsoli, this);
-            }
         }
         //Päivitä, mitä tiilejä pelaaja näkee
         public void PaivitaNakoKentta() {
             Pelaaja pelaaja = Ohjelma.Pelaaja;
             ComputeFov(pelaaja.X, pelaaja.Y, pelaaja.Nakoetaisyys, true);
-            foreach (Cell solu in GetAllCells()) {
+            foreach (Cell solu in GetCellsInDiamond(pelaaja.X, pelaaja.Y, pelaaja.Nakoetaisyys)) {
                 if (IsInFov(solu.X, solu.Y)) {
                     SetCellProperties(solu.X, solu.Y, solu.IsTransparent, solu.IsWalkable, true);
                 }

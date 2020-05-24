@@ -46,6 +46,13 @@ namespace Ohjelmointiprojekti
         }
         public bool LisaaEsine(Esine esine) {
             if (Inventaario.Count < Inventaario.Capacity) {
+                foreach (Esine inv in Inventaario) {
+                    if (inv.Nimi == esine.Nimi) {
+                        inv.Maara++;
+                        Ohjelma.peliKartta.Esineet.Remove(esine);
+                        return true;
+                    }
+                }
                 Inventaario.Add(esine);
                 Ohjelma.peliKartta.Esineet.Remove(esine);
                 return true;

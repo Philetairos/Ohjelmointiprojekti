@@ -32,6 +32,93 @@ namespace Ohjelmointiprojekti {
             }
             return false;
         }
+        public bool Ammu(Suunta suunta, Ammus ammus)  {
+            switch (suunta) {
+                case Suunta.Ylos:
+                    for (int y = 1; y < 15; y++) {
+                        if (Ohjelma.peliKartta.GetCell(Ohjelma.Pelaaja.X, Ohjelma.Pelaaja.Y - y).IsWalkable) {
+                            ammus.X = Ohjelma.Pelaaja.X;
+                            ammus.Y = Ohjelma.Pelaaja.Y - y;
+                        }
+                        else {
+                            Vastustaja vastustaja = Ohjelma.peliKartta.VastustajaSijainti(Ohjelma.Pelaaja.X, Ohjelma.Pelaaja.Y - y);
+                            if (vastustaja != null) {
+                                return KasitteleOsuma(vastustaja, ammus);
+                            }
+                            Ohjelma.peliKartta.Esineet.Add(ammus);
+                            return false;
+                        }
+                    }
+                    break;
+                case Suunta.Alas:
+                    for (int y = 1; y < 15; y++) {
+                        if (Ohjelma.peliKartta.GetCell(Ohjelma.Pelaaja.X, Ohjelma.Pelaaja.Y + y).IsWalkable) {
+                            ammus.X = Ohjelma.Pelaaja.X;
+                            ammus.Y = Ohjelma.Pelaaja.Y + y;
+                        }
+                        else {
+                            Vastustaja vastustaja = Ohjelma.peliKartta.VastustajaSijainti(Ohjelma.Pelaaja.X, Ohjelma.Pelaaja.Y + y);
+                            if (vastustaja != null) {
+                                return KasitteleOsuma(vastustaja, ammus);
+                            }
+                            Ohjelma.peliKartta.Esineet.Add(ammus);
+                            return false;
+                        }
+                    }
+                    break;
+                case Suunta.Vasen:
+                    for (int x = 1; x < 15; x++) {
+                        if (Ohjelma.peliKartta.GetCell(Ohjelma.Pelaaja.X - x, Ohjelma.Pelaaja.Y).IsWalkable) {
+                            ammus.X = Ohjelma.Pelaaja.X - x;
+                            ammus.Y = Ohjelma.Pelaaja.Y;
+                        }
+                        else {
+                            Vastustaja vastustaja = Ohjelma.peliKartta.VastustajaSijainti(Ohjelma.Pelaaja.X - x, Ohjelma.Pelaaja.Y);
+                            if (vastustaja != null) {
+                                return KasitteleOsuma(vastustaja, ammus);
+                            }
+                            Ohjelma.peliKartta.Esineet.Add(ammus);
+                            return false;
+                        }
+                    }
+                    break;
+                case Suunta.Oikea:
+                    for (int x = 1; x < 15; x++) {
+                        if (Ohjelma.peliKartta.GetCell(Ohjelma.Pelaaja.X + x, Ohjelma.Pelaaja.Y).IsWalkable) {
+                            ammus.X = Ohjelma.Pelaaja.X + x;
+                            ammus.Y = Ohjelma.Pelaaja.Y;
+                        }
+                        else {
+                            Vastustaja vastustaja = Ohjelma.peliKartta.VastustajaSijainti(Ohjelma.Pelaaja.X + x, Ohjelma.Pelaaja.Y);
+                            if (vastustaja != null) {
+                                return KasitteleOsuma(vastustaja, ammus);
+                            }
+                            Ohjelma.peliKartta.Esineet.Add(ammus);
+                            return false;
+                        }
+                    }
+                    break;
+                default:
+                    return false;
+            }
+            Ohjelma.peliKartta.Esineet.Add(ammus);
+            return false;
+        }
+        public bool KasitteleOsuma(Vastustaja vastustaja, Ammus ammus) {
+            DiceExpression noppa = new DiceExpression().Die(6);
+            DiceResult noppatulos = noppa.Roll();
+            if (noppatulos.Value + ammus.Vahinko - vastustaja.Puolustus >= 3) {
+                vastustaja.Elama -= ammus.Vahinko;
+                if (vastustaja.Elama <= 0) {
+                    Ohjelma.ViestiLoki.Lisaa($"{vastustaja.Nimi} has been shot and killed.");
+                    vastustaja.KasitteleKuolema(Ohjelma.peliKartta);
+                }
+            }
+            else {
+                Ohjelma.ViestiLoki.Lisaa($"{ammus.Nimi} hits {vastustaja.Nimi}, but fails to penetrate!");
+            }
+            return false;
+        }
         public NPC GetNPC(Suunta suunta) {
             Tuple<int, int> koord = GetSuunta(suunta);
             NPC npc = Ohjelma.peliKartta.NPCSijainti(koord.Item1, koord.Item2);
@@ -56,7 +143,7 @@ namespace Ohjelmointiprojekti {
                 if (noppatulos.Value + hyokkaaja.Voimakkuus - puolustaja.Puolustus >= 3) {
                     puolustaja.Elama -= hyokkaaja.Voimakkuus;
                     Ohjelma.ViestiLoki.Lisaa($"{hyokkaaja.Nimi} hits {puolustaja.Nimi} for {hyokkaaja.Voimakkuus} damage!");
-                    if (puolustaja.Elama == 0) {
+                    if (puolustaja.Elama <= 0) {
                         Ohjelma.ViestiLoki.Lisaa($"{puolustaja.Nimi} has been struck down.");
                         puolustaja.KasitteleKuolema(Ohjelma.peliKartta);
                     }

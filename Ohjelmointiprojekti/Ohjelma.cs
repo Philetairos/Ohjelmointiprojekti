@@ -44,6 +44,7 @@ namespace Ohjelmointiprojekti {
         private static bool poistaEsine = false;
         private static bool attackMoodi = false;
         private static bool lookMoodi = false;
+        private static bool shootMoodi = false;
 
         readonly static SiirraHahmo liikuttaja = new SiirraHahmo();
         private static int liikkumislaskuri = 0;
@@ -54,7 +55,7 @@ namespace Ohjelmointiprojekti {
         public static KomentoKasittelija KomentoKasittelija { get; private set; }
         public static Viestiloki ViestiLoki { get; private set; }
 
-        private readonly static string Kontrollit = "Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, U - Use, L - Look, R - Unequip, D - Drop Item, C - Controls, Esc - Exit game";
+        private readonly static string Kontrollit = "Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, S - Shoot, U - Use, L - Look, R - Unequip, D - Drop Item, C - Controls, Esc - Exit game";
 
         public static void Main() {
             //Fontti jota tiilit ja teksti käyttävät
@@ -97,7 +98,9 @@ namespace Ohjelmointiprojekti {
             }
             else if (attackMoodi == true) {
                 vihollinen = KomentoKasittelija.GetVastustaja(suunta);
-                KomentoKasittelija.Hyokkaa(Pelaaja, vihollinen);
+                if (vihollinen != null) {
+                    KomentoKasittelija.Hyokkaa(Pelaaja, vihollinen);
+                }
                 attackMoodi = false;
             }
             else if (getMoodi == true) {
@@ -106,6 +109,25 @@ namespace Ohjelmointiprojekti {
                     Pelaaja.LisaaEsine(otettavaEsine);
                 }
                 getMoodi = false;
+            }
+            else if (shootMoodi == true) {
+                if(Pelaaja.Varusteet[4] != null && Pelaaja.Varusteet[4].VoiAmpua == true) {
+                    foreach(Ammus ammus in Pelaaja.Inventaario) {
+                        if (ammus.Maara == 1) {
+                            Pelaaja.Inventaario.Remove(ammus);
+                        }
+                        else {
+                            ammus.Maara--;
+                        }
+                        shootMoodi = KomentoKasittelija.Ammu(suunta, ammus);
+                        return;
+                    }
+                    ViestiLoki.Lisaa("You need ammunition to shoot.");
+                }
+                else {
+                    ViestiLoki.Lisaa("You need to wield a ranged weapon to shoot.");
+                }
+                shootMoodi = false;
             }
             else if (lookMoodi == true) {
                 Esine katsottavaEsine = KomentoKasittelija.GetEsine(suunta);
@@ -165,6 +187,10 @@ namespace Ohjelmointiprojekti {
                     case RLKey.A:
                         attackMoodi = true;
                         ViestiLoki.Lisaa("Attack: Press an arrow key");
+                        return;
+                    case RLKey.S:
+                        shootMoodi = true;
+                        ViestiLoki.Lisaa("Shoot: Press an arrow key");
                         return;
                     case RLKey.U:
                         kaytaEsine = true;
@@ -240,6 +266,7 @@ namespace Ohjelmointiprojekti {
                     int num = Int32.Parse(nappain.Char.ToString());
                     if (num > Pelaaja.Inventaario.Count) {
                         ViestiLoki.Lisaa("No item in that slot!");
+                        poistaEsine = false;
                     }
                     else {
                         poistaEsine = Pelaaja.PoistaEsine(num-1);
