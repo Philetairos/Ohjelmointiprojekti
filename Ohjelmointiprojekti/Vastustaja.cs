@@ -32,6 +32,7 @@ namespace Ohjelmointiprojekti {
             };
         }
         public override void KasitteleKuolema(PeliKartta kartta) {
+            Ohjelma.Pelaaja.LisaaKokemus(Elama);
             kartta.Vastustajat.Remove(this);
             kartta.AsetaWalkable(X, Y, true);
             kartta.Solut.Add(new Solu(X, Y, true, true, true, RLColor.Black, RLColor.Red, Merkki));

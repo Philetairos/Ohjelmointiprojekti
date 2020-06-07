@@ -45,6 +45,8 @@ namespace Ohjelmointiprojekti {
         private static bool attackMoodi = false;
         private static bool lookMoodi = false;
         private static bool shootMoodi = false;
+        private static bool magicMoodi = false;
+        private static bool circleOne = false;
 
         readonly static SiirraHahmo liikuttaja = new SiirraHahmo();
         private static int liikkumislaskuri = 0;
@@ -55,7 +57,8 @@ namespace Ohjelmointiprojekti {
         public static KomentoKasittelija KomentoKasittelija { get; private set; }
         public static Viestiloki ViestiLoki { get; private set; }
 
-        private readonly static string Kontrollit = "Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, S - Shoot, U - Use, L - Look, R - Unequip, D - Drop Item, C - Controls, Esc - Exit game";
+        private readonly static string Kontrollit1 = "Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, S - Shoot, U - Use, L - Look, M - Use Magic,";
+        private readonly static string Kontrollit2 = "R - Remove equipment, D - Drop Item, C - Controls, Esc - Exit game";
 
         public static void Main() {
             //Fontti jota tiilit ja teksti käyttävät
@@ -77,7 +80,8 @@ namespace Ohjelmointiprojekti {
             KomentoKasittelija = new KomentoKasittelija();
             //Luo viestiloki
             ViestiLoki = new Viestiloki();
-            ViestiLoki.Lisaa(Kontrollit);
+            ViestiLoki.Lisaa(Kontrollit1);
+            ViestiLoki.Lisaa(Kontrollit2);
             //Luo aloituskartta
             peliKartta = karttaGeneroija.TestiKartta();
             peliKartta.PaivitaNakoKentta();
@@ -158,7 +162,92 @@ namespace Ohjelmointiprojekti {
             else {
                 render = true;
             }
-            if (dialogi == false && kaytaEsine == false && poistaVaruste == false && poistaEsine == false) {
+            if (dialogi == true)  {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
+                    dialogi = dialogiNPC.Dialogi(Int32.Parse(nappain.Char.ToString()));
+                }
+            }
+            else if (kaytaEsine == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
+                    int num = Int32.Parse(nappain.Char.ToString());
+                    if (num > Pelaaja.Inventaario.Count) {
+                        ViestiLoki.Lisaa("No item in that slot!");
+                    }
+                    else {
+                        kaytaEsine = Pelaaja.Inventaario[num - 1].KaytaEsine();
+                    }
+                }
+                kaytaEsine = false;
+            }
+            else if (magicMoodi == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4 || nappain.Key == RLKey.Number5 || nappain.Key == RLKey.Number6) {
+                    int num = Int32.Parse(nappain.Char.ToString());
+                    if (num > Pelaaja.Taso) {
+                        ViestiLoki.Lisaa("You need a higher level for this Circle!");
+                        magicMoodi = false;
+                    }
+                    else {
+                        ViestiLoki.Lisaa("Which spell do you want to cast?");
+                        ViestiLoki.Lisaa("1. Heal (Moon mushroom)");
+                        magicMoodi = false;
+                        circleOne = true;
+                    }
+                }
+            }
+            else if (circleOne == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3) {
+                    int num = Int32.Parse(nappain.Char.ToString());
+                    switch (num) {
+                        case 1:
+                            foreach (Reagenssi reagenssi in Pelaaja.Inventaario) {
+                                if(reagenssi.Nimi == "Moon Mushroom") {
+                                    if (reagenssi.Maara == 1) {
+                                        Pelaaja.Inventaario.Remove(reagenssi);
+                                    }
+                                    else {
+                                        reagenssi.Maara--;
+                                    }
+                                    Pelaaja.Elama += 10;
+                                    if (Pelaaja.Elama > 10+Pelaaja.Taso * 10) {
+                                        Pelaaja.Elama = 10 + Pelaaja.Taso * 10;
+                                    }
+                                    ViestiLoki.Lisaa("MANI!");
+                                    ViestiLoki.Lisaa("You cast Heal.");
+                                    circleOne = false;
+                                    return;
+                                }
+                            }
+                            ViestiLoki.Lisaa("You need 1 Moon Mushroom to cast this!");
+                            break;
+                        case 2:
+                            
+                            break;
+                        case 3:
+                            
+                            break;
+                    }
+                    circleOne = false;
+                }
+            }
+            else if (poistaVaruste == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4 || nappain.Key == RLKey.Number5) {
+                    int num = Int32.Parse(nappain.Char.ToString());
+                    poistaEsine = Pelaaja.PoistaVaruste(num);
+                }
+            }
+            else if (poistaEsine == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
+                    int num = Int32.Parse(nappain.Char.ToString());
+                    if (num > Pelaaja.Inventaario.Count) {
+                        ViestiLoki.Lisaa("No item in that slot!");
+                        poistaEsine = false;
+                    }
+                    else {
+                        poistaEsine = Pelaaja.PoistaEsine(num - 1);
+                    }
+                }
+            }
+            else {
                 switch (nappain.Key) {
                     case RLKey.Up:
                         Suorita(Suunta.Ylos);
@@ -174,38 +263,43 @@ namespace Ohjelmointiprojekti {
                         break;
                     case RLKey.L:
                         lookMoodi = true;
-                        ViestiLoki.Lisaa("Look: Press an arrow key");
+                        ViestiLoki.Lisaa("Look: Press an arrow key to choose direction");
                         return;
                     case RLKey.G:
                         getMoodi = true;
-                        ViestiLoki.Lisaa("Get: Press an arrow key");
+                        ViestiLoki.Lisaa("Get: Press an arrow key to choose direction");
                         return;
                     case RLKey.T:
                         talkMoodi = true;
-                        ViestiLoki.Lisaa("Talk: Press an arrow key");
+                        ViestiLoki.Lisaa("Talk: Press an arrow key to choose direction");
                         return;
                     case RLKey.A:
                         attackMoodi = true;
-                        ViestiLoki.Lisaa("Attack: Press an arrow key");
+                        ViestiLoki.Lisaa("Attack: Press an arrow key to choose direction");
                         return;
                     case RLKey.S:
                         shootMoodi = true;
-                        ViestiLoki.Lisaa("Shoot: Press an arrow key");
+                        ViestiLoki.Lisaa("Shoot: Press an arrow key to choose direction");
                         return;
                     case RLKey.U:
                         kaytaEsine = true;
-                        ViestiLoki.Lisaa("Use: Press a number key");
+                        ViestiLoki.Lisaa("Use: Press a number key to choose item");
+                        return;
+                    case RLKey.M:
+                        magicMoodi = true;
+                        ViestiLoki.Lisaa("Magic: Press a number key to choose Circle (1-6)");
                         return;
                     case RLKey.R:
                         poistaVaruste = true;
-                        ViestiLoki.Lisaa("Remove Equipment: Press a number key");
+                        ViestiLoki.Lisaa("Remove Equipment: Press a number key to choose item");
                         return;
                     case RLKey.D:
                         poistaEsine = true;
-                        ViestiLoki.Lisaa("Drop: Press a number key");
+                        ViestiLoki.Lisaa("Drop: Press a number key to choose item");
                         return;
                     case RLKey.C:
-                        ViestiLoki.Lisaa(Kontrollit);
+                        ViestiLoki.Lisaa(Kontrollit1);
+                        ViestiLoki.Lisaa(Kontrollit2);
                         return;
                     case RLKey.Escape:
                         paaKonsoli.Close();
@@ -238,41 +332,7 @@ namespace Ohjelmointiprojekti {
                     liikkumislaskuri = 0;
                 }
             }
-            else if (dialogi == true) {
-                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
-                    dialogi = dialogiNPC.Dialogi(Int32.Parse(nappain.Char.ToString()));
-                }
-            }
-            else if (kaytaEsine == true) {
-                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
-                    int num = Int32.Parse(nappain.Char.ToString());
-                    if (num > Pelaaja.Inventaario.Count) {
-                        ViestiLoki.Lisaa("No item in that slot!");
-                    }
-                    else {
-                        kaytaEsine = Pelaaja.Inventaario[num-1].KaytaEsine();
-                    }
-                }
-                kaytaEsine = false;
-            }
-            else if (poistaVaruste == true) {
-                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4 || nappain.Key == RLKey.Number5) {
-                    int num = Int32.Parse(nappain.Char.ToString());
-                    poistaEsine = Pelaaja.PoistaVaruste(num);
-                }
-            }
-            else if (poistaEsine == true) {
-                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
-                    int num = Int32.Parse(nappain.Char.ToString());
-                    if (num > Pelaaja.Inventaario.Count) {
-                        ViestiLoki.Lisaa("No item in that slot!");
-                        poistaEsine = false;
-                    }
-                    else {
-                        poistaEsine = Pelaaja.PoistaEsine(num-1);
-                    }
-                }
-            }
+            
         }
         //Piirrä kaikki ruudulle
         private static void PiirraKonsoli(object sender, UpdateEventArgs e) {
