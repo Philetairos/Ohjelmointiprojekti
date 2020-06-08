@@ -35,7 +35,7 @@ namespace Ohjelmointiprojekti {
         public bool Ammu(Suunta suunta, Ammus ammus)  {
             switch (suunta) {
                 case Suunta.Ylos:
-                    for (int y = 1; y < 15; y++) {
+                    for (int y = 1; y < ammus.Kantama; y++) {
                         if (Ohjelma.peliKartta.GetCell(Ohjelma.Pelaaja.X, Ohjelma.Pelaaja.Y - y).IsWalkable) {
                             ammus.X = Ohjelma.Pelaaja.X;
                             ammus.Y = Ohjelma.Pelaaja.Y - y;
@@ -51,7 +51,7 @@ namespace Ohjelmointiprojekti {
                     }
                     break;
                 case Suunta.Alas:
-                    for (int y = 1; y < 15; y++) {
+                    for (int y = 1; y < ammus.Kantama; y++) {
                         if (Ohjelma.peliKartta.GetCell(Ohjelma.Pelaaja.X, Ohjelma.Pelaaja.Y + y).IsWalkable) {
                             ammus.X = Ohjelma.Pelaaja.X;
                             ammus.Y = Ohjelma.Pelaaja.Y + y;
@@ -67,7 +67,7 @@ namespace Ohjelmointiprojekti {
                     }
                     break;
                 case Suunta.Vasen:
-                    for (int x = 1; x < 15; x++) {
+                    for (int x = 1; x < ammus.Kantama; x++) {
                         if (Ohjelma.peliKartta.GetCell(Ohjelma.Pelaaja.X - x, Ohjelma.Pelaaja.Y).IsWalkable) {
                             ammus.X = Ohjelma.Pelaaja.X - x;
                             ammus.Y = Ohjelma.Pelaaja.Y;
@@ -83,7 +83,7 @@ namespace Ohjelmointiprojekti {
                     }
                     break;
                 case Suunta.Oikea:
-                    for (int x = 1; x < 15; x++) {
+                    for (int x = 1; x < ammus.Kantama; x++) {
                         if (Ohjelma.peliKartta.GetCell(Ohjelma.Pelaaja.X + x, Ohjelma.Pelaaja.Y).IsWalkable) {
                             ammus.X = Ohjelma.Pelaaja.X + x;
                             ammus.Y = Ohjelma.Pelaaja.Y;

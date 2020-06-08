@@ -16,7 +16,6 @@ namespace Ohjelmointiprojekti
         public int Nalka;
         public int Alykkyys;
         public int Taso;
-        public int Kokemus;
 
         public Pelaaja(int x, int y) {
             Nimi = "Player";
@@ -32,7 +31,6 @@ namespace Ohjelmointiprojekti
             Alykkyys = 1;
             Puolustus = 1;
             Taso = 1;
-            Kokemus = 0;
             Inventaario = new List<Esine> {
                 Capacity = 4
             };
@@ -44,11 +42,10 @@ namespace Ohjelmointiprojekti
             statsiKonsoli.Print(1, 2, $"Health:       {Elama}", RLColor.White);
             statsiKonsoli.Print(1, 3, $"Hunger:       {Nalka}", RLColor.White);
             statsiKonsoli.Print(1, 4, $"Level:        {Taso}", RLColor.White);
-            statsiKonsoli.Print(1, 5, $"Experience:   {Kokemus}", RLColor.White);
-            statsiKonsoli.Print(1, 6, $"Defence:      {Puolustus}", RLColor.White);
-            statsiKonsoli.Print(1, 7, $"Strength:     {Voimakkuus}", RLColor.White);
-            statsiKonsoli.Print(1, 8, $"Dexterity:    {Napparyys}", RLColor.White);
-            statsiKonsoli.Print(1, 9, $"Intelligence: {Alykkyys}", RLColor.White);
+            statsiKonsoli.Print(1, 5, $"Defence:      {Puolustus}", RLColor.White);
+            statsiKonsoli.Print(1, 6, $"Strength:     {Voimakkuus}", RLColor.White);
+            statsiKonsoli.Print(1, 7, $"Dexterity:    {Napparyys}", RLColor.White);
+            statsiKonsoli.Print(1, 8, $"Intelligence: {Alykkyys}", RLColor.White);
         }
         public bool LisaaEsine(Esine esine) {
             if (Inventaario.Count < Inventaario.Capacity) {
@@ -114,11 +111,9 @@ namespace Ohjelmointiprojekti
             Ohjelma.ViestiLoki.Lisaa("You have died!");
             kartta = Ohjelma.karttaGeneroija.TyhjaKartta();
         }
-        public void LisaaKokemus(int exp) {
-            Kokemus += exp;
-            if (Kokemus == Taso*100 && Taso < 6) {
+        public void LisaaTaso() {
+            if (Taso < 3) {
                 Taso += 1;
-                Kokemus = 0;
                 Ohjelma.ViestiLoki.Lisaa("Level up!");
                 Random rand = new Random();
                 int result = rand.Next(1,3);

@@ -12,8 +12,9 @@ namespace Ohjelmointiprojekti {
     /// </summary>
     public class Ammus : Esine {
         public int Vahinko { get; set; }
+        public int Kantama { get; set; }
 
-        public Ammus(int maara, int x, int y, int vahinko, string nimi, RLColor vari, char merkki) {
+        public Ammus(int maara, int x, int y, int vahinko, string nimi, RLColor vari, char merkki, int kantama) {
             X = x;
             Y = y;
             Nimi = nimi;
@@ -21,6 +22,7 @@ namespace Ohjelmointiprojekti {
             Vari = vari;
             Merkki = merkki;
             Vahinko = vahinko;
+            Kantama = kantama;
         }
     }
 }

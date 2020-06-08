@@ -12,24 +12,19 @@ namespace Ohjelmointiprojekti {
     /// </summary>
     public class Viestiloki {
         private readonly Queue<string> rivit;
-        public Viestiloki()
-        {
+        public Viestiloki() {
             rivit = new Queue<string>();
         }
-        public void Lisaa(string viesti)
-        {
+        public void Lisaa(string viesti) {
             rivit.Enqueue(viesti);
-            if (rivit.Count > 10)
-            {
+            if (rivit.Count > 10) {
                 rivit.Dequeue();
             }
         }
-        public void Piirra(RLConsole konsoli)
-        {
+        public void Piirra(RLConsole konsoli) {
             konsoli.Clear();
             string[] rivitaulukko = rivit.ToArray();
-            for (int i = 0; i < rivitaulukko.Length; i++)
-            {
+            for (int i = 0; i < rivitaulukko.Length; i++) {
                 konsoli.Print(1, i + 1, rivitaulukko[i], RLColor.White);
             }
         }

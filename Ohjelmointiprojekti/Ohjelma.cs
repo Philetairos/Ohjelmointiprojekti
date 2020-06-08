@@ -30,6 +30,7 @@ namespace Ohjelmointiprojekti {
         private static RLConsole dialogiKonsoli;
         private static RLConsole inventaarioKonsoli;
         private static RLConsole statsiKonsoli;
+        private static RLConsole valikkoKonsoli;
 
         //Dialogia varten
         private static bool talkMoodi = false;
@@ -47,6 +48,9 @@ namespace Ohjelmointiprojekti {
         private static bool shootMoodi = false;
         private static bool magicMoodi = false;
         private static bool circleOne = false;
+
+        //Vain aloitusvalikkoa varten
+        private static int valittuVaihtoehto = 1;
 
         readonly static SiirraHahmo liikuttaja = new SiirraHahmo();
         private static int liikkumislaskuri = 0;
@@ -74,19 +78,19 @@ namespace Ohjelmointiprojekti {
             inventaarioKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
             //Luo statistiikkakonsoli joka näyttää pelaajan hahmo(je)n tilan
             statsiKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
+            //Luo konsoli aloitusvalikolle
+            valikkoKonsoli = new RLConsole(sivukonsolileveys, konsolikorkeuspuolet);
+            //luo karttageneroija joka luo datan pelikartoille
             karttaGeneroija = new KarttaGeneroija(karttaleveys,karttakorkeus);
             //Luo pelaajan hahmo
             Pelaaja = new Pelaaja(karttaleveys/2, karttakorkeus/2);
+            //Luo käsittelijä pelaajan komennoille
             KomentoKasittelija = new KomentoKasittelija();
             //Luo viestiloki
             ViestiLoki = new Viestiloki();
-            ViestiLoki.Lisaa(Kontrollit1);
-            ViestiLoki.Lisaa(Kontrollit2);
-            //Luo aloituskartta
-            peliKartta = karttaGeneroija.TestiKartta();
-            peliKartta.PaivitaNakoKentta();
-            paaKonsoli.Update += PaivitaKonsoli;
-            paaKonsoli.Render += PiirraKonsoli;
+
+            paaKonsoli.Update += PaivitaValikko;
+            paaKonsoli.Render += PiirraValikko;
             paaKonsoli.Run();
         }
         //Suorita suunnasta riippuvat komennot
@@ -153,7 +157,63 @@ namespace Ohjelmointiprojekti {
                 bool siirtyma = KomentoKasittelija.SiirraPelaaja(suunta);
             }
         }
-        //Käsittele syöte
+        //Käsittele pelaajan syöte päävalikossa
+        private static void PaivitaValikko(object sender, UpdateEventArgs e) {
+            RLKeyPress nappain = paaKonsoli.Keyboard.GetKeyPress();
+            if (nappain == null) {
+                return;
+            }
+            else {
+                render = true;
+            }
+            if (valittuVaihtoehto == 1) {
+                switch (nappain.Key) {
+                    case RLKey.Down:
+                        valittuVaihtoehto = 2;
+                        break;
+                    case RLKey.Enter:
+                        paaKonsoli.Update -= PaivitaValikko;
+                        paaKonsoli.Render -= PiirraValikko;
+
+                        //Luo aloituskartta
+                        ViestiLoki.Lisaa(Kontrollit1);
+                        ViestiLoki.Lisaa(Kontrollit2);
+                        peliKartta = karttaGeneroija.TestiKartta();
+                        peliKartta.PaivitaNakoKentta();
+                        paaKonsoli.Update += PaivitaKonsoli;
+                        paaKonsoli.Render += PiirraKonsoli;
+                        break;
+                }
+            }
+            else if (valittuVaihtoehto == 2) {
+                switch (nappain.Key) {
+                    case RLKey.Down:
+                        valittuVaihtoehto = 3;
+                        break;
+                    case RLKey.Up:
+                        valittuVaihtoehto = 1;
+                        break;
+                    case RLKey.Enter:
+                        //paaKonsoli.Update -= PaivitaValikko;
+                        //paaKonsoli.Render -= PiirraValikko;
+
+                        //Lisää koodi tallenuksen lataamiseen
+                        break;
+                }
+            }
+            else {
+                switch (nappain.Key) {
+                    case RLKey.Up:
+                        valittuVaihtoehto = 2;
+                        break;
+                    case RLKey.Enter:
+                        paaKonsoli.Close();
+                        break;
+                }
+            }
+        }
+        
+        //Käsittele pelaajan syöte muulloin
         private static void PaivitaKonsoli(object sender, UpdateEventArgs e) {
             RLKeyPress nappain = paaKonsoli.Keyboard.GetKeyPress();
             if (nappain == null) {
@@ -162,7 +222,7 @@ namespace Ohjelmointiprojekti {
             else {
                 render = true;
             }
-            if (dialogi == true)  {
+            if (dialogi == true) {
                 if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
                     dialogi = dialogiNPC.Dialogi(Int32.Parse(nappain.Char.ToString()));
                 }
@@ -180,7 +240,7 @@ namespace Ohjelmointiprojekti {
                 kaytaEsine = false;
             }
             else if (magicMoodi == true) {
-                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4 || nappain.Key == RLKey.Number5 || nappain.Key == RLKey.Number6) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3) {
                     int num = Int32.Parse(nappain.Char.ToString());
                     if (num > Pelaaja.Taso) {
                         ViestiLoki.Lisaa("You need a higher level for this Circle!");
@@ -287,7 +347,7 @@ namespace Ohjelmointiprojekti {
                         return;
                     case RLKey.M:
                         magicMoodi = true;
-                        ViestiLoki.Lisaa("Magic: Press a number key to choose Circle (1-6)");
+                        ViestiLoki.Lisaa("Magic: Press a number key to choose Circle (1-3)");
                         return;
                     case RLKey.R:
                         poistaVaruste = true;
@@ -334,7 +394,30 @@ namespace Ohjelmointiprojekti {
             }
             
         }
-        //Piirrä kaikki ruudulle
+        //Piirtometodi aloitusvalikolle
+        private static void PiirraValikko(object sender, UpdateEventArgs e) {
+            RLConsole.Blit(valikkoKonsoli, 0, 0, konsolileveys / 2, konsolikorkeuspuolet, paaKonsoli, konsolileveys / 2-10, konsolikorkeuspuolet-10);
+            paaKonsoli.Draw();
+            if (render) {
+                valikkoKonsoli.Print(0,0, "Paragon of Virtue 0.1", RLColor.LightBlue);
+                if (valittuVaihtoehto == 1) {
+                    valikkoKonsoli.Print(0, 5, "Start your journey", RLColor.LightCyan);
+                    valikkoKonsoli.Print(0, 7, "Continue your jounrey", RLColor.Cyan);
+                    valikkoKonsoli.Print(0, 9, "End your journey... for now", RLColor.Cyan);
+                }
+                else if (valittuVaihtoehto == 2) {
+                    valikkoKonsoli.Print(0, 5, "Start your journey", RLColor.Cyan);
+                    valikkoKonsoli.Print(0, 7, "Continue your journey", RLColor.LightCyan);
+                    valikkoKonsoli.Print(0, 9, "End your journey... for now", RLColor.Cyan);
+                }
+                else {
+                    valikkoKonsoli.Print(0, 5, "Start your journey", RLColor.Cyan);
+                    valikkoKonsoli.Print(0, 7, "Continue your jounrey", RLColor.Cyan);
+                    valikkoKonsoli.Print(0, 9, "End your journey... for now", RLColor.LightCyan);
+                }
+            }
+        }
+        //Piirometodi pelille
         private static void PiirraKonsoli(object sender, UpdateEventArgs e) {
             RLConsole.Blit(karttaKonsoli, 0, 0, karttaleveys, karttakorkeus, paaKonsoli, 0, 0);
             RLConsole.Blit(dialogiKonsoli, 0, 0, karttaleveys, dialogikonsolikorkeus, paaKonsoli, 0, karttakorkeus);
