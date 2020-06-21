@@ -52,27 +52,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ammus.cs" />
-    <Compile Include="Huppu.cs" />
-    <Compile Include="Jousi.cs" />
-    <Compile Include="Kolikko.cs" />
+    <Compile Include="Peliobjektit\Ammus.cs" />
+    <Compile Include="Peliobjektit\Huppu.cs" />
+    <Compile Include="Peliobjektit\Jousi.cs" />
+    <Compile Include="Peliobjektit\Kolikko.cs" />
     <Compile Include="KomentoKasittelija.cs" />
     <Compile Include="DialogiNoodi.cs" />
-    <Compile Include="Reagenssi.cs" />
-    <Compile Include="Leipa.cs" />
-    <Compile Include="Ovi.cs" />
+    <Compile Include="Peliobjektit\Reagenssi.cs" />
+    <Compile Include="Peliobjektit\Leipa.cs" />
+    <Compile Include="Peliobjektit\Ovi.cs" />
     <Compile Include="PeliKartta.cs" />
-    <Compile Include="Hahmo.cs" />
+    <Compile Include="Peliobjektit\Hahmo.cs" />
     <Compile Include="Rajapinnat.cs" />
-    <Compile Include="Esine.cs" />
+    <Compile Include="Peliobjektit\Esine.cs" />
     <Compile Include="KarttaGeneroija.cs" />
-    <Compile Include="Solu.cs" />
-    <Compile Include="Varuste.cs" />
-    <Compile Include="Vastustaja.cs" />
+    <Compile Include="Peliobjektit\Solu.cs" />
+    <Compile Include="Peliobjektit\Varuste.cs" />
+    <Compile Include="Peliobjektit\Vastustaja.cs" />
     <Compile Include="Viestiloki.cs" />
     <Compile Include="SiirraHahmo.cs" />
-    <Compile Include="NPC.cs" />
-    <Compile Include="Pelaaja.cs" />
+    <Compile Include="Peliobjektit\NPC.cs" />
+    <Compile Include="Peliobjektit\Pelaaja.cs" />
     <Compile Include="Ohjelma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -84,6 +84,9 @@
     <Content Include="terminal8x8.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tallennukset\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

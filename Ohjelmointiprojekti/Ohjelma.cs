@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,11 +27,7 @@ namespace Ohjelmointiprojekti {
 
         //Luo kaikki konsolit
         private static RLRootConsole paaKonsoli;
-        private static RLConsole karttaKonsoli;
-        private static RLConsole dialogiKonsoli;
-        private static RLConsole inventaarioKonsoli;
-        private static RLConsole statsiKonsoli;
-        private static RLConsole valikkoKonsoli;
+        private static RLConsole karttaKonsoli, dialogiKonsoli, inventaarioKonsoli, statsiKonsoli, valikkoKonsoli;
 
         //Dialogia varten
         private static bool talkMoodi = false;
@@ -51,6 +48,8 @@ namespace Ohjelmointiprojekti {
 
         //Vain aloitusvalikkoa varten
         private static int valittuVaihtoehto = 1;
+        private static int valittuTallennus = 1;
+        private static string[] tiedostot;
 
         readonly static SiirraHahmo liikuttaja = new SiirraHahmo();
         private static int liikkumislaskuri = 0;
@@ -194,20 +193,51 @@ namespace Ohjelmointiprojekti {
                         valittuVaihtoehto = 1;
                         break;
                     case RLKey.Enter:
-                        //paaKonsoli.Update -= PaivitaValikko;
-                        //paaKonsoli.Render -= PiirraValikko;
-
-                        //Lisää koodi tallenuksen lataamiseen
+                        valittuVaihtoehto = 4;
+                        tiedostot = Directory.GetFiles("C:\\Users\\Daniel Juola\\Documents\\Yliopistotavaraa\\kurssit\\TIEA306\\Git\\Ohjelmointiprojekti\\Tallennukset");
+                        if (tiedostot.Length == 0) {
+                            tiedostot = new string[] { "No journeys started yet!" };
+                        }
                         break;
                 }
             }
-            else {
-                switch (nappain.Key) {
+            else if (valittuVaihtoehto == 3) {
+                switch (nappain.Key)
+                {
                     case RLKey.Up:
                         valittuVaihtoehto = 2;
                         break;
                     case RLKey.Enter:
                         paaKonsoli.Close();
+                        break;
+                }
+            }
+            else if (valittuVaihtoehto == 4) {
+                switch (nappain.Key) {
+                    case RLKey.Up:
+                        if (valittuTallennus > 1) {
+                            valittuTallennus--;
+                        }
+                        break;
+                    case RLKey.Down:
+                        valittuTallennus++;
+                        if (valittuTallennus > tiedostot.Length) {
+                            valittuVaihtoehto = 5;
+                        }
+                        break;
+                    case RLKey.Enter:
+                        
+                        break;
+                }
+            }
+            else if (valittuVaihtoehto == 5) {
+                switch (nappain.Key) {
+                    case RLKey.Up:
+                        valittuVaihtoehto = 4;
+                        valittuTallennus = tiedostot.Length;
+                        break;
+                    case RLKey.Enter:
+                        valittuVaihtoehto = 1;
                         break;
                 }
             }
@@ -399,10 +429,11 @@ namespace Ohjelmointiprojekti {
             RLConsole.Blit(valikkoKonsoli, 0, 0, konsolileveys / 2, konsolikorkeuspuolet, paaKonsoli, konsolileveys / 2-10, konsolikorkeuspuolet-10);
             paaKonsoli.Draw();
             if (render) {
+                valikkoKonsoli.Clear();
                 valikkoKonsoli.Print(0,0, "Paragon of Virtue 0.1", RLColor.LightBlue);
                 if (valittuVaihtoehto == 1) {
                     valikkoKonsoli.Print(0, 5, "Start your journey", RLColor.LightCyan);
-                    valikkoKonsoli.Print(0, 7, "Continue your jounrey", RLColor.Cyan);
+                    valikkoKonsoli.Print(0, 7, "Continue your journey", RLColor.Cyan);
                     valikkoKonsoli.Print(0, 9, "End your journey... for now", RLColor.Cyan);
                 }
                 else if (valittuVaihtoehto == 2) {
@@ -410,10 +441,33 @@ namespace Ohjelmointiprojekti {
                     valikkoKonsoli.Print(0, 7, "Continue your journey", RLColor.LightCyan);
                     valikkoKonsoli.Print(0, 9, "End your journey... for now", RLColor.Cyan);
                 }
-                else {
+                else if (valittuVaihtoehto == 3) {
                     valikkoKonsoli.Print(0, 5, "Start your journey", RLColor.Cyan);
-                    valikkoKonsoli.Print(0, 7, "Continue your jounrey", RLColor.Cyan);
+                    valikkoKonsoli.Print(0, 7, "Continue your journey", RLColor.Cyan);
                     valikkoKonsoli.Print(0, 9, "End your journey... for now", RLColor.LightCyan);
+                }
+                else if (valittuVaihtoehto == 4) {
+                    valikkoKonsoli.Print(0, 5, "Unfinished Journeys:", RLColor.Cyan);
+                    int i = 7;
+                    foreach (string tiedosto in tiedostot) {
+                        if ((i/2)-2 == valittuTallennus) {
+                            valikkoKonsoli.Print(0, i, System.IO.Path.GetFileNameWithoutExtension(tiedosto), RLColor.LightCyan);
+                        }
+                        else {
+                            valikkoKonsoli.Print(0, i, System.IO.Path.GetFileNameWithoutExtension(tiedosto), RLColor.Cyan);
+                        }
+                        i += 2;
+                    }
+                    valikkoKonsoli.Print(0, i, "Return", RLColor.Cyan);
+                }
+                else if (valittuVaihtoehto == 5) {
+                    valikkoKonsoli.Print(0, 5, "Unfinished Journeys:", RLColor.Cyan);
+                    int i = 7;
+                    foreach (string tiedosto in tiedostot) {
+                        valikkoKonsoli.Print(0, i, System.IO.Path.GetFileNameWithoutExtension(tiedosto), RLColor.Cyan);
+                        i += 2;
+                    }
+                    valikkoKonsoli.Print(0, i, "Return", RLColor.LightCyan);
                 }
             }
         }
