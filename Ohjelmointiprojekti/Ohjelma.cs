@@ -45,6 +45,7 @@ namespace Ohjelmointiprojekti {
         private static bool shootMoodi = false;
         private static bool magicMoodi = false;
         private static bool circleOne = false;
+        private static bool saveMoodi = false;
 
         //Vain aloitusvalikkoa varten
         private static int valittuVaihtoehto = 1;
@@ -61,7 +62,7 @@ namespace Ohjelmointiprojekti {
         public static Viestiloki ViestiLoki { get; private set; }
 
         private readonly static string Kontrollit1 = "Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, S - Shoot, U - Use, L - Look, M - Use Magic,";
-        private readonly static string Kontrollit2 = "R - Remove equipment, D - Drop Item, C - Controls, Esc - Exit game";
+        private readonly static string Kontrollit2 = "R - Remove equipment, D - Drop Item, C - Controls, Z - Save Game, Esc - Exit Game";
 
         public static void Main() {
             //Fontti jota tiilit ja teksti käyttävät
@@ -226,7 +227,7 @@ namespace Ohjelmointiprojekti {
                         }
                         break;
                     case RLKey.Enter:
-                        
+                        //lisää tallenuksen lataaminen
                         break;
                 }
             }
@@ -337,6 +338,25 @@ namespace Ohjelmointiprojekti {
                     }
                 }
             }
+            else if (saveMoodi == true) {
+                switch (nappain.Key) {
+                    case RLKey.Y:
+                        int id = Directory.GetFiles("C:\\Users\\Daniel Juola\\Documents\\Yliopistotavaraa\\kurssit\\TIEA306\\Git\\Ohjelmointiprojekti\\Tallennukset").Length;
+                        id++;
+                        using (StreamWriter sw = new StreamWriter("Journey " + id + ".txt")) {
+                            Tallenna(sw);
+                        }
+                        ViestiLoki.Lisaa("Game saved!");
+                        break;
+                    case RLKey.N:
+                        using (StreamWriter sw = new StreamWriter("Journey.txt")) {
+                            Tallenna(sw);
+                        }
+                        ViestiLoki.Lisaa("Game saved!");
+                        break;
+                }
+                saveMoodi = false;
+            }
             else {
                 switch (nappain.Key) {
                     case RLKey.Up:
@@ -391,6 +411,11 @@ namespace Ohjelmointiprojekti {
                         ViestiLoki.Lisaa(Kontrollit1);
                         ViestiLoki.Lisaa(Kontrollit2);
                         return;
+                    case RLKey.Z:
+                        saveMoodi = true;
+                        ViestiLoki.Lisaa("Y - Yes, N - No, save in default file");
+                        ViestiLoki.Lisaa("Save: Do you want to save in a new file?");
+                        return;
                     case RLKey.Escape:
                         paaKonsoli.Close();
                         break;
@@ -423,6 +448,28 @@ namespace Ohjelmointiprojekti {
                 }
             }
             
+        }
+        private static void Tallenna(StreamWriter sw) {
+            sw.WriteLine(peliKartta.id);
+            sw.WriteLine(Pelaaja.X);
+            sw.WriteLine(Pelaaja.Y);
+            sw.WriteLine(Pelaaja.Nalka);
+            sw.WriteLine(Pelaaja.Elama);
+            sw.WriteLine(Pelaaja.Voimakkuus);
+            sw.WriteLine(Pelaaja.Alykkyys);
+            sw.WriteLine(Pelaaja.Napparyys);
+            sw.WriteLine(Pelaaja.Puolustus);
+            sw.WriteLine(Pelaaja.Taso);
+            sw.WriteLine(Pelaaja.Inventaario.Count);
+            foreach (Esine esine in Pelaaja.Inventaario) {
+                sw.WriteLine(esine.Nimi);
+                sw.WriteLine(esine.Maara);
+            }
+            sw.WriteLine(Pelaaja.Varusteet.Length);
+            foreach (Varuste varuste in Pelaaja.Varusteet) {
+                sw.WriteLine(varuste.Nimi);
+                sw.WriteLine(varuste.Maara);
+            }
         }
         //Piirtometodi aloitusvalikolle
         private static void PiirraValikko(object sender, UpdateEventArgs e) {
