@@ -23,7 +23,6 @@ namespace Ohjelmointiprojekti {
         }
         //Aloituskartta
         public PeliKartta TestiKartta() {
-            kartta.id = 0;
             kartta.Initialize(karttaLeveys, karttaKorkeus);
             foreach (Cell solu in kartta.GetAllCells()) {
                 kartta.SetCellProperties(solu.X, solu.Y, true, true, false);

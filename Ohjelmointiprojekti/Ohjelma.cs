@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -227,7 +228,28 @@ namespace Ohjelmointiprojekti {
                         }
                         break;
                     case RLKey.Enter:
-                        //lisää tallenuksen lataaminen
+                        if (tiedostot[0] != "No journeys started yet!") {
+                            try {
+                                using (StreamReader sr = new StreamReader(tiedostot[valittuTallennus - 1])) {
+                                    string jsonString = sr.ReadLine();
+                                    peliKartta = JsonSerializer.Deserialize<PeliKartta>(jsonString);
+                                    jsonString = sr.ReadLine();
+                                    Pelaaja = JsonSerializer.Deserialize<Pelaaja>(jsonString);
+                                    sr.Close();
+                                    paaKonsoli.Update -= PaivitaValikko;
+                                    paaKonsoli.Render -= PiirraValikko;
+                                    ViestiLoki.Lisaa(Kontrollit1);
+                                    ViestiLoki.Lisaa(Kontrollit2);
+                                    peliKartta.PaivitaNakoKentta();
+                                    paaKonsoli.Update += PaivitaKonsoli;
+                                    paaKonsoli.Render += PiirraKonsoli;
+                                }
+                            }
+                            catch (Exception exc) {
+                                Console.WriteLine("The file could not be read:");
+                                Console.WriteLine(exc.Message);
+                            }
+                        }
                         break;
                 }
             }
@@ -343,13 +365,13 @@ namespace Ohjelmointiprojekti {
                     case RLKey.Y:
                         int id = Directory.GetFiles("C:\\Users\\Daniel Juola\\Documents\\Yliopistotavaraa\\kurssit\\TIEA306\\Git\\Ohjelmointiprojekti\\Tallennukset").Length;
                         id++;
-                        using (StreamWriter sw = new StreamWriter("Journey " + id + ".txt")) {
+                        using (StreamWriter sw = new StreamWriter("C:\\Users\\Daniel Juola\\Documents\\Yliopistotavaraa\\kurssit\\TIEA306\\Git\\Ohjelmointiprojekti\\Tallennukset\\" + "Journey" + id + ".json")) {
                             Tallenna(sw);
                         }
                         ViestiLoki.Lisaa("Game saved!");
                         break;
                     case RLKey.N:
-                        using (StreamWriter sw = new StreamWriter("Journey.txt")) {
+                        using (StreamWriter sw = new StreamWriter("C:\\Users\\Daniel Juola\\Documents\\Yliopistotavaraa\\kurssit\\TIEA306\\Git\\Ohjelmointiprojekti\\Tallennukset\\" + "Journey.json")) {
                             Tallenna(sw);
                         }
                         ViestiLoki.Lisaa("Game saved!");
@@ -450,25 +472,19 @@ namespace Ohjelmointiprojekti {
             
         }
         private static void Tallenna(StreamWriter sw) {
-            sw.WriteLine(peliKartta.id);
-            sw.WriteLine(Pelaaja.X);
-            sw.WriteLine(Pelaaja.Y);
-            sw.WriteLine(Pelaaja.Nalka);
-            sw.WriteLine(Pelaaja.Elama);
-            sw.WriteLine(Pelaaja.Voimakkuus);
-            sw.WriteLine(Pelaaja.Alykkyys);
-            sw.WriteLine(Pelaaja.Napparyys);
-            sw.WriteLine(Pelaaja.Puolustus);
-            sw.WriteLine(Pelaaja.Taso);
-            sw.WriteLine(Pelaaja.Inventaario.Count);
-            foreach (Esine esine in Pelaaja.Inventaario) {
-                sw.WriteLine(esine.Nimi);
-                sw.WriteLine(esine.Maara);
+            string jsonString;
+            try {
+                jsonString = JsonSerializer.Serialize(peliKartta);
+                sw.WriteLine(jsonString);
+                jsonString = JsonSerializer.Serialize(Pelaaja);
+                sw.WriteLine(jsonString);
             }
-            sw.WriteLine(Pelaaja.Varusteet.Length);
-            foreach (Varuste varuste in Pelaaja.Varusteet) {
-                sw.WriteLine(varuste.Nimi);
-                sw.WriteLine(varuste.Maara);
+            catch (Exception exc) {
+                Console.WriteLine("Failed: " + exc.Message);
+                throw;
+            }
+            finally {
+                sw.Close();
             }
         }
         //Piirtometodi aloitusvalikolle
