@@ -233,6 +233,7 @@ namespace Ohjelmointiprojekti {
                                 using (StreamReader sr = new StreamReader(tiedostot[valittuTallennus - 1])) {
                                     string jsonString = sr.ReadLine();
                                     peliKartta = JsonSerializer.Deserialize<PeliKartta>(jsonString);
+                                    peliKartta.Initialize(karttaleveys, karttakorkeus);
                                     jsonString = sr.ReadLine();
                                     Pelaaja = JsonSerializer.Deserialize<Pelaaja>(jsonString);
                                     sr.Close();

@@ -11,11 +11,11 @@ namespace Ohjelmointiprojekti {
     /// Tämä on luokka pelin karttojen luomiseen, joilla pelaaja liikkuu
     /// </summary>
     public class PeliKartta : Map {
-        public List<NPC> NPCs;
-        public List<Vastustaja> Vastustajat;
-        public List<Ovi> Ovet;
-        public List<Esine> Esineet;
-        public List<Solu> Solut;
+        public List<NPC> NPCs { get; set; }
+        public List<Vastustaja> Vastustajat { get; set; }
+        public List<Ovi> Ovet { get; set; }
+        public List<Esine> Esineet { get; set; }
+        public List<Solu> Solut { get; set; }
 
         public PeliKartta() {
             NPCs = new List<NPC>();

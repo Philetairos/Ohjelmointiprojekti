@@ -13,9 +13,9 @@ namespace Ohjelmointiprojekti
     /// </summary>
     public class Pelaaja : Hahmo {
         public Varuste[] Varusteet { get; set; }
-        public int Nalka;
-        public int Alykkyys;
-        public int Taso;
+        public int Nalka { get; set; }
+        public int Alykkyys { get; set; }
+        public int Taso { get; set; }
 
         public Pelaaja(int x, int y) {
             Nimi = "Player";
