@@ -16,6 +16,7 @@ namespace Ohjelmointiprojekti {
         public List<Ovi> Ovet { get; set; }
         public List<Esine> Esineet { get; set; }
         public List<Solu> Solut { get; set; }
+        public int id;
 
         public PeliKartta() {
             NPCs = new List<NPC>();

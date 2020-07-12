@@ -13,16 +13,5 @@ namespace Ohjelmointiprojekti {
     public class Ammus : Esine {
         public int Vahinko { get; set; }
         public int Kantama { get; set; }
-
-        public Ammus(int maara, int x, int y, int vahinko, string nimi, RLColor vari, char merkki, int kantama) {
-            X = x;
-            Y = y;
-            Nimi = nimi;
-            Maara = maara;
-            Vari = vari;
-            Merkki = merkki;
-            Vahinko = vahinko;
-            Kantama = kantama;
-        }
     }
 }

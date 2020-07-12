@@ -86,7 +86,8 @@
     <Compile Include="Peliobjektit\Kolikko.cs" />
     <Compile Include="KomentoKasittelija.cs" />
     <Compile Include="DialogiNoodi.cs" />
-    <Compile Include="Peliobjektit\Reagenssi.cs" />
+    <Compile Include="Peliobjektit\Kuusieni.cs" />
+    <Compile Include="Peliobjektit\Nuoli.cs" />
     <Compile Include="Peliobjektit\Leipa.cs" />
     <Compile Include="Peliobjektit\Ovi.cs" />
     <Compile Include="PeliKartta.cs" />

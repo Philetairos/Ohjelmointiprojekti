@@ -121,14 +121,16 @@ namespace Ohjelmointiprojekti {
             }
             else if (shootMoodi == true) {
                 if(Pelaaja.Varusteet[4] != null && Pelaaja.Varusteet[4].VoiAmpua == true) {
-                    foreach(Ammus ammus in Pelaaja.Inventaario) {
-                        if (ammus.Maara == 1) {
-                            Pelaaja.Inventaario.Remove(ammus);
+                    foreach (var ammus in Pelaaja.Inventaario.OfType<Ammus>()) {
+                        if (ammus is Ammus) {
+                            if (ammus.Maara == 1) {
+                                Pelaaja.Inventaario.Remove(ammus);
+                            }
+                            else {
+                                ammus.Maara--;
+                            }
+                            shootMoodi = KomentoKasittelija.Ammu(suunta, ammus);
                         }
-                        else {
-                            ammus.Maara--;
-                        }
-                        shootMoodi = KomentoKasittelija.Ammu(suunta, ammus);
                         return;
                     }
                     ViestiLoki.Lisaa("You need ammunition to shoot.");
@@ -232,10 +234,22 @@ namespace Ohjelmointiprojekti {
                             try {
                                 using (StreamReader sr = new StreamReader(tiedostot[valittuTallennus - 1])) {
                                     string jsonString = sr.ReadLine();
-                                    peliKartta = JsonSerializer.Deserialize<PeliKartta>(jsonString);
-                                    peliKartta.Initialize(karttaleveys, karttakorkeus);
+                                    //Käytetyjen kirjastojen tiilet ja värit eivät ole serialisoitavissa, mahdollista korjata?
+                                    //peliKartta = JsonSerializer.Deserialize<PeliKartta>(jsonString);
+                                    //peliKartta.Initialize(karttaleveys, karttakorkeus);
+                                    if (Int32.TryParse(jsonString, out int tasoid)) {
+                                        switch (tasoid) {
+                                            case 0:
+                                                peliKartta = karttaGeneroija.TestiKartta();
+                                                break;
+                                        }
+                                    }
+                                    else {
+                                        throw new Exception("Unreadable level id");
+                                    }
                                     jsonString = sr.ReadLine();
                                     Pelaaja = JsonSerializer.Deserialize<Pelaaja>(jsonString);
+                                    Pelaaja.Vari = RLColor.White;
                                     sr.Close();
                                     paaKonsoli.Update -= PaivitaValikko;
                                     paaKonsoli.Render -= PiirraValikko;
@@ -313,13 +327,13 @@ namespace Ohjelmointiprojekti {
                     int num = Int32.Parse(nappain.Char.ToString());
                     switch (num) {
                         case 1:
-                            foreach (Reagenssi reagenssi in Pelaaja.Inventaario) {
-                                if(reagenssi.Nimi == "Moon Mushroom") {
-                                    if (reagenssi.Maara == 1) {
-                                        Pelaaja.Inventaario.Remove(reagenssi);
+                            foreach (Esine esine in Pelaaja.Inventaario) {
+                                if(esine.Nimi == "Moon Mushroom") {
+                                    if (esine.Maara == 1) {
+                                        Pelaaja.Inventaario.Remove(esine);
                                     }
                                     else {
-                                        reagenssi.Maara--;
+                                        esine.Maara--;
                                     }
                                     Pelaaja.Elama += 10;
                                     if (Pelaaja.Elama > 10+Pelaaja.Taso * 10) {
@@ -475,8 +489,10 @@ namespace Ohjelmointiprojekti {
         private static void Tallenna(StreamWriter sw) {
             string jsonString;
             try {
-                jsonString = JsonSerializer.Serialize(peliKartta);
-                sw.WriteLine(jsonString);
+                //Käytetyjen kirjastojen tiilet ja värit eivät ole serialisoitavissa, mahdollista korjata?
+                //jsonString = JsonSerializer.Serialize(peliKartta);
+                //sw.WriteLine(jsonString);
+                sw.WriteLine(peliKartta.id);
                 jsonString = JsonSerializer.Serialize(Pelaaja);
                 sw.WriteLine(jsonString);
             }
