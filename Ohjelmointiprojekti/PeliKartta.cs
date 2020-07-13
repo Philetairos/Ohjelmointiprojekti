@@ -106,7 +106,11 @@ namespace Ohjelmointiprojekti {
         }
         //Aseta hahmon sijainti, jos sijantiin voi liikkua (isWalkable)
         public bool AsetaSijainti(Hahmo hahmo, int x, int y) {
-            if (GetCell(x, y).IsWalkable) {
+            if (x >= Width || y >= Height || x < 0 || y < 0) {
+                VaihdaKarttaa();
+                return false;
+            }
+            else if (GetCell(x, y).IsWalkable) {
                 AsetaWalkable(hahmo.X, hahmo.Y, true);
                 hahmo.X = x;
                 hahmo.Y = y;
@@ -134,6 +138,9 @@ namespace Ohjelmointiprojekti {
                 SetCellProperties(x, y, true, true, solu.IsExplored);
                 Ohjelma.ViestiLoki.Lisaa($"{hahmo.Nimi} opened a door.");
             }
+        }
+        private void VaihdaKarttaa() {
+            
         }
     }
 }

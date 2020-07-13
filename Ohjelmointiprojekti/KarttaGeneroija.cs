@@ -21,7 +21,7 @@ namespace Ohjelmointiprojekti {
             karttaKorkeus = korkeus;
             kartta = new PeliKartta();
         }
-        //Aloituskartta
+        //Testikartta testausta varten
         public PeliKartta TestiKartta() {
             kartta.id = 0;
             kartta.Initialize(karttaLeveys, karttaKorkeus);
@@ -57,6 +57,19 @@ namespace Ohjelmointiprojekti {
             foreach (Cell solu in kartta.GetAllCells()) {
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
             }
+            return kartta;
+        }
+        public PeliKartta AloitusKartta() {
+            kartta.id = 2;
+            kartta.Initialize(karttaLeveys, karttaKorkeus);
+            foreach (Cell solu in kartta.GetAllCells()) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+            }
+            foreach (Cell solu in kartta.GetCellsInRectangle(karttaKorkeus/2, karttaLeveys / 2-2, 5, karttaKorkeus / 2)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, true, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
+            kartta.Solut.Add(new Solu(karttaKorkeus-10, karttaLeveys / 2 - 6, false, false, true, RLColor.Green, RLColor.Black, 'T'));
+            kartta.SetCellProperties(karttaKorkeus - 10, karttaLeveys / 2 - 6, false, false, true);
             return kartta;
         }
     }

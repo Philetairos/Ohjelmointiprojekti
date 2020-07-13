@@ -84,7 +84,7 @@ namespace Ohjelmointiprojekti {
             //luo karttageneroija joka luo datan pelikartoille
             karttaGeneroija = new KarttaGeneroija(karttaleveys,karttakorkeus);
             //Luo pelaajan hahmo
-            Pelaaja = new Pelaaja(karttaleveys/2, karttakorkeus/2);
+            Pelaaja = new Pelaaja(karttaleveys/2, karttakorkeus-4);
             //Luo käsittelijä pelaajan komennoille
             KomentoKasittelija = new KomentoKasittelija();
             //Luo viestiloki
@@ -181,7 +181,7 @@ namespace Ohjelmointiprojekti {
                         //Luo aloituskartta
                         ViestiLoki.Lisaa(Kontrollit1);
                         ViestiLoki.Lisaa(Kontrollit2);
-                        peliKartta = karttaGeneroija.TestiKartta();
+                        peliKartta = karttaGeneroija.AloitusKartta();
                         peliKartta.PaivitaNakoKentta();
                         paaKonsoli.Update += PaivitaKonsoli;
                         paaKonsoli.Render += PiirraKonsoli;
