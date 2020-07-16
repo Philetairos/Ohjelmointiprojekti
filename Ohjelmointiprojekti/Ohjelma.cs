@@ -242,6 +242,12 @@ namespace Ohjelmointiprojekti {
                                             case 0:
                                                 peliKartta = karttaGeneroija.TestiKartta();
                                                 break;
+                                            case 1:
+                                                peliKartta = karttaGeneroija.TyhjaKartta();
+                                                break;
+                                            case 2:
+                                                peliKartta = karttaGeneroija.AloitusKartta();
+                                                break;
                                         }
                                     }
                                     else {

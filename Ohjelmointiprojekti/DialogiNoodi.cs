@@ -15,11 +15,13 @@ namespace Ohjelmointiprojekti
         public readonly string dialogi;
         public readonly string vastaukset;
         public readonly int[] linkit;
+        public readonly string koodi;
 
-        public DialogiNoodi(string d, string v, int[] l) {
+        public DialogiNoodi(string d, string v, int[] l, string k) {
             dialogi = d;
             vastaukset = v;
             linkit = l;
+            koodi = k;
         }
     }
 }
