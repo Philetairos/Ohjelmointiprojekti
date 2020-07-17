@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
 
 namespace Ohjelmointiprojekti {
     /// <summary>
@@ -33,12 +32,12 @@ namespace Ohjelmointiprojekti {
         public bool Dialogi(int syote) {
             if (syote <= HahmonDialogi[DialogiID].linkit.Length) {
                 DialogiID = HahmonDialogi[DialogiID].linkit[syote - 1];
-                Ohjelma.ViestiLoki.Lisaa(HahmonDialogi[DialogiID].dialogi);
-                Ohjelma.ViestiLoki.Lisaa(HahmonDialogi[DialogiID].vastaukset);
-                if (HahmonDialogi[DialogiID].koodi.Length > 0) {
-                    //
+                if (DialogiID != -1){
+                    Ohjelma.ViestiLoki.Lisaa(HahmonDialogi[DialogiID].dialogi);
+                    Ohjelma.ViestiLoki.Lisaa(HahmonDialogi[DialogiID].vastaukset);
+                    HahmonDialogi[DialogiID].Koodi?.Invoke();
+                    return true;
                 }
-                return true;
             }
             DialogiID = 0;
             Ohjelma.ViestiLoki.Lisaa("You end the conversation.");

@@ -71,8 +71,7 @@ namespace Ohjelmointiprojekti
             Inventaario.RemoveAt(num);
             return false;
         }
-        public bool PoistaVaruste(int lokero)
-        {
+        public bool PoistaVaruste(int lokero) {
             if (Varusteet[lokero - 1] != null) {
                 if (Inventaario.Count < Inventaario.Capacity) {
                     Inventaario.Add(Varusteet[lokero - 1]);
@@ -119,19 +118,31 @@ namespace Ohjelmointiprojekti
                 int result = rand.Next(1,3);
                 switch (result) {
                     case 1:
-                        Voimakkuus += 1;
+                        Voimakkuus++;
                         Ohjelma.ViestiLoki.Lisaa("Your Strength has improved!");
                         break;
                     case 2:
-                        Napparyys += 1;
+                        Napparyys++;
                         Ohjelma.ViestiLoki.Lisaa("Your Dexterity has improved!");
                         break;
                     case 3:
-                        Alykkyys += 1;
+                        Alykkyys++;
                         Ohjelma.ViestiLoki.Lisaa("Your Intelligence has improved!");
                         break;
                 }
             }
+        }
+        public Action LisaaAlykkyys() {
+            Alykkyys++;
+            return null;
+        }
+        public Action LisaaVoimakkuus() {
+            Voimakkuus++;
+            return null;
+        }
+        public Action LisaaNapparyys() {
+            Napparyys++;
+            return null;
         }
     }
 }
