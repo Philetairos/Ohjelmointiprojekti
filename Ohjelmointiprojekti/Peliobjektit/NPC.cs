@@ -31,11 +31,11 @@ namespace Ohjelmointiprojekti {
         }
         public bool Dialogi(int syote) {
             if (syote <= HahmonDialogi[DialogiID].linkit.Length) {
-                DialogiID = HahmonDialogi[DialogiID].linkit[syote - 1];
+                HahmonDialogi[DialogiID].linkit[syote - 1].Item2?.Invoke();
+                DialogiID = HahmonDialogi[DialogiID].linkit[syote - 1].Item1;
                 if (DialogiID != -1){
                     Ohjelma.ViestiLoki.Lisaa(HahmonDialogi[DialogiID].dialogi);
                     Ohjelma.ViestiLoki.Lisaa(HahmonDialogi[DialogiID].vastaukset);
-                    HahmonDialogi[DialogiID].Koodi?.Invoke();
                     return true;
                 }
             }

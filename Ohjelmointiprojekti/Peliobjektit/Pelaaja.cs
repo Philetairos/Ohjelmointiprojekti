@@ -132,17 +132,14 @@ namespace Ohjelmointiprojekti
                 }
             }
         }
-        public Action LisaaAlykkyys() {
+        public void LisaaAlykkyys() {
             Alykkyys++;
-            return null;
         }
-        public Action LisaaVoimakkuus() {
+        public void LisaaVoimakkuus() {
             Voimakkuus++;
-            return null;
         }
-        public Action LisaaNapparyys() {
+        public void LisaaNapparyys() {
             Napparyys++;
-            return null;
         }
     }
 }

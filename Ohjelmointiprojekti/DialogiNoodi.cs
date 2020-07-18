@@ -14,10 +14,9 @@ namespace Ohjelmointiprojekti
     public class DialogiNoodi {
         public readonly string dialogi;
         public readonly string vastaukset;
-        public readonly int[] linkit;
-        public Action Koodi { get; set; }
+        public readonly (int, Action)[] linkit;
 
-        public DialogiNoodi(string d, string v, int[] l) {
+        public DialogiNoodi(string d, string v, (int, Action)[] l) {
             dialogi = d;
             vastaukset = v;
             linkit = l;
