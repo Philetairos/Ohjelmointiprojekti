@@ -8,8 +8,7 @@ using RogueSharp.DiceNotation;
 using RLNET;
 
 namespace Ohjelmointiprojekti {
-    public enum Suunta
-    {
+    public enum Suunta {
         Null = 0,
         AlaVasen = 1,
         Alas = 2,

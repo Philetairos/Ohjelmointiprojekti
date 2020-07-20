@@ -206,8 +206,7 @@ namespace Ohjelmointiprojekti {
                 }
             }
             else if (valittuVaihtoehto == 3) {
-                switch (nappain.Key)
-                {
+                switch (nappain.Key) {
                     case RLKey.Up:
                         valittuVaihtoehto = 2;
                         break;
@@ -247,6 +246,9 @@ namespace Ohjelmointiprojekti {
                                                 break;
                                             case 2:
                                                 peliKartta = karttaGeneroija.AloitusKartta();
+                                                break;
+                                            case 3:
+                                                peliKartta = karttaGeneroija.LinnaKartta();
                                                 break;
                                         }
                                     }

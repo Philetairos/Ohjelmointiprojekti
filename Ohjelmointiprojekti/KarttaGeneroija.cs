@@ -13,7 +13,7 @@ namespace Ohjelmointiprojekti {
     public class KarttaGeneroija {
         private readonly int karttaLeveys;
         private readonly int karttaKorkeus;
-        private readonly PeliKartta kartta;
+        private PeliKartta kartta;
 
         //konstruktori
         public KarttaGeneroija(int leveys, int korkeus) {
@@ -23,7 +23,9 @@ namespace Ohjelmointiprojekti {
         }
         //Testikartta testausta varten
         public PeliKartta TestiKartta() {
-            kartta.id = 0;
+            kartta = new PeliKartta {
+                id = 0
+            };
             kartta.Initialize(karttaLeveys, karttaKorkeus);
             foreach (Cell solu in kartta.GetAllCells()) {
                 kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
@@ -52,7 +54,9 @@ namespace Ohjelmointiprojekti {
         }
         //Kartta jos pelaaja kuolee
         public PeliKartta TyhjaKartta() {
-            kartta.id = 1;
+            kartta = new PeliKartta {
+                id = 1
+            };
             kartta.Initialize(karttaLeveys, karttaKorkeus);
             foreach (Cell solu in kartta.GetAllCells()) {
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
@@ -60,7 +64,9 @@ namespace Ohjelmointiprojekti {
             return kartta;
         }
         public PeliKartta AloitusKartta() {
-            kartta.id = 2;
+            kartta = new PeliKartta {
+                id = 2
+            };
             kartta.Initialize(karttaLeveys, karttaKorkeus);
             foreach (Cell solu in kartta.GetAllCells()) {
                 kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
@@ -87,7 +93,7 @@ namespace Ohjelmointiprojekti {
             DialogiNoodi ennustajaDialogi4 = new DialogiNoodi(alykkyysVsVoimakkuus1, alykkyysVsVoimakkuus2, new (int, Action)[] { (6, Ohjelma.Pelaaja.LisaaAlykkyys), (6, Ohjelma.Pelaaja.LisaaVoimakkuus) });
             DialogiNoodi ennustajaDialogi5 = new DialogiNoodi(napparyysVsVoimakkuus1, napparyysVsVoimakkuus2, new (int, Action)[] { (8, Ohjelma.Pelaaja.LisaaNapparyys), (8, Ohjelma.Pelaaja.LisaaVoimakkuus) });
             DialogiNoodi ennustajaDialogi6 = new DialogiNoodi(napparyysVsVoimakkuus1, napparyysVsVoimakkuus2, new (int, Action)[] { (7, Ohjelma.Pelaaja.LisaaNapparyys), (7, Ohjelma.Pelaaja.LisaaVoimakkuus) });
-            DialogiNoodi ennustajaDialogi7 = new DialogiNoodi("Good. Now I can see your path clearly. Close your eyes, and awaken.", "1. I feel dizzy...", new (int, Action)[] { (-1, null) });
+            DialogiNoodi ennustajaDialogi7 = new DialogiNoodi("Good. Now I can see your path clearly. Close your eyes, and awaken.", "1. I feel dizzy...", new (int, Action)[] { (-1, LataaLinna) });
             DialogiNoodi ennustajaDialogi8 = new DialogiNoodi(alykkyysVsVoimakkuus1, alykkyysVsVoimakkuus2, new (int, Action)[] { (7, Ohjelma.Pelaaja.LisaaAlykkyys), (7, Ohjelma.Pelaaja.LisaaVoimakkuus) });
             DialogiNoodi[] ennustajadialogitaulukko = new DialogiNoodi[] { ennustajaDialogi0, ennustajaDialogi1, ennustajaDialogi2, ennustajaDialogi3, ennustajaDialogi4, ennustajaDialogi5, ennustajaDialogi6, ennustajaDialogi7, ennustajaDialogi8};
             kartta.LisaaNPC(new NPC((karttaLeveys / 2), ((karttaKorkeus / 2) -5), "The Fortuneteller", 'f', RLColor.Blue, ennustajadialogitaulukko, false));
@@ -99,6 +105,22 @@ namespace Ohjelmointiprojekti {
             }
             
             return kartta;
+        }
+        public PeliKartta LinnaKartta() {
+            kartta = new PeliKartta {
+                id = 3
+            };
+            kartta.Initialize(karttaLeveys, karttaKorkeus);
+            foreach (Cell solu in kartta.GetAllCells()) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+            }
+            return kartta;
+        }
+        public void LataaLinna() {
+            Ohjelma.ViestiLoki.Lisaa("You feel strange as your surroundings fade temporarily...");
+            Ohjelma.peliKartta = Ohjelma.karttaGeneroija.LinnaKartta();
+            Ohjelma.peliKartta.PaivitaNakoKentta();
+            Ohjelma.ViestiLoki.Lisaa("...Until you find yourself at an oddly familiar location.");
         }
     }
 }
