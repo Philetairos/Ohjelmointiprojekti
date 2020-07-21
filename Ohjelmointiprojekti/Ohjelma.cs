@@ -494,6 +494,7 @@ namespace Ohjelmointiprojekti {
             }
             
         }
+        //Tallenna pelaajan tiedot ja tason ID
         private static void Tallenna(StreamWriter sw) {
             string jsonString;
             try {

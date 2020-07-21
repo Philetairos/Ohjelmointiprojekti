@@ -109,6 +109,7 @@ namespace Ohjelmointiprojekti
         public override void KasitteleKuolema(PeliKartta kartta) {
             Ohjelma.ViestiLoki.Lisaa("You have died!");
             kartta = Ohjelma.karttaGeneroija.TyhjaKartta();
+
         }
         public void LisaaTaso() {
             if (Taso < 3) {

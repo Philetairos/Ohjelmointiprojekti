@@ -114,11 +114,29 @@ namespace Ohjelmointiprojekti {
             foreach (Cell solu in kartta.GetAllCells()) {
                 kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
             }
+            foreach (Cell solu in kartta.GetBorderCellsInSquare(karttaLeveys / 2, karttaKorkeus / 2, karttaKorkeus - 40)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            foreach (Cell solu in kartta.GetBorderCellsInSquare(karttaLeveys / 2 - 40, karttaKorkeus / 2, karttaKorkeus - 48)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            foreach (Cell solu in kartta.GetBorderCellsInSquare(karttaLeveys / 2 +40, karttaKorkeus / 2, karttaKorkeus - 48)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            kartta.Ovet.Add(new Ovi { X = ((karttaLeveys / 2) - 1), Y = karttaKorkeus - 8, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = ((karttaLeveys / 2) + 1), Y = karttaKorkeus - 8, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = ((karttaLeveys / 2) -24), Y = karttaKorkeus/2, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = ((karttaLeveys / 2) + 24), Y = karttaKorkeus / 2, Auki = false });
             return kartta;
         }
         public void LataaLinna() {
             Ohjelma.ViestiLoki.Lisaa("You feel strange as your surroundings fade temporarily...");
             Ohjelma.peliKartta = Ohjelma.karttaGeneroija.LinnaKartta();
+            Ohjelma.Pelaaja.X = karttaLeveys / 2;
+            Ohjelma.Pelaaja.Y = karttaKorkeus- 1;
             Ohjelma.peliKartta.PaivitaNakoKentta();
             Ohjelma.ViestiLoki.Lisaa("...Until you find yourself at an oddly familiar location.");
         }
