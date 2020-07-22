@@ -118,6 +118,10 @@ namespace Ohjelmointiprojekti {
                 kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
             }
+            foreach (Cell solu in kartta.GetBorderCellsInSquare(karttaLeveys / 2, karttaKorkeus / 2, karttaKorkeus - 55)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
             foreach (Cell solu in kartta.GetBorderCellsInSquare(karttaLeveys / 2 - 40, karttaKorkeus / 2, karttaKorkeus - 48)) {
                 kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
@@ -126,10 +130,35 @@ namespace Ohjelmointiprojekti {
                 kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
             }
-            kartta.Ovet.Add(new Ovi { X = ((karttaLeveys / 2) - 1), Y = karttaKorkeus - 8, Auki = false });
-            kartta.Ovet.Add(new Ovi { X = ((karttaLeveys / 2) + 1), Y = karttaKorkeus - 8, Auki = false });
-            kartta.Ovet.Add(new Ovi { X = ((karttaLeveys / 2) -24), Y = karttaKorkeus/2, Auki = false });
-            kartta.Ovet.Add(new Ovi { X = ((karttaLeveys / 2) + 24), Y = karttaKorkeus / 2, Auki = false });
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys / 2-23, karttaKorkeus / 2+9, karttaLeveys / 2+23, karttaKorkeus / 2+9)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys / 2 - 9, karttaKorkeus / 2 - 23, karttaLeveys / 2 - 9, karttaKorkeus / 2 + 23)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys / 2 - 23, karttaKorkeus / 2 - 9, karttaLeveys / 2 + 23, karttaKorkeus / 2 - 9)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys / 2 + 9, karttaKorkeus / 2 - 23, karttaLeveys / 2 + 9, karttaKorkeus / 2 + 23)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) - 1, Y = karttaKorkeus - 8, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) + 1, Y = karttaKorkeus - 8, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2, Y = karttaKorkeus - 23, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) -24, Y = karttaKorkeus/2, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) + 24, Y = karttaKorkeus / 2, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) - 16, Y = karttaKorkeus - 23, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) + 16, Y = karttaKorkeus - 23, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) - 16, Y = karttaKorkeus / 2 - 9, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) + 16, Y = karttaKorkeus / 2 - 9, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) - 9, Y = karttaKorkeus / 2 +16, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) + 9, Y = karttaKorkeus / 2 + 16, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) - 9, Y = karttaKorkeus / 2 - 16, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) + 9, Y = karttaKorkeus / 2 - 16, Auki = false });
             return kartta;
         }
         public void LataaLinna() {
