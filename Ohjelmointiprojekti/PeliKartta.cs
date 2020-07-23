@@ -137,6 +137,7 @@ namespace Ohjelmointiprojekti {
                 var solu = GetCell(x, y);
                 SetCellProperties(x, y, true, true, solu.IsExplored);
                 Ohjelma.ViestiLoki.Lisaa($"{hahmo.Nimi} opened a door.");
+                PaivitaNakoKentta();
             }
         }
         private void VaihdaKarttaa() {

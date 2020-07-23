@@ -30,8 +30,7 @@ namespace Ohjelmointiprojekti
             if (kartta.IsInFov(X, Y)) {
                 konsoli.Set(X, Y, Vari, RLColor.Black, Merkki);
             }
-            else
-            {
+            else {
                 konsoli.Set(X, Y, RLColor.Gray, RLColor.Black, '.');
             }
         }

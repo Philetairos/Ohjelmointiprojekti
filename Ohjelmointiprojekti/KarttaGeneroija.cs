@@ -118,6 +118,9 @@ namespace Ohjelmointiprojekti {
                 kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
             }
+            foreach (Cell solu in kartta.GetCellsInSquare(karttaLeveys / 2, karttaKorkeus / 2, karttaKorkeus - 41)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
             foreach (Cell solu in kartta.GetBorderCellsInSquare(karttaLeveys / 2, karttaKorkeus / 2, karttaKorkeus - 55)) {
                 kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
@@ -126,9 +129,15 @@ namespace Ohjelmointiprojekti {
                 kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
             }
+            foreach (Cell solu in kartta.GetCellsInSquare(karttaLeveys / 2 - 40, karttaKorkeus / 2, karttaKorkeus - 49)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
             foreach (Cell solu in kartta.GetBorderCellsInSquare(karttaLeveys / 2 +40, karttaKorkeus / 2, karttaKorkeus - 48)) {
                 kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            foreach (Cell solu in kartta.GetCellsInSquare(karttaLeveys / 2 + 40, karttaKorkeus / 2, karttaKorkeus - 49)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
             }
             foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys / 2-23, karttaKorkeus / 2+9, karttaLeveys / 2+23, karttaKorkeus / 2+9)) {
                 kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
@@ -146,6 +155,17 @@ namespace Ohjelmointiprojekti {
                 kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
                 kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
             }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys / 2 - 40, karttaKorkeus / 2 +16, karttaLeveys / 2 - 40, karttaKorkeus / 2 -16)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys / 2 + 40, karttaKorkeus / 2 + 16, karttaLeveys / 2 + 40, karttaKorkeus / 2 - 16)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Gray, RLColor.Black, '#'));
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            foreach (Cell solu in kartta.GetCellsInRectangle(karttaKorkeus-7, karttaLeveys / 2 - 2, 5, 7)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, true, true, RLColor.LightRed, RLColor.Black, '.'));
+            }
             kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) - 1, Y = karttaKorkeus - 8, Auki = false });
             kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) + 1, Y = karttaKorkeus - 8, Auki = false });
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2, Y = karttaKorkeus - 23, Auki = false });
@@ -159,6 +179,15 @@ namespace Ohjelmointiprojekti {
             kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) + 9, Y = karttaKorkeus / 2 + 16, Auki = false });
             kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) - 9, Y = karttaKorkeus / 2 - 16, Auki = false });
             kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) + 9, Y = karttaKorkeus / 2 - 16, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 - 40, Y = karttaKorkeus / 2, Auki = false });
+            kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 + 40, Y = karttaKorkeus / 2, Auki = false });
+            DialogiNoodi narriDialogi0 = new DialogiNoodi("Ho eyo he hum, I am Chuckles! Everyone's favourite court jester! Wanna hear a joke?", "1. Yes 2. No thank you", new (int, Action)[] { (1, null), (1, null) });
+            DialogiNoodi narriDialogi1 = new DialogiNoodi("What do you call two witches who live together? Broom mates!", "1. That was funny 2. No more jokes please", new (int, Action)[] { (2, null), (2, null) });
+            DialogiNoodi narriDialogi2 = new DialogiNoodi("What happened to the King's seat? It was throne out!", "1. Alright, enough jokes 2. I beg you to stop", new (int, Action)[] { (3, null), (3, null) });
+            DialogiNoodi narriDialogi3 = new DialogiNoodi("I tried reading a book about a castle with the drawbridge up... but it was impossible to get into!", "1. Guards! This man has gone mad!", new (int, Action)[] { (4, null) });
+            DialogiNoodi narriDialogi4 = new DialogiNoodi("Ho eyo he hum! It is my job to be mad! Maddeningly funny! Haha!", "1. I think I've had enough of you.", new (int, Action)[] { (-1, null) });
+            DialogiNoodi[] narridialogitaulukko = new DialogiNoodi[] { narriDialogi0, narriDialogi1, narriDialogi2, narriDialogi3, narriDialogi4 };
+            kartta.LisaaNPC(new NPC((karttaLeveys / 2) -2, karttaKorkeus - 16, "Chuckles", 'c', RLColor.LightGreen, narridialogitaulukko, true));
             return kartta;
         }
         public void LataaLinna() {

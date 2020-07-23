@@ -123,8 +123,7 @@ namespace Ohjelmointiprojekti {
             NPC npc = Ohjelma.peliKartta.NPCSijainti(koord.Item1, koord.Item2);
             return npc;
         }
-        public Vastustaja GetVastustaja(Suunta suunta)
-        {
+        public Vastustaja GetVastustaja(Suunta suunta) {
             Tuple<int, int> koord = GetSuunta(suunta);
             Vastustaja vihollinen = Ohjelma.peliKartta.VastustajaSijainti(koord.Item1, koord.Item2);
             return vihollinen;
