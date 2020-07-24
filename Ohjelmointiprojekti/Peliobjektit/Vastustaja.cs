@@ -12,9 +12,27 @@ namespace Ohjelmointiprojekti {
     /// </summary>
     public class Vastustaja : Hahmo {
         public readonly bool Liikkuu;
+
+        /// <summary>
+        /// Tyhjä konstruktori
+        /// </summary>
         public Vastustaja() {
 
         }
+
+        /// <summary>
+        /// Vastustajan konstruktori
+        /// </summary>
+        /// <param name="x">Sijainti kartan x-akselilla</param>
+        /// <param name="y">Sijainti kartan y-akselilla</param>
+        /// <param name="nimi">Vastustajan nimi</param>
+        /// <param name="merkki">Vastustajan symboli</param>
+        /// <param name="vari">Symbolin väri</param>
+        /// <param name="elama">Kuinka paljon elämää vastustajalla on</param>
+        /// <param name="voimakkuus">Kuinka voimakas vastustaja on</param>
+        /// <param name="napparyys">Kuinka näppärä vastustaja on</param>
+        /// <param name="puolustus">Kuinka hyvä puolustus vastustajalla on</param>
+        /// <param name="liikkuukko">Liikkuuko vastustaja satunnaisesti</param>
         public Vastustaja(int x, int y, string nimi, char merkki, RLColor vari, int elama, int voimakkuus, int napparyys, int puolustus, bool liikkuukko) {
             Nimi = nimi;
             Nakoetaisyys = 15;
@@ -31,6 +49,11 @@ namespace Ohjelmointiprojekti {
                 Capacity = 1
             };
         }
+
+        /// <summary>
+        /// Käsittely vastustajan kuolemalle
+        /// </summary>
+        /// <param name="kartta">Millä kartalla vastustaja kuolee</param>
         public override void KasitteleKuolema(PeliKartta kartta) { 
             kartta.Vastustajat.Remove(this);
             kartta.AsetaWalkable(X, Y, true);

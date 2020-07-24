@@ -15,13 +15,21 @@ namespace Ohjelmointiprojekti {
         private readonly int karttaKorkeus;
         private PeliKartta kartta;
 
-        //konstruktori
+        /// <summary>
+        /// Generoijan konstruktori
+        /// </summary>
+        /// <param name="leveys">Kartan leveys tiileinä</param>
+        /// <param name="korkeus">Kartan korkeus tiileinä</param>
         public KarttaGeneroija(int leveys, int korkeus) {
             karttaLeveys = leveys;
             karttaKorkeus = korkeus;
             kartta = new PeliKartta();
         }
-        //Testikartta testausta varten
+
+        /// <summary>
+        /// Testikartta testausta varten
+        /// </summary>
+        /// <returns>Palauttaa valmiin testikartan</returns>
         public PeliKartta TestiKartta() {
             kartta = new PeliKartta {
                 id = 0
@@ -52,7 +60,11 @@ namespace Ohjelmointiprojekti {
             kartta.LisaaVastustaja(new Vastustaja((karttaLeveys / 2) + 3, ((karttaKorkeus / 2) +4), "enemy", 'E', RLColor.Red, 5,1,1,1,true));
             return kartta;
         }
-        //Kartta jos pelaaja kuolee
+
+        /// <summary>
+        /// Tyhjä kartta jos pelaaja kuolee
+        /// </summary>
+        /// <returns>Palauttaa tyhjän kartan</returns>
         public PeliKartta TyhjaKartta() {
             kartta = new PeliKartta {
                 id = 1
@@ -63,6 +75,11 @@ namespace Ohjelmointiprojekti {
             }
             return kartta;
         }
+
+        /// <summary>
+        /// Kartta josta peli alkaa
+        /// </summary>
+        /// <returns>Palauttaa valmiin aloituskartan</returns>
         public PeliKartta AloitusKartta() {
             kartta = new PeliKartta {
                 id = 2
@@ -106,6 +123,11 @@ namespace Ohjelmointiprojekti {
             
             return kartta;
         }
+
+        /// <summary>
+        /// Kartta linnaa varten, toimii pelaajan "tukikohtana"
+        /// </summary>
+        /// <returns>Palauttaa valmiin linnakartan</returns>
         public PeliKartta LinnaKartta() {
             kartta = new PeliKartta {
                 id = 3
@@ -190,6 +212,10 @@ namespace Ohjelmointiprojekti {
             kartta.LisaaNPC(new NPC((karttaLeveys / 2) -2, karttaKorkeus - 16, "Chuckles", 'c', RLColor.LightGreen, narridialogitaulukko, true));
             return kartta;
         }
+
+        /// <summary>
+        /// Metodi linnakartan lataamista varten
+        /// </summary>
         public void LataaLinna() {
             Ohjelma.ViestiLoki.Lisaa("You feel strange as your surroundings fade temporarily...");
             Ohjelma.peliKartta = Ohjelma.karttaGeneroija.LinnaKartta();

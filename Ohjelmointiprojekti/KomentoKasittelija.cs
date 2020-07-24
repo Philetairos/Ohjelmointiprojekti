@@ -24,6 +24,11 @@ namespace Ohjelmointiprojekti {
     /// Luokka pelaajan toiminnoille, kuten liikumiselle ja interaktiolle
     /// </summary>
     public class KomentoKasittelija {
+        /// <summary>
+        /// Metodi pelaajan siirtämiselle
+        /// </summary>
+        /// <param name="suunta">Mihin suuntaan halutaan siirtää</param>
+        /// <returns>Onnistuiko siirtäminen, true jos kyllä, false jos ei</returns>
         public bool SiirraPelaaja(Suunta suunta) {
             Tuple<int, int> koord = GetSuunta(suunta);
             if (Ohjelma.peliKartta.AsetaSijainti(Ohjelma.Pelaaja, koord.Item1, koord.Item2)) {
@@ -31,6 +36,13 @@ namespace Ohjelmointiprojekti {
             }
             return false;
         }
+
+        /// <summary>
+        /// Metodi pitkän kantaman aseella ampumiselle
+        /// </summary>
+        /// <param name="suunta">Mihin suuntaan ammutaan</param>
+        /// <param name="ammus">Mitä ammutaan</param>
+        /// <returns>Palauttaa aina false</returns>
         public bool Ammu(Suunta suunta, Ammus ammus)  {
             switch (suunta) {
                 case Suunta.Ylos:
@@ -103,6 +115,13 @@ namespace Ohjelmointiprojekti {
             Ohjelma.peliKartta.Esineet.Add(ammus);
             return false;
         }
+
+        /// <summary>
+        /// Käsittele ammutun ammuksen osuma vastustajaan
+        /// </summary>
+        /// <param name="vastustaja">Vastustaja johon ammus on osunut</param>
+        /// <param name="ammus">Ammus joka osuu</param>
+        /// <returns>Palauttaa aina false</returns>
         public bool KasitteleOsuma(Vastustaja vastustaja, Ammus ammus) {
             DiceExpression noppa = new DiceExpression().Die(6);
             DiceResult noppatulos = noppa.Roll();
@@ -118,21 +137,45 @@ namespace Ohjelmointiprojekti {
             }
             return false;
         }
+
+        /// <summary>
+        /// Palauttaa NPC-hahmon halutusta suunnasta
+        /// </summary>
+        /// <param name="suunta">Suunta jota tarkastellaan</param>
+        /// <returns>NPC-hahmo jos sellainen on, muutoin null</returns>
         public NPC GetNPC(Suunta suunta) {
             Tuple<int, int> koord = GetSuunta(suunta);
             NPC npc = Ohjelma.peliKartta.NPCSijainti(koord.Item1, koord.Item2);
             return npc;
         }
+
+        /// <summary>
+        /// Palauttaa vastustajahahmon halutusta suunnasta
+        /// </summary>
+        /// <param name="suunta">Suunta jota tarkastellaan</param>
+        /// <returns>Vastustajahahmo jos sellainen on, muutoin null</returns>
         public Vastustaja GetVastustaja(Suunta suunta) {
             Tuple<int, int> koord = GetSuunta(suunta);
             Vastustaja vihollinen = Ohjelma.peliKartta.VastustajaSijainti(koord.Item1, koord.Item2);
             return vihollinen;
         }
+
+        /// <summary>
+        /// Palauttaa esineen halutusta suunnasta
+        /// </summary>
+        /// <param name="suunta">Suunta jota tarkastellaan</param>
+        /// <returns>Esine jos sellainen on, muutoin null</returns>
         public Esine GetEsine(Suunta suunta) {
             Tuple<int, int> koord = GetSuunta(suunta);
             Esine esine = Ohjelma.peliKartta.EsineSijainti(koord.Item1, koord.Item2);
             return esine;
         }
+
+        /// <summary>
+        /// Metodi joka käsittelee lähitaistelun pelaajan ja vastustajan välillä
+        /// </summary>
+        /// <param name="hyokkaaja">Hahmo joka hyökkää</param>
+        /// <param name="puolustaja">Hahmo joka puolustaa</param>
         public void Hyokkaa(Hahmo hyokkaaja, Hahmo puolustaja) {
             DiceExpression noppa = new DiceExpression().Die(6);
             DiceResult noppatulos = noppa.Roll();
@@ -154,6 +197,12 @@ namespace Ohjelmointiprojekti {
                 Ohjelma.ViestiLoki.Lisaa($"{hyokkaaja.Nimi} misses {puolustaja.Nimi}!");
             }
         }
+
+        /// <summary>
+        /// Hae tiilen koordinaatit halutusta suunnasta
+        /// </summary>
+        /// <param name="suunta">Haluttu suunta</param>
+        /// <returns>Naapuritiilen koordinaatit</returns>
         public Tuple<int,int> GetSuunta(Suunta suunta) {
             int x = Ohjelma.Pelaaja.X;
             int y = Ohjelma.Pelaaja.Y;

@@ -18,15 +18,14 @@ namespace Ohjelmointiprojekti {
         //Pääkonsolin koko tiileinä, ei pikseleinä
         private static readonly int konsolileveys = 160;
         private static readonly int konsolikorkeus = 80;
-        //Muiden konsolien koko perustuu sitten pääkonsolin kokoon
+
         private static readonly int karttaleveys = Convert.ToInt32(konsolileveys *0.75);
         private static readonly int karttakorkeus = Convert.ToInt32(konsolikorkeus * 0.8);
         private static readonly int sivukonsolileveys = Convert.ToInt32(konsolileveys * 0.25);
         private static readonly int dialogikonsolikorkeus = Convert.ToInt32(konsolikorkeus * 0.2);
         private static readonly int konsolikorkeuspuolet = Convert.ToInt32(konsolikorkeus * 0.5);
         private static bool render = true;
-
-        //Luo kaikki konsolit
+        
         private static RLRootConsole paaKonsoli;
         private static RLConsole karttaKonsoli, dialogiKonsoli, inventaarioKonsoli, statsiKonsoli, valikkoKonsoli;
 
@@ -64,7 +63,10 @@ namespace Ohjelmointiprojekti {
 
         private readonly static string Kontrollit1 = "Controls: Arrow Keys - Move, T - Talk, G - Get, A - Attack, S - Shoot, U - Use, L - Look, M - Use Magic,";
         private readonly static string Kontrollit2 = "R - Remove equipment, D - Drop Item, C - Controls, Z - Save Game, Esc - Exit Game";
-
+        
+        /// <summary>
+        /// Luo kaikki konsolit ja kaikki muu tarvittava, lopuksi käynnistä pääkonsoli
+        /// </summary>
         public static void Main() {
             //Fontti jota tiilit ja teksti käyttävät
             string fonttiTiedosto = "terminal8x8.png";
@@ -94,7 +96,11 @@ namespace Ohjelmointiprojekti {
             paaKonsoli.Render += PiirraValikko;
             paaKonsoli.Run();
         }
-        //Suorita suunnasta riippuvat komennot
+
+        /// <summary>
+        /// Suorita suunnasta riippuvat komennot
+        /// </summary>
+        /// <param name="suunta">Minkä suunnan pelaaja on valinnut</param>
         private static void Suorita(Suunta suunta) {
             if (talkMoodi == true) {
                 dialogiNPC = KomentoKasittelija.GetNPC(suunta);
@@ -160,7 +166,12 @@ namespace Ohjelmointiprojekti {
                 bool siirtyma = KomentoKasittelija.SiirraPelaaja(suunta);
             }
         }
-        //Käsittele pelaajan syöte päävalikossa
+
+        /// <summary>
+        /// Käsittele pelaajan syöte päävalikossa
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void PaivitaValikko(object sender, UpdateEventArgs e) {
             RLKeyPress nappain = paaKonsoli.Keyboard.GetKeyPress();
             if (nappain == null) {
@@ -288,8 +299,12 @@ namespace Ohjelmointiprojekti {
                 }
             }
         }
-        
-        //Käsittele pelaajan syöte muulloin
+
+        /// <summary>
+        /// Käsittele pelaajan syöte muulloin, itse pelissä
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void PaivitaKonsoli(object sender, UpdateEventArgs e) {
             RLKeyPress nappain = paaKonsoli.Keyboard.GetKeyPress();
             if (nappain == null) {
@@ -318,8 +333,8 @@ namespace Ohjelmointiprojekti {
             else if (magicMoodi == true) {
                 if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3) {
                     int num = Int32.Parse(nappain.Char.ToString());
-                    if (num > Pelaaja.Taso) {
-                        ViestiLoki.Lisaa("You need a higher level for this Circle!");
+                    if (num > Pelaaja.Alykkyys) {
+                        ViestiLoki.Lisaa("You need higher intelligence for this Circle!");
                         magicMoodi = false;
                     }
                     else {
@@ -494,7 +509,11 @@ namespace Ohjelmointiprojekti {
             }
             
         }
-        //Tallenna pelaajan tiedot ja tason ID
+
+        /// <summary>
+        /// Tallenna pelaajan tiedot ja tason ID
+        /// </summary>
+        /// <param name="sw">Tiedostoon kirjoittaja</param>
         private static void Tallenna(StreamWriter sw) {
             string jsonString;
             try {
@@ -513,7 +532,12 @@ namespace Ohjelmointiprojekti {
                 sw.Close();
             }
         }
-        //Piirtometodi aloitusvalikolle
+
+        /// <summary>
+        /// Piirtometodi aloitusvalikolle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void PiirraValikko(object sender, UpdateEventArgs e) {
             RLConsole.Blit(valikkoKonsoli, 0, 0, konsolileveys / 2, konsolikorkeuspuolet, paaKonsoli, konsolileveys / 2-10, konsolikorkeuspuolet-10);
             paaKonsoli.Draw();
@@ -560,7 +584,12 @@ namespace Ohjelmointiprojekti {
                 }
             }
         }
-        //Piirometodi pelille
+
+        /// <summary>
+        /// Piirtometodi itse pelille
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void PiirraKonsoli(object sender, UpdateEventArgs e) {
             RLConsole.Blit(karttaKonsoli, 0, 0, karttaleveys, karttakorkeus, paaKonsoli, 0, 0);
             RLConsole.Blit(dialogiKonsoli, 0, 0, karttaleveys, dialogikonsolikorkeus, paaKonsoli, 0, karttakorkeus);
@@ -570,7 +599,8 @@ namespace Ohjelmointiprojekti {
             paaKonsoli.Draw();
             if (render) {
                 Pelaaja.PiirraStatsit(statsiKonsoli);
-                peliKartta.PiirraKartta(karttaKonsoli, statsiKonsoli, inventaarioKonsoli);
+                Pelaaja.PiirraInventaario(inventaarioKonsoli);
+                peliKartta.PiirraKartta(karttaKonsoli, statsiKonsoli);
                 ViestiLoki.Piirra(dialogiKonsoli);
                 Pelaaja.Piirra(karttaKonsoli, peliKartta);
                 render = false;

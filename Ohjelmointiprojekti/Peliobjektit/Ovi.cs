@@ -18,10 +18,20 @@ namespace Ohjelmointiprojekti
         public char Merkki { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+
+        /// <summary>
+        /// Konstruktori
+        /// </summary>
         public Ovi() {
             Merkki = '|';
             Vari = RLColor.LightGray;
         }
+
+        /// <summary>
+        /// Piirtometodi ovelle
+        /// </summary>
+        /// <param name="konsoli">Konsoli johon piirretään</param>
+        /// <param name="kartta">Kartta jonka tietoja tarkastellaan</param>
         public void Piirra(RLConsole konsoli, IMap kartta) {
             if (!kartta.GetCell(X, Y).IsExplored) {
                 return;

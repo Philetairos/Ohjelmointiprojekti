@@ -18,6 +18,9 @@ namespace Ohjelmointiprojekti {
         public List<Solu> Solut { get; set; }
         public int id;
 
+        /// <summary>
+        /// Konstruktori
+        /// </summary>
         public PeliKartta() {
             NPCs = new List<NPC>();
             Vastustajat = new List<Vastustaja>();
@@ -25,24 +28,71 @@ namespace Ohjelmointiprojekti {
             Esineet = new List<Esine>();
             Solut = new List<Solu>();
         }
+
+        /// <summary>
+        /// Metodi NPC-hahmon lisäämiseen kartalle
+        /// </summary>
+        /// <param name="npc">NPC-hahmo joka lisätään</param>
         public void LisaaNPC(NPC npc) {
             NPCs.Add(npc);
             AsetaWalkable(npc.X, npc.Y, false);
         }
+
+        /// <summary>
+        /// Metodi vastustajahahmon lisäämiseen kartalle
+        /// </summary>
+        /// <param name="npc">Vastustajahahmo joka lisätään</param>
         public void LisaaVastustaja(Vastustaja vastustaja) {
             Vastustajat.Add(vastustaja);
             AsetaWalkable(vastustaja.X, vastustaja.Y, false);
         }
+
+        /// <summary>
+        /// Tarkista, sijaitseeko tiilellä NPC-hahmo
+        /// </summary>
+        /// <param name="x">Sijainti kartan x-akselilla</param>
+        /// <param name="y">Sijainti kartan y-akselilla</param>
+        /// <returns>NPC-hahmo joka sijaitsee tiilellä, jos ei ole niin palauttaa null</returns>
         public NPC NPCSijainti(int x, int y) {
             return NPCs.FirstOrDefault(m => m.X == x && m.Y == y);
         }
+
+        /// <summary>
+        /// Tarkista, sijaitseeko tiilellä vastustajahahmo
+        /// </summary>
+        /// <param name="x">Sijainti kartan x-akselilla</param>
+        /// <param name="y">Sijainti kartan y-akselilla</param>
+        /// <returns>Vastustajahahmo joka sijaitsee tiilellä, jos ei ole niin palauttaa null</returns>
         public Vastustaja VastustajaSijainti(int x, int y) {
             return Vastustajat.FirstOrDefault(m => m.X == x && m.Y == y);
         }
+
+        /// <summary>
+        /// Tarkista, sijaitseeko tiilellä esine
+        /// </summary>
+        /// <param name="x">Sijainti kartan x-akselilla</param>
+        /// <param name="y">Sijainti kartan y-akselilla</param>
+        /// <returns>Esine joka sijaitsee tiilellä, jos ei ole niin palauttaa null</returns>
         public Esine EsineSijainti(int x, int y) {
             return Esineet.FirstOrDefault(m => m.X == x && m.Y == y);
         }
-        public void PiirraKartta(RLConsole karttaKonsoli, RLConsole statsiKonsoli, RLConsole inventaarioKonsoli) {
+
+        /// <summary>
+        /// Tarkista, sijaitseeko tiilellä ovi
+        /// </summary>
+        /// <param name="x">Sijainti kartan x-akselilla</param>
+        /// <param name="y">Sijainti kartan y-akselilla</param>
+        /// <returns>Ovi joka sijaitsee tiilellä, jos ei ole niin palauttaa null</returns>
+        public Ovi PalautaOvi(int x, int y) {
+            return Ovet.SingleOrDefault(d => d.X == x && d.Y == y);
+        }
+
+        /// <summary>
+        /// Päivitä konsolit ja piirrä kartta sekä siinä olevat hahmot
+        /// </summary>
+        /// <param name="karttaKonsoli">Konsoli johon piirretään kartan tiilet</param>
+        /// <param name="statsiKonsoli">Konsoli johon piirretään kartalla olevat ja pelaajan näkemät hahmot</param>
+        public void PiirraKartta(RLConsole karttaKonsoli, RLConsole statsiKonsoli) {
             karttaKonsoli.Clear();
             foreach (Cell solu in GetAllCells()) {
                 AsetaSymboli(karttaKonsoli, solu);
@@ -71,8 +121,13 @@ namespace Ohjelmointiprojekti {
                     i++;
                 }
             }
-            Ohjelma.Pelaaja.PiirraInventaario(inventaarioKonsoli);
         }
+
+        /// <summary>
+        /// Aseta oletussymboli kyseiselle tiilelle
+        /// </summary>
+        /// <param name="karttaKonsoli">Konsoli johon piirretään</param>
+        /// <param name="solu">Tiili joka piirretään</param>
         private void AsetaSymboli(RLConsole karttaKonsoli, Cell solu) {
             if (!solu.IsExplored) {
                 return;
@@ -94,7 +149,10 @@ namespace Ohjelmointiprojekti {
                 }
             }
         }
-        //Päivitä, mitä tiilejä pelaaja näkee
+
+        /// <summary>
+        /// Päivitä, mitä tiilejä pelaaja näkee
+        /// </summary>
         public void PaivitaNakoKentta() {
             Pelaaja pelaaja = Ohjelma.Pelaaja;
             ComputeFov(pelaaja.X, pelaaja.Y, pelaaja.Nakoetaisyys, true);
@@ -104,7 +162,14 @@ namespace Ohjelmointiprojekti {
                 }
             }
         }
-        //Aseta hahmon sijainti, jos sijantiin voi liikkua (isWalkable)
+
+        /// <summary>
+        /// Aseta hahmon sijainti, jos sijantiin voi liikkua (isWalkable)
+        /// </summary>
+        /// <param name="hahmo">Hahmo jota siirretään</param>
+        /// <param name="x">Sijainti kartan x-akselilla</param>
+        /// <param name="y">Sijainti kartan y-akselilla</param>
+        /// <returns>Onnistuiko siirtäminen? True jos kyllä, false jos ei</returns>
         public bool AsetaSijainti(Hahmo hahmo, int x, int y) {
             if (x >= Width || y >= Height || x < 0 || y < 0) {
                 VaihdaKarttaa();
@@ -123,13 +188,24 @@ namespace Ohjelmointiprojekti {
             AvaaOvi(hahmo, x, y);
             return false;
         }
+
+        /// <summary>
+        /// Aseta tiilen isWalkable-muuttuja
+        /// </summary>
+        /// <param name="x">Tiilen sijainti x-akselilla</param>
+        /// <param name="y">Tiilen sijainti y-akselilla</param>
+        /// <param name="isWalkable">Arvo joka halutaan asettaa</param>
         public void AsetaWalkable(int x, int y, bool isWalkable) {
             ICell solu = GetCell(x, y);
             SetCellProperties(solu.X, solu.Y, solu.IsTransparent, isWalkable, solu.IsExplored);
         }
-        public Ovi PalautaOvi(int x, int y) {
-            return Ovet.SingleOrDefault(d => d.X == x && d.Y == y);
-        }
+
+        /// <summary>
+        /// Avaa ovi jos sellainen on hahmon tiellä
+        /// </summary>
+        /// <param name="hahmo">Hahmo joka avaa ovea</param>
+        /// <param name="x">Avattavan oven sijainti kartan x-akselilla</param>
+        /// <param name="y">Avattavan oven sijainti kartan y-akselilla</param>
         private void AvaaOvi (Hahmo hahmo, int x, int y) {
             Ovi door = PalautaOvi(x, y);
             if (door != null && !door.Auki) {
@@ -140,6 +216,8 @@ namespace Ohjelmointiprojekti {
                 PaivitaNakoKentta();
             }
         }
+
+
         private void VaihdaKarttaa() {
             
         }

@@ -11,6 +11,13 @@ namespace Ohjelmointiprojekti {
     /// Luokka huppu-esinettä varten, jonka voi pukea
     /// </summary>
     public class Huppu : Varuste {
+
+        /// <summary>
+        /// Konstruktori
+        /// </summary>
+        /// <param name="maara">Kuinka monta esinettä</param>
+        /// <param name="x">Sijainti kartan x-akselilla</param>
+        /// <param name="y">Sijainti kartan y-akselilla</param>
         public Huppu(int maara, int x, int y) {
             X = x;
             Y = y;
@@ -22,6 +29,11 @@ namespace Ohjelmointiprojekti {
             Lokero = 0;
             LokeroNimi = "1. Head";
         }
+
+        /// <summary>
+        /// Mitä tapahtuu kun pelaaja käyttää huppua (pelaaja pukee sen)
+        /// </summary>
+        /// <returns>Palauttaa aina false</returns>
         public override bool KaytaEsine() {
             Ohjelma.ViestiLoki.Lisaa("You wear the hood.");
             Ohjelma.Pelaaja.Varusteet[Lokero] = this;
@@ -29,6 +41,10 @@ namespace Ohjelmointiprojekti {
             Ohjelma.Pelaaja.Inventaario.Remove(this);
             return false;
         }
+
+        /// <summary>
+        /// Metodi sille, mitä tapahtuu kun pelaaja poistaa varusteen
+        /// </summary>
         public override void PoistaVaruste() {
             Ohjelma.ViestiLoki.Lisaa("You take off the hood.");
             Ohjelma.Pelaaja.Puolustus -= Puolustus;

@@ -19,6 +19,9 @@ namespace Ohjelmointiprojekti {
         public bool VoiAmpua { get; set; }
         public string LokeroNimi { get; set; }
 
+        /// <summary>
+        /// Metodi sille, mitä tapahtuu kun pelaaja poistaa varusteen
+        /// </summary>
         public virtual void PoistaVaruste () {
 
         }

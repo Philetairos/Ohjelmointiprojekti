@@ -16,6 +16,12 @@ namespace Ohjelmointiprojekti
         public readonly string vastaukset;
         public readonly (int, Action)[] linkit;
 
+        /// <summary>
+        /// Konstruktori
+        /// </summary>
+        /// <param name="d">Dialogin puhe tekstimuodossa</param>
+        /// <param name="v">Vastausvaihtoehdot listattuna tekstimuodossa</param>
+        /// <param name="l">Vastausvaihtoehdot linkkeinä muihin vastauksiin, voivat suorittaa koodia Actionin kautta</param>
         public DialogiNoodi(string d, string v, (int, Action)[] l) {
             dialogi = d;
             vastaukset = v;

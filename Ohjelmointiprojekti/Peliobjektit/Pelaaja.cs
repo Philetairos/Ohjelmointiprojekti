@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-namespace Ohjelmointiprojekti
-{
+namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka pelaajan hahmolle, jota hän hallitsee
     /// </summary>
@@ -17,6 +16,11 @@ namespace Ohjelmointiprojekti
         public int Alykkyys { get; set; }
         public int Taso { get; set; }
 
+        /// <summary>
+        /// Konstruktori pelaajalle
+        /// </summary>
+        /// <param name="x">Sijanti kartan x-akselilla</param>
+        /// <param name="y">Sijainti kartan y-akselilla</param>
         public Pelaaja(int x, int y) {
             Nimi = "Player";
             Nakoetaisyys = 25;
@@ -36,6 +40,11 @@ namespace Ohjelmointiprojekti
             };
             Varusteet = new Varuste[5];
         }
+
+        /// <summary>
+        /// Piirtää pelaajan tilan konsoliin
+        /// </summary>
+        /// <param name="statsiKonsoli">Mihin konsoliin piirretään</param>
         public void PiirraStatsit(RLConsole statsiKonsoli) {
             statsiKonsoli.Clear();
             statsiKonsoli.Print(1, 1, $"Name:         {Nimi}", RLColor.White);
@@ -47,6 +56,12 @@ namespace Ohjelmointiprojekti
             statsiKonsoli.Print(1, 7, $"Dexterity:    {Napparyys}", RLColor.White);
             statsiKonsoli.Print(1, 8, $"Intelligence: {Alykkyys}", RLColor.White);
         }
+
+        /// <summary>
+        /// Lisää esine pelaajan inventaarioon
+        /// </summary>
+        /// <param name="esine">Esine joka lisätään</param>
+        /// <returns>Palauttaa aina false</returns>
         public bool LisaaEsine(Esine esine) {
             if (Inventaario.Count < Inventaario.Capacity) {
                 foreach (Esine inv in Inventaario) {
@@ -63,6 +78,12 @@ namespace Ohjelmointiprojekti
             Ohjelma.ViestiLoki.Lisaa("Inventory is full!");
             return false;
         }
+
+        /// <summary>
+        /// Poista tietty esine inventaariosta 
+        /// </summary>
+        /// <param name="num">Esineen sijainti taulukossa</param>
+        /// <returns>Palauttaa aina false</returns>
         public bool PoistaEsine(int num) {
             Inventaario[num].X = X;
             Inventaario[num].Y = Y;
@@ -71,6 +92,12 @@ namespace Ohjelmointiprojekti
             Inventaario.RemoveAt(num);
             return false;
         }
+
+        /// <summary>
+        /// Poista tietty esine pelaajan varusteista
+        /// </summary>
+        /// <param name="lokero">Varusteen sijainti</param>
+        /// <returns>Palauttaa aina false</returns>
         public bool PoistaVaruste(int lokero) {
             if (Varusteet[lokero - 1] != null) {
                 if (Inventaario.Count < Inventaario.Capacity) {
@@ -87,6 +114,11 @@ namespace Ohjelmointiprojekti
             }
             return false;
         }
+
+        /// <summary>
+        /// Piirrä pelaajan inventaarion sisältö konsoliin
+        /// </summary>
+        /// <param name="inventaarioKonsoli">Mihin konsoliin piiretään</param>
         public void PiirraInventaario(RLConsole inventaarioKonsoli) {
             inventaarioKonsoli.Clear();
             inventaarioKonsoli.Print(1,1, "Inventory:", RLColor.White);
@@ -106,11 +138,20 @@ namespace Ohjelmointiprojekti
                 }
             }
         }
+
+        /// <summary>
+        /// Metodi pelaajan kuolemiselle (kun elämämittari on 0), lataa tyhjän kartan
+        /// </summary>
+        /// <param name="kartta">Kartta joka korvataan</param>
         public override void KasitteleKuolema(PeliKartta kartta) {
             Ohjelma.ViestiLoki.Lisaa("You have died!");
             kartta = Ohjelma.karttaGeneroija.TyhjaKartta();
 
         }
+
+        /// <summary>
+        /// Metodi joka lisää pelaajan tasoa, kutsutaan kun kokemusta on tarpeeksi
+        /// </summary>
         public void LisaaTaso() {
             if (Taso < 3) {
                 Taso += 1;
@@ -133,12 +174,24 @@ namespace Ohjelmointiprojekti
                 }
             }
         }
+
+        /// <summary>
+        /// Metodi joka lisää pelaajan älykkyyttä
+        /// </summary>
         public void LisaaAlykkyys() {
             Alykkyys++;
         }
+
+        /// <summary>
+        /// Metodi joka lisää pelaajan voimakkuutta
+        /// </summary>
         public void LisaaVoimakkuus() {
             Voimakkuus++;
         }
+
+        /// <summary>
+        /// Metodi joka lisää pelaajan näppäryyttä
+        /// </summary>
         public void LisaaNapparyys() {
             Napparyys++;
         }

@@ -12,6 +12,11 @@ namespace Ohjelmointiprojekti {
     /// Tämä luokka siirtää hahmoa, välttäen seiniin törmäämistä
     /// </summary>
     public class SiirraHahmo {
+        /// <summary>
+        /// Hahmon liikkuminen satunnaiseen suuntaan
+        /// </summary>
+        /// <param name="hahmo">Hahmo jota siirretään</param>
+        /// <returns>Palauttaa aina true</returns>
         public bool LiikuRandom(Hahmo hahmo) {
             PeliKartta kartta = Ohjelma.peliKartta;
             DotNetRandom satunnaisluku = new DotNetRandom();
@@ -23,6 +28,13 @@ namespace Ohjelmointiprojekti {
             }
             return true;
         }
+
+        /// <summary>
+        /// Hahmon siirtäminen tiettyyn tiileen
+        /// </summary>
+        /// <param name="kohde">Kohde jota kohti siirretään</param>
+        /// <param name="hahmo">Hahmo jota siirretään</param>
+        /// <returns>Palauttaa aina true</returns>
         public bool LiikuKohteeseen(ICell kohde, Hahmo hahmo) {
             PeliKartta kartta = Ohjelma.peliKartta;
             kartta.AsetaWalkable(hahmo.X, hahmo.Y, true);
@@ -47,6 +59,12 @@ namespace Ohjelmointiprojekti {
             }
             return true;
         }
+
+        /// <summary>
+        /// Siirrä hahmoa kohti pelaajan sijaintia
+        /// </summary>
+        /// <param name="hahmo">Hahmo jota siirretään</param>
+        /// <returns>Palauttaa aina true</returns>
         public bool LiikuKohtiPelaajaa(Hahmo hahmo) {
             Pelaaja pelaaja = Ohjelma.Pelaaja;
             PeliKartta kartta = Ohjelma.peliKartta;
@@ -57,6 +75,12 @@ namespace Ohjelmointiprojekti {
             }
             return true;
         }
+
+        /// <summary>
+        /// Siirrä hahmo tiettyyn tiileen, jos hahmo on vastustaja ja pelaaja on vieressä niin hyökkää
+        /// </summary>
+        /// <param name="hahmo">Hahmo jota siirretään</param>
+        /// <param name="solu">Tiili johon siirrytään</param>
         public void LiikutaHahmo(Hahmo hahmo, ICell solu) {
             if (!Ohjelma.peliKartta.AsetaSijainti(hahmo, solu.X, solu.Y)) {
                 if (hahmo.GetType() == typeof(Vastustaja) && Ohjelma.Pelaaja.X == solu.X && Ohjelma.Pelaaja.Y == solu.Y) {

@@ -11,6 +11,13 @@ namespace Ohjelmointiprojekti {
     /// Luokka kolikko-esinettä varten. Kolikoita voi käyttää kaupankäynnissä, ja sen voi myös heittää.
     /// </summary>
     public class Kolikko : Esine {
+
+        /// <summary>
+        /// Konstruktori
+        /// </summary>
+        /// <param name="maara">Kuinka monta esinettä</param>
+        /// <param name="x">Sijainti kartan x-akselilla</param>
+        /// <param name="y">Sijainti kartan y-akselilla</param>
         public Kolikko(int maara, int x, int y) {
             X = x;
             Y = y;
@@ -19,6 +26,11 @@ namespace Ohjelmointiprojekti {
             Vari = RLColor.Yellow;
             Merkki = 'o';
         }
+
+        /// <summary>
+        /// Mitä tapahtuu kun pelaaja käyttää esinettä (pelaaja heittää kolikkoa)
+        /// </summary>
+        /// <returns>Palauttaa aina false</returns>
         public override bool KaytaEsine() {
             Ohjelma.ViestiLoki.Lisaa("You flip the coin.");
             DotNetRandom satunnaisluku = new DotNetRandom();

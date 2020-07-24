@@ -22,6 +22,12 @@ namespace Ohjelmointiprojekti {
         public int Puolustus { get; set; }
         public int Elama { get; set; }
         public List<Esine> Inventaario { get; set; }
+
+        /// <summary>
+        /// Piirtometodi hahmolle
+        /// </summary>
+        /// <param name="konsoli">Konsoli johon piirretään</param>
+        /// <param name="kartta">Kartta josta haetaan tietoja</param>
         public void Piirra(RLConsole konsoli, IMap kartta) {
             if (!kartta.GetCell(X, Y).IsExplored) {
                 return;
@@ -33,10 +39,20 @@ namespace Ohjelmointiprojekti {
                 konsoli.Set(X, Y, RLColor.Gray, RLColor.Black, '.');
             }
         }
+        /// <summary>
+        /// Metodi hahmon tietojen piirtämiseen konsoliin
+        /// </summary>
+        /// <param name="statsiKonsoli">Konsoli johon piirretään</param>
+        /// <param name="sijainti">Mihin kohtaan piirretään</param>
         public void PiirraStatsit(RLConsole statsiKonsoli, int sijainti) {
             statsiKonsoli.Print(1, 13 + (sijainti * 2), Merkki.ToString(), Vari);
             statsiKonsoli.Print(2, 13 + (sijainti * 2), $": {Nimi}", RLColor.White);
         }
+
+        /// <summary>
+        /// Metodi hahmon kuoleman käsittelylle
+        /// </summary>
+        /// <param name="kartta">Kartta jolla hahmo kuolee</param>
         public virtual void KasitteleKuolema(PeliKartta kartta) {
             //erillinen toteutus luokan periville
         }
