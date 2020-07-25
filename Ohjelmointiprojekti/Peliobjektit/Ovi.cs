@@ -28,7 +28,7 @@ namespace Ohjelmointiprojekti
         }
 
         /// <summary>
-        /// Piirtometodi ovelle
+        /// Uniikki piirtometodi ovelle, tarkistaa onko ovi auki vai kiinni
         /// </summary>
         /// <param name="konsoli">Konsoli johon piirretään</param>
         /// <param name="kartta">Kartta jonka tietoja tarkastellaan</param>

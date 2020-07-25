@@ -14,6 +14,9 @@ namespace Ohjelmointiprojekti {
         public Varuste[] Varusteet { get; set; }
         public int Nalka { get; set; }
         public int Alykkyys { get; set; }
+        public int ViisausKarma { get; set; }
+        public int KontrolliKarma { get; set; }
+        public int SopuisuusKarma { get; set; }
         public int Taso { get; set; }
 
         /// <summary>
@@ -34,6 +37,9 @@ namespace Ohjelmointiprojekti {
             Napparyys = 1;
             Alykkyys = 1;
             Puolustus = 1;
+            ViisausKarma = 0;
+            KontrolliKarma = 0;
+            SopuisuusKarma = 0;
             Taso = 1;
             Inventaario = new List<Esine> {
                 Capacity = 4
@@ -130,11 +136,11 @@ namespace Ohjelmointiprojekti {
                 }
             }
             inventaarioKonsoli.Print(1, 3+i, "Equipment:", RLColor.White);
-            for (; i < Varusteet.Length; i++) {
-                if (!(Varusteet[i] is null)) {
-                    inventaarioKonsoli.Print(3, 4 + i, Varusteet[i].LokeroNimi, RLColor.White);
-                    inventaarioKonsoli.Print(8, 5 + i, Varusteet[i].Merkki.ToString(), Varusteet[i].Vari);
-                    inventaarioKonsoli.Print(10, 5 + i, $"{Varusteet[i].Nimi}  {Varusteet[i].Maara}", RLColor.White);
+            for (int j = 0; j < Varusteet.Length; j++, i += 2) {
+                if (!(Varusteet[j] is null)) {
+                    inventaarioKonsoli.Print(3, 4 + i, Varusteet[j].LokeroNimi, RLColor.White);
+                    inventaarioKonsoli.Print(8, 5 + i, Varusteet[j].Merkki.ToString(), Varusteet[j].Vari);
+                    inventaarioKonsoli.Print(10, 5 + i, $"{Varusteet[j].Nimi}  {Varusteet[j].Maara}", RLColor.White);
                 }
             }
         }
@@ -194,6 +200,48 @@ namespace Ohjelmointiprojekti {
         /// </summary>
         public void LisaaNapparyys() {
             Napparyys++;
+        }
+
+        /// <summary>
+        /// Metodi joka lisää pelaajan viisauskarmaa
+        /// </summary>
+        public void LisaaViisausKarma() {
+            ViisausKarma++;
+        }
+
+        /// <summary>
+        /// Metodi joka lisää pelaajan kontrollikarmaa
+        /// </summary>
+        public void LisaaKontrolliKarma() {
+            KontrolliKarma++;
+        }
+
+        /// <summary>
+        /// Metodi joka lisää pelaajan sopuisuuskarmaa
+        /// </summary>
+        public void LisaaSopuisuusKarma() {
+            SopuisuusKarma++;
+        }
+
+        /// <summary>
+        /// Metodi joka vähentää pelaajan viisauskarmaa
+        /// </summary>
+        public void VahennaViisausKarma() {
+            ViisausKarma--;
+        }
+
+        /// <summary>
+        /// Metodi joka vähentää pelaajan kontrollikarmaa
+        /// </summary>
+        public void VahennaKontrolliKarma() {
+            KontrolliKarma++;
+        }
+
+        /// <summary>
+        /// Metodi joka lisää pelaajan näppäryyttä
+        /// </summary>
+        public void VahennaSopuisuusKarma() {
+            SopuisuusKarma++;
         }
     }
 }

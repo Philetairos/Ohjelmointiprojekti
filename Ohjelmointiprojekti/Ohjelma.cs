@@ -45,6 +45,8 @@ namespace Ohjelmointiprojekti {
         private static bool shootMoodi = false;
         private static bool magicMoodi = false;
         private static bool circleOne = false;
+        private static bool circleTwo = false;
+        private static bool circleThree = false;
         private static bool saveMoodi = false;
 
         //Vain aloitusvalikkoa varten
@@ -337,11 +339,24 @@ namespace Ohjelmointiprojekti {
                         ViestiLoki.Lisaa("You need higher intelligence for this Circle!");
                         magicMoodi = false;
                     }
-                    else {
+                    else if (num == 1) {
+                        ViestiLoki.Lisaa("Which spell do you want to cast?");
+                        ViestiLoki.Lisaa("1. Heal (Moon Mushroom)");
+                        ViestiLoki.Lisaa("2. Light (Brimstone Dust)");
+                        ViestiLoki.Lisaa("3. Blink (Black Pearl)");
+                        magicMoodi = false;
+                        circleOne = true;
+                    }
+                    else if (num == 2) {
                         ViestiLoki.Lisaa("Which spell do you want to cast?");
                         ViestiLoki.Lisaa("1. Heal (Moon mushroom)");
                         magicMoodi = false;
-                        circleOne = true;
+                        circleTwo = true;
+                    }
+                    else {
+                        ViestiLoki.Lisaa("Which spell do you want to cast?");
+                        magicMoodi = false;
+                        circleThree = true;
                     }
                 }
             }
@@ -371,10 +386,38 @@ namespace Ohjelmointiprojekti {
                             ViestiLoki.Lisaa("You need 1 Moon Mushroom to cast this!");
                             break;
                         case 2:
-                            
+                            foreach (Esine esine in Pelaaja.Inventaario) {
+                                if(esine.Nimi == "Brimstone Dust") {
+                                    if (esine.Maara == 1) {
+                                        Pelaaja.Inventaario.Remove(esine);
+                                    }
+                                    else {
+                                        esine.Maara--;
+                                    }
+                                    Pelaaja.Nakoetaisyys = 25;
+                                    ViestiLoki.Lisaa("IN LOR!");
+                                    ViestiLoki.Lisaa("You cast Light.");
+                                    circleOne = false;
+                                    return;
+                                }
+                            }
                             break;
                         case 3:
-                            
+                            foreach (Esine esine in Pelaaja.Inventaario) {
+                                if(esine.Nimi == "Black Pearl") {
+                                    if (esine.Maara == 1) {
+                                        Pelaaja.Inventaario.Remove(esine);
+                                    }
+                                    else {
+                                        esine.Maara--;
+                                    }
+                                    karttaGeneroija.LataaLinna();
+                                    ViestiLoki.Lisaa("IN POR!");
+                                    ViestiLoki.Lisaa("You cast Blink.");
+                                    circleOne = false;
+                                    return;
+                                }
+                            }
                             break;
                     }
                     circleOne = false;

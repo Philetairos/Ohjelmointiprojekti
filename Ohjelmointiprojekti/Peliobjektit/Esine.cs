@@ -10,7 +10,7 @@ namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka pelin esineitä varten. Pelaaja voi kerätä ja käyttää esineitä.
     /// </summary>
-    public class Esine : IEsine, IPiirra {
+    public class Esine : IPiirra, IEsine {
         public string Nimi { get; set; }
         public char Merkki { get; set; }
         public RLColor Vari { get; set; }
@@ -40,7 +40,7 @@ namespace Ohjelmointiprojekti {
         }
 
         /// <summary>
-        /// Piirtometodi esineelle
+        /// Piirtometodi objektille
         /// </summary>
         /// <param name="konsoli">Konsoli johon piirretään</param>
         /// <param name="kartta">Kartta josta haetaan tietoja</param>

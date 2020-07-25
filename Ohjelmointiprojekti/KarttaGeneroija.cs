@@ -203,13 +203,24 @@ namespace Ohjelmointiprojekti {
             kartta.Ovet.Add(new Ovi { X = (karttaLeveys / 2) + 9, Y = karttaKorkeus / 2 - 16, Auki = false });
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 - 40, Y = karttaKorkeus / 2, Auki = false });
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 + 40, Y = karttaKorkeus / 2, Auki = false });
-            DialogiNoodi narriDialogi0 = new DialogiNoodi("Ho eyo he hum, I am Chuckles! Everyone's favourite court jester! Wanna hear a joke?", "1. Yes 2. No thank you", new (int, Action)[] { (1, null), (1, null) });
-            DialogiNoodi narriDialogi1 = new DialogiNoodi("What do you call two witches who live together? Broom mates!", "1. That was funny 2. No more jokes please", new (int, Action)[] { (2, null), (2, null) });
+
+            kartta.Esineet.Add(new Huppu(1, (karttaLeveys / 2) -15, (karttaKorkeus / 2) +22));
+            kartta.Esineet.Add(new KangasTakki(1, (karttaLeveys / 2) - 14, (karttaKorkeus / 2) + 22));
+            kartta.Esineet.Add(new KangasHousut(1, (karttaLeveys / 2) - 13, (karttaKorkeus / 2) + 22));
+
+            DialogiNoodi narriDialogi0 = new DialogiNoodi("Ho eyo he hum, I am Chuckles! Everyone's favourite court jester! Wanna hear a joke?", "1. Yes 2. No thank you", new (int, Action)[] { (1, null), (1, Ohjelma.Pelaaja.VahennaSopuisuusKarma) });
+            DialogiNoodi narriDialogi1 = new DialogiNoodi("What do you call two witches who live together? Broom mates!", "1. That was funny 2. No more jokes please", new (int, Action)[] { (2, Ohjelma.Pelaaja.LisaaSopuisuusKarma), (2, null) });
             DialogiNoodi narriDialogi2 = new DialogiNoodi("What happened to the King's seat? It was throne out!", "1. Alright, enough jokes 2. I beg you to stop", new (int, Action)[] { (3, null), (3, null) });
             DialogiNoodi narriDialogi3 = new DialogiNoodi("I tried reading a book about a castle with the drawbridge up... but it was impossible to get into!", "1. Guards! This man has gone mad!", new (int, Action)[] { (4, null) });
             DialogiNoodi narriDialogi4 = new DialogiNoodi("Ho eyo he hum! It is my job to be mad! Maddeningly funny! Haha!", "1. I think I've had enough of you.", new (int, Action)[] { (-1, null) });
             DialogiNoodi[] narridialogitaulukko = new DialogiNoodi[] { narriDialogi0, narriDialogi1, narriDialogi2, narriDialogi3, narriDialogi4 };
             kartta.LisaaNPC(new NPC((karttaLeveys / 2) -2, karttaKorkeus - 16, "Chuckles", 'c', RLColor.LightGreen, narridialogitaulukko, true));
+            DialogiNoodi palvelustyttoDialogi0 = new DialogiNoodi("Hello there, I am the King's maid, Amelina. How may I serve you?", "1. Can I borrow these clothes?", new (int, Action)[] { (1, null) });
+            DialogiNoodi palvelustyttoDialogi1 = new DialogiNoodi("Oh, of course. Your current clothes look very strange. Are you from another land?", "1. Yes 2. No", new (int, Action)[] { (2, null), (3, Ohjelma.Pelaaja.VahennaViisausKarma) });
+            DialogiNoodi palvelustyttoDialogi2 = new DialogiNoodi("Well then, you should talk to the King. He can provide you guidance.", "1. Alright, thank you", new (int, Action)[] { (-1, null) });
+            DialogiNoodi palvelustyttoDialogi3 = new DialogiNoodi("Really? Then you must be a jester. Talk to Chuckles, you two should get along well.", "1. Uh, okay...", new (int, Action)[] { (-1, null) });
+            DialogiNoodi[] palvelustyttodialogitaulukko = new DialogiNoodi[] { palvelustyttoDialogi0, palvelustyttoDialogi1, palvelustyttoDialogi2, palvelustyttoDialogi3 };
+            kartta.LisaaNPC(new NPC((karttaLeveys / 2) - 18, karttaKorkeus - 11, "Amelina", 'a', RLColor.Yellow, palvelustyttodialogitaulukko, true));
             return kartta;
         }
 

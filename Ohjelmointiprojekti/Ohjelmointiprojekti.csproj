@@ -92,11 +92,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Peliobjektit\Ammus.cs" />
+    <Compile Include="Peliobjektit\KangasHousut.cs" />
+    <Compile Include="Peliobjektit\KangasTakki.cs" />
     <Compile Include="Peliobjektit\Huppu.cs" />
     <Compile Include="Peliobjektit\Jousi.cs" />
     <Compile Include="Peliobjektit\Kolikko.cs" />
     <Compile Include="KomentoKasittelija.cs" />
     <Compile Include="DialogiNoodi.cs" />
+    <Compile Include="Peliobjektit\MustaHelmi.cs" />
+    <Compile Include="Peliobjektit\Tulikivi.cs" />
     <Compile Include="Peliobjektit\Kuusieni.cs" />
     <Compile Include="Peliobjektit\Nuoli.cs" />
     <Compile Include="Peliobjektit\Leipa.cs" />

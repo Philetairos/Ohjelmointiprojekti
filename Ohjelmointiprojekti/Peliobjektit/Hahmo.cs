@@ -10,7 +10,7 @@ namespace Ohjelmointiprojekti {
     /// <summary>
     /// Hahmo-luokka, jota kaikki pelin hahmot käyttävät. Hyödyntää hahmo- ja piirrä-rajapintoja
     /// </summary>
-    public class Hahmo : IHahmo, IPiirra {
+    public class Hahmo : IPiirra, IHahmo {
         public string Nimi { get; set; }
         public int Nakoetaisyys { get; set; }
         public RLColor Vari { get; set; }
@@ -23,22 +23,6 @@ namespace Ohjelmointiprojekti {
         public int Elama { get; set; }
         public List<Esine> Inventaario { get; set; }
 
-        /// <summary>
-        /// Piirtometodi hahmolle
-        /// </summary>
-        /// <param name="konsoli">Konsoli johon piirretään</param>
-        /// <param name="kartta">Kartta josta haetaan tietoja</param>
-        public void Piirra(RLConsole konsoli, IMap kartta) {
-            if (!kartta.GetCell(X, Y).IsExplored) {
-                return;
-            }
-            if (kartta.IsInFov(X, Y)) {
-                konsoli.Set(X, Y, Vari, RLColor.Black, Merkki);
-            }
-            else {
-                konsoli.Set(X, Y, RLColor.Gray, RLColor.Black, '.');
-            }
-        }
         /// <summary>
         /// Metodi hahmon tietojen piirtämiseen konsoliin
         /// </summary>
@@ -55,6 +39,23 @@ namespace Ohjelmointiprojekti {
         /// <param name="kartta">Kartta jolla hahmo kuolee</param>
         public virtual void KasitteleKuolema(PeliKartta kartta) {
             //erillinen toteutus luokan periville
+        }
+
+        /// <summary>
+        /// Piirtometodi objektille
+        /// </summary>
+        /// <param name="konsoli">Konsoli johon piirretään</param>
+        /// <param name="kartta">Kartta josta haetaan tietoja</param>
+        public void Piirra(RLConsole konsoli, IMap kartta) {
+            if (!kartta.GetCell(X, Y).IsExplored) {
+                return;
+            }
+            if (kartta.IsInFov(X, Y)) {
+                konsoli.Set(X, Y, Vari, RLColor.Black, Merkki);
+            }
+            else {
+                konsoli.Set(X, Y, RLColor.Gray, RLColor.Black, '.');
+            }
         }
     }
 }
