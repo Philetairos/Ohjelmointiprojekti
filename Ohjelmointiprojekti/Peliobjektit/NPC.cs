@@ -9,7 +9,6 @@ using RLNET;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka pelin hahmoille, joita vastaan pelaaja ei voi taistella, mutta joiden kanssa pelaaja voi keskustella
-    /// TODO: kaupankäynti
     /// </summary>
     public class NPC : Hahmo {
         public DialogiNoodi[] HahmonDialogi;
@@ -63,6 +62,23 @@ namespace Ohjelmointiprojekti {
             DialogiID = 0;
             Ohjelma.ViestiLoki.Lisaa("You end the conversation.");
             return false;
+        }
+
+        /// <summary>
+        /// Yksinkertainen kaupankäyntimetodi, NPC-hahmo myy esineen inventaariosta
+        /// </summary>
+        public void MyyEsine() {
+            if (Inventaario[0] != null) {
+                if (Ohjelma.Pelaaja.MaksaRahat(1)) {
+                    Ohjelma.Pelaaja.Inventaario.Add(Inventaario[0]);
+                    if (Inventaario[0].Maara == 1) {
+                        Inventaario.RemoveAt(0);
+                    }
+                    else {
+                        Inventaario[0].Maara--;
+                    }
+                }
+            }
         }
     }
 }

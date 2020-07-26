@@ -325,6 +325,7 @@ namespace Ohjelmointiprojekti {
                     int num = Int32.Parse(nappain.Char.ToString());
                     if (num > Pelaaja.Inventaario.Count) {
                         ViestiLoki.Lisaa("No item in that slot!");
+                        kaytaEsine = false;
                     }
                     else {
                         kaytaEsine = Pelaaja.Inventaario[num - 1].KaytaEsine();
@@ -426,7 +427,7 @@ namespace Ohjelmointiprojekti {
             else if (poistaVaruste == true) {
                 if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4 || nappain.Key == RLKey.Number5) {
                     int num = Int32.Parse(nappain.Char.ToString());
-                    poistaEsine = Pelaaja.PoistaVaruste(num);
+                    poistaVaruste = Pelaaja.PoistaVaruste(num);
                 }
             }
             else if (poistaEsine == true) {

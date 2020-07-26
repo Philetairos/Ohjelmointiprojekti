@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using RogueSharp;
 using RLNET;
 
-namespace Ohjelmointiprojekti
-{
+namespace Ohjelmointiprojekti {
     /// <summary>
     /// Dialogin osio, hahmon dialogi koostuu näistä
     /// </summary>

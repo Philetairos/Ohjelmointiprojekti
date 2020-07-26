@@ -215,12 +215,26 @@ namespace Ohjelmointiprojekti {
             DialogiNoodi narriDialogi4 = new DialogiNoodi("Ho eyo he hum! It is my job to be mad! Maddeningly funny! Haha!", "1. I think I've had enough of you.", new (int, Action)[] { (-1, null) });
             DialogiNoodi[] narridialogitaulukko = new DialogiNoodi[] { narriDialogi0, narriDialogi1, narriDialogi2, narriDialogi3, narriDialogi4 };
             kartta.LisaaNPC(new NPC((karttaLeveys / 2) -2, karttaKorkeus - 16, "Chuckles", 'c', RLColor.LightGreen, narridialogitaulukko, true));
+
             DialogiNoodi palvelustyttoDialogi0 = new DialogiNoodi("Hello there, I am the King's maid, Amelina. How may I serve you?", "1. Can I borrow these clothes?", new (int, Action)[] { (1, null) });
             DialogiNoodi palvelustyttoDialogi1 = new DialogiNoodi("Oh, of course. Your current clothes look very strange. Are you from another land?", "1. Yes 2. No", new (int, Action)[] { (2, null), (3, Ohjelma.Pelaaja.VahennaViisausKarma) });
             DialogiNoodi palvelustyttoDialogi2 = new DialogiNoodi("Well then, you should talk to the King. He can provide you guidance.", "1. Alright, thank you", new (int, Action)[] { (-1, null) });
             DialogiNoodi palvelustyttoDialogi3 = new DialogiNoodi("Really? Then you must be a jester. Talk to Chuckles, you two should get along well.", "1. Uh, okay...", new (int, Action)[] { (-1, null) });
             DialogiNoodi[] palvelustyttodialogitaulukko = new DialogiNoodi[] { palvelustyttoDialogi0, palvelustyttoDialogi1, palvelustyttoDialogi2, palvelustyttoDialogi3 };
             kartta.LisaaNPC(new NPC((karttaLeveys / 2) - 18, karttaKorkeus - 11, "Amelina", 'a', RLColor.Yellow, palvelustyttodialogitaulukko, true));
+
+            NPC maagi = new NPC((karttaLeveys / 2) - 18, (karttaKorkeus / 2) - 15, "Magnus", 'm', RLColor.Blue, new DialogiNoodi[] { }, true) {
+                Inventaario = new List<Esine> { new Kuusieni(5, 1, 1) }
+            };
+            DialogiNoodi velhoDialogi0 = new DialogiNoodi("Oh, greetings, stranger! I am Magnus, the court magician in service to the King.", "1. How does magic work?", new (int, Action)[] { (1, null) });
+            DialogiNoodi velhoDialogi1 = new DialogiNoodi("That is a question I hear quite often. Magic in Brythonn requires reagents, which provide power for spells.", "1. Where can I get reagents?", new (int, Action)[] { (2, null) });
+            DialogiNoodi velhoDialogi2 = new DialogiNoodi("Well you can get them from me! I am selling Moon Mushrooms, one coin each.", "1. I would like to buy one 2. No thank you", new (int, Action)[] { (3, maagi.MyyEsine), (4, null) });
+            DialogiNoodi velhoDialogi3 = new DialogiNoodi("These mushrooms are handy for the healing spell of the first Circle.", "1. Thank you and good bye", new (int, Action)[] { (-1, null)});
+            DialogiNoodi velhoDialogi4 = new DialogiNoodi("Perhaps some other time then. Now if you excuse me, I have magical studies to conduct.", "1. Good bye", new (int, Action)[] { (-1, null) });
+            DialogiNoodi[] velhodialogitaulukko = new DialogiNoodi[] { velhoDialogi0, velhoDialogi1, velhoDialogi2, velhoDialogi3, velhoDialogi4 };
+            maagi.HahmonDialogi = velhodialogitaulukko;
+            kartta.LisaaNPC(maagi);
+
             return kartta;
         }
 

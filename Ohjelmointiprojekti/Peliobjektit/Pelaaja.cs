@@ -182,6 +182,32 @@ namespace Ohjelmointiprojekti {
         }
 
         /// <summary>
+        /// Vähentää tietyn määrän kolikoita pelaajalta, jos niitä on tarpeeksi
+        /// </summary>
+        /// <param name="maara">Kuinka paljon pitää maksaa</param>
+        /// <returns>Onnistuiko maksaminen, true jos kyllä, false jos ei</returns>
+        public bool MaksaRahat(int maara) {
+            foreach (var kolikko in Inventaario.OfType<Kolikko>()) {
+                if (kolikko is Kolikko) {
+                    if (kolikko.Maara < maara) {
+                        Ohjelma.ViestiLoki.Lisaa("You don't have enough money!");
+                        return false;
+                    }
+                    else if (kolikko.Maara == 1) {
+                        Inventaario.Remove(kolikko);
+                        return true;
+                    }
+                    else {
+                        kolikko.Maara--;
+                        return true;
+                    }
+                }
+            }
+            Ohjelma.ViestiLoki.Lisaa("You don't have enough money!");
+            return false;
+        }
+
+        /// <summary>
         /// Metodi joka lisää pelaajan älykkyyttä
         /// </summary>
         public void LisaaAlykkyys() {
