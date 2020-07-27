@@ -156,7 +156,7 @@ namespace Ohjelmointiprojekti {
         }
 
         /// <summary>
-        /// Metodi joka lisää pelaajan tasoa, kutsutaan kun kokemusta on tarpeeksi
+        /// Metodi joka lisää pelaajan tasoa
         /// </summary>
         public void LisaaTaso() {
             if (Taso < 3) {

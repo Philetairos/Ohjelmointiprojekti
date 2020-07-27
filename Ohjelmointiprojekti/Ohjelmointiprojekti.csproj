@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Peliobjektit\Ammus.cs" />
+    <Compile Include="Peliobjektit\Miekka.cs" />
     <Compile Include="Peliobjektit\KangasHousut.cs" />
     <Compile Include="Peliobjektit\KangasTakki.cs" />
     <Compile Include="Peliobjektit\Huppu.cs" />

@@ -35,10 +35,13 @@ namespace Ohjelmointiprojekti {
         /// </summary>
         /// <returns>Palauttaa aina false</returns>
         public override bool KaytaEsine() {
+            Ohjelma.Pelaaja.Inventaario.Remove(this);
+            if (Ohjelma.Pelaaja.Varusteet[Lokero] != null) {
+                Ohjelma.Pelaaja.PoistaVaruste(Lokero+1);
+            }
             Ohjelma.ViestiLoki.Lisaa("You wear the hood.");
             Ohjelma.Pelaaja.Varusteet[Lokero] = this;
             Ohjelma.Pelaaja.Puolustus += Puolustus;
-            Ohjelma.Pelaaja.Inventaario.Remove(this);
             return false;
         }
 

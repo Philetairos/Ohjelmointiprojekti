@@ -8,9 +8,9 @@ using RogueSharp;
 
 namespace Ohjelmointiprojekti {
     /// <summary>
-    /// Luokka huppu-esinettä varten, jonka voi pukea
+    /// Miekkavaruste joka lisää pelaajan aiheuttamaa vahinkoa
     /// </summary>
-    public class KangasHousut : Varuste {
+    public class Miekka : Varuste {
 
         /// <summary>
         /// Konstruktori
@@ -18,20 +18,20 @@ namespace Ohjelmointiprojekti {
         /// <param name="maara">Kuinka monta esinettä</param>
         /// <param name="x">Sijainti kartan x-akselilla</param>
         /// <param name="y">Sijainti kartan y-akselilla</param>
-        public KangasHousut(int maara, int x, int y) {
+        public Miekka(int maara, int x, int y) {
             X = x;
             Y = y;
-            Nimi = "Woolen Pants";
+            Nimi = "Sword";
             Maara = maara;
-            Vari = RLColor.Brown;
-            Merkki = 'M';
-            Puolustus = 1;
-            Lokero = 2;
-            LokeroNimi = "3. Legs";
+            Vari = RLColor.LightGray;
+            Merkki = 'l';
+            Lokero = 3;
+            VoiAmpua = true;
+            LokeroNimi = "4. Right Hand";
         }
 
         /// <summary>
-        /// Mitä tapahtuu kun pelaaja käyttää huppua (pelaaja pukee sen)
+        /// Mitä tapahtuu kun pelaaja käyttää esinettä (pelaaja asettaa sen varusteeksi)
         /// </summary>
         /// <returns>Palauttaa aina false</returns>
         public override bool KaytaEsine() {
@@ -39,9 +39,9 @@ namespace Ohjelmointiprojekti {
             if (Ohjelma.Pelaaja.Varusteet[Lokero] != null) {
                 Ohjelma.Pelaaja.PoistaVaruste(Lokero+1);
             }
-            Ohjelma.ViestiLoki.Lisaa("You wear the pants.");
+            Ohjelma.ViestiLoki.Lisaa("You equip the sword.");
             Ohjelma.Pelaaja.Varusteet[Lokero] = this;
-            Ohjelma.Pelaaja.Puolustus += Puolustus;
+            Ohjelma.Pelaaja.LisaaVoimakkuus();
             return false;
         }
 
@@ -49,8 +49,8 @@ namespace Ohjelmointiprojekti {
         /// Metodi sille, mitä tapahtuu kun pelaaja poistaa varusteen
         /// </summary>
         public override void PoistaVaruste() {
-            Ohjelma.ViestiLoki.Lisaa("You take off the pants.");
-            Ohjelma.Pelaaja.Puolustus -= Puolustus;
+            Ohjelma.ViestiLoki.Lisaa("You unequip the sword.");
+            Ohjelma.Pelaaja.Voimakkuus--;
         }
     }
 }

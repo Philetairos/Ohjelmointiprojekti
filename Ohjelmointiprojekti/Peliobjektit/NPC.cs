@@ -74,8 +74,11 @@ namespace Ohjelmointiprojekti {
                     if (Inventaario[0].Maara == 1) {
                         Inventaario.RemoveAt(0);
                     }
-                    else {
+                    else if(Inventaario[0].Maara > 1) {
                         Inventaario[0].Maara--;
+                    }
+                    else {
+                        Ohjelma.ViestiLoki.Lisaa("Out of stock!");
                     }
                 }
             }

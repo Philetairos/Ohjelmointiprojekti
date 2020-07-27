@@ -25,7 +25,7 @@ namespace Ohjelmointiprojekti {
             Maara = maara;
             Vari = RLColor.Brown;
             Merkki = ')';
-            Lokero = 4;
+            Lokero = 3;
             VoiAmpua = true;
             LokeroNimi = "4. Right Hand";
         }
@@ -35,9 +35,12 @@ namespace Ohjelmointiprojekti {
         /// </summary>
         /// <returns>Palauttaa aina false</returns>
         public override bool KaytaEsine() {
+            Ohjelma.Pelaaja.Inventaario.Remove(this);
+            if (Ohjelma.Pelaaja.Varusteet[Lokero] != null) {
+                Ohjelma.Pelaaja.PoistaVaruste(Lokero+1);
+            }
             Ohjelma.ViestiLoki.Lisaa("You equip the bow.");
             Ohjelma.Pelaaja.Varusteet[Lokero] = this;
-            Ohjelma.Pelaaja.Inventaario.Remove(this);
             return false;
         }
 
