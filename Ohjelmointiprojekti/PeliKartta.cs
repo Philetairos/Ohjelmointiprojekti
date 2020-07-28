@@ -172,7 +172,7 @@ namespace Ohjelmointiprojekti {
         /// <returns>Onnistuiko siirtäminen? True jos kyllä, false jos ei</returns>
         public bool AsetaSijainti(Hahmo hahmo, int x, int y) {
             if (x >= Width || y >= Height || x < 0 || y < 0) {
-                VaihdaKarttaa();
+                Ohjelma.karttaGeneroija.VaihdaKarttaa();
                 return false;
             }
             else if (GetCell(x, y).IsWalkable) {
@@ -215,11 +215,6 @@ namespace Ohjelmointiprojekti {
                 Ohjelma.ViestiLoki.Lisaa($"{hahmo.Nimi} opened a door.");
                 PaivitaNakoKentta();
             }
-        }
-
-
-        private void VaihdaKarttaa() {
-            
         }
     }
 }

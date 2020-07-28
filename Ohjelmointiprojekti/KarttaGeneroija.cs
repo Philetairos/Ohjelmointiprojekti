@@ -285,12 +285,37 @@ namespace Ohjelmointiprojekti {
             return kartta;
         }
 
+        public PeliKartta SaariKartta() {
+            kartta = new PeliKartta {
+                id = 4
+            };
+            kartta.Initialize(karttaLeveys, karttaKorkeus);
+            foreach (Cell solu in kartta.GetAllCells()) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+            }
+            return kartta;
+        }
+
+        /// <summary>
+        /// Lataa uuden kartan kun pelaaja menee tämänhetkisen kartan ulkopuolelle
+        /// </summary>
+        public void VaihdaKarttaa() {
+            switch (Ohjelma.peliKartta.id) {
+                case 3:
+                    Ohjelma.peliKartta = SaariKartta();
+                    Ohjelma.Pelaaja.X = karttaLeveys / 2;
+                    Ohjelma.Pelaaja.Y = karttaKorkeus / 2;
+                    Ohjelma.peliKartta.PaivitaNakoKentta();
+                    break;
+            }
+        }
+
         /// <summary>
         /// Metodi linnakartan lataamista varten
         /// </summary>
         public void LataaLinna() {
             Ohjelma.ViestiLoki.Lisaa("You feel strange as your surroundings fade temporarily...");
-            Ohjelma.peliKartta = Ohjelma.karttaGeneroija.LinnaKartta();
+            Ohjelma.peliKartta = LinnaKartta();
             Ohjelma.Pelaaja.X = karttaLeveys / 2;
             Ohjelma.Pelaaja.Y = karttaKorkeus- 1;
             Ohjelma.peliKartta.PaivitaNakoKentta();
