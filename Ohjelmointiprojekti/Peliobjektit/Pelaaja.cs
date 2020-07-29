@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using RogueSharp;
 using RLNET;
 
@@ -148,11 +148,12 @@ namespace Ohjelmointiprojekti {
         /// <summary>
         /// Metodi pelaajan kuolemiselle (kun elämämittari on 0), lataa tyhjän kartan
         /// </summary>
-        /// <param name="kartta">Kartta joka korvataan</param>
-        public override void KasitteleKuolema(PeliKartta kartta) {
+        public override void KasitteleKuolema() {
             Ohjelma.ViestiLoki.Lisaa("You have died!");
-            kartta = Ohjelma.karttaGeneroija.TyhjaKartta();
-
+            Ohjelma.peliKartta = Ohjelma.karttaGeneroija.TyhjaKartta();
+            Ohjelma.ViestiLoki.Lisaa("A dark cold void surrounds you. It's over, you feel.");
+            Ohjelma.ViestiLoki.Lisaa("...Or is it?");
+            Ohjelma.ViestiLoki.Lisaa("(Press Enter to respawn)");
         }
 
         /// <summary>

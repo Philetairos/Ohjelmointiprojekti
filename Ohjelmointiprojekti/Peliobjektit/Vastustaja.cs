@@ -54,12 +54,12 @@ namespace Ohjelmointiprojekti {
         /// Käsittely vastustajan kuolemalle
         /// </summary>
         /// <param name="kartta">Millä kartalla vastustaja kuolee</param>
-        public override void KasitteleKuolema(PeliKartta kartta) { 
-            kartta.Vastustajat.Remove(this);
-            kartta.AsetaWalkable(X, Y, true);
-            kartta.Solut.Add(new Solu(X, Y, true, true, true, RLColor.Black, RLColor.Red, Merkki));
+        public override void KasitteleKuolema() {
+            Ohjelma.peliKartta.Vastustajat.Remove(this);
+            Ohjelma.peliKartta.AsetaWalkable(X, Y, true);
+            Ohjelma.peliKartta.Solut.Add(new Solu(X, Y, true, true, true, RLColor.Black, RLColor.Red, Merkki));
             foreach (Esine esine in Inventaario) {
-                kartta.Esineet.Add(esine);
+                Ohjelma.peliKartta.Esineet.Add(esine);
             }
         }
     }

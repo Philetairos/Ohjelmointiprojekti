@@ -129,7 +129,7 @@ namespace Ohjelmointiprojekti {
                 vastustaja.Elama -= ammus.Vahinko;
                 if (vastustaja.Elama <= 0) {
                     Ohjelma.ViestiLoki.Lisaa($"{vastustaja.Nimi} has been shot and killed.");
-                    vastustaja.KasitteleKuolema(Ohjelma.peliKartta);
+                    vastustaja.KasitteleKuolema();
                 }
             }
             else {
@@ -186,7 +186,7 @@ namespace Ohjelmointiprojekti {
                     Ohjelma.ViestiLoki.Lisaa($"{hyokkaaja.Nimi} hits {puolustaja.Nimi} for {hyokkaaja.Voimakkuus} damage!");
                     if (puolustaja.Elama <= 0) {
                         Ohjelma.ViestiLoki.Lisaa($"{puolustaja.Nimi} has been struck down.");
-                        puolustaja.KasitteleKuolema(Ohjelma.peliKartta);
+                        puolustaja.KasitteleKuolema();
                     }
                 }
                 else {

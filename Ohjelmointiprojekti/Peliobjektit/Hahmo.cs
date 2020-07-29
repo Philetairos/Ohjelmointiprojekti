@@ -36,8 +36,7 @@ namespace Ohjelmointiprojekti {
         /// <summary>
         /// Metodi hahmon kuoleman käsittelylle
         /// </summary>
-        /// <param name="kartta">Kartta jolla hahmo kuolee</param>
-        public virtual void KasitteleKuolema(PeliKartta kartta) {
+        public virtual void KasitteleKuolema() {
             //erillinen toteutus luokan periville
         }
 

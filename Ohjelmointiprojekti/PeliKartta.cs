@@ -175,7 +175,10 @@ namespace Ohjelmointiprojekti {
                 Ohjelma.karttaGeneroija.VaihdaKarttaa();
                 return false;
             }
-            else if (GetCell(x, y).IsWalkable) {
+            if (id == 4) {
+                Ohjelma.karttaGeneroija.SiirrySaarella(x, y);
+            }
+            if (GetCell(x, y).IsWalkable) {
                 AsetaWalkable(hahmo.X, hahmo.Y, true);
                 hahmo.X = x;
                 hahmo.Y = y;

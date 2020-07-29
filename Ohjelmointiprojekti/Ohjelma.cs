@@ -367,7 +367,7 @@ namespace Ohjelmointiprojekti {
                     switch (num) {
                         case 1:
                             foreach (Esine esine in Pelaaja.Inventaario) {
-                                if(esine.Nimi == "Moon Mushroom") {
+                                if (esine.Nimi == "Moon Mushroom") {
                                     if (esine.Maara == 1) {
                                         Pelaaja.Inventaario.Remove(esine);
                                     }
@@ -375,7 +375,7 @@ namespace Ohjelmointiprojekti {
                                         esine.Maara--;
                                     }
                                     Pelaaja.Elama += 10;
-                                    if (Pelaaja.Elama > 10+Pelaaja.Taso * 10) {
+                                    if (Pelaaja.Elama > 10 + Pelaaja.Taso * 10) {
                                         Pelaaja.Elama = 10 + Pelaaja.Taso * 10;
                                     }
                                     ViestiLoki.Lisaa("MANI!");
@@ -388,7 +388,7 @@ namespace Ohjelmointiprojekti {
                             break;
                         case 2:
                             foreach (Esine esine in Pelaaja.Inventaario) {
-                                if(esine.Nimi == "Brimstone Dust") {
+                                if (esine.Nimi == "Brimstone Dust") {
                                     if (esine.Maara == 1) {
                                         Pelaaja.Inventaario.Remove(esine);
                                     }
@@ -405,7 +405,7 @@ namespace Ohjelmointiprojekti {
                             break;
                         case 3:
                             foreach (Esine esine in Pelaaja.Inventaario) {
-                                if(esine.Nimi == "Black Pearl") {
+                                if (esine.Nimi == "Black Pearl") {
                                     if (esine.Maara == 1) {
                                         Pelaaja.Inventaario.Remove(esine);
                                     }
@@ -520,6 +520,13 @@ namespace Ohjelmointiprojekti {
                         ViestiLoki.Lisaa("Y - Yes, N - No, save in default file");
                         ViestiLoki.Lisaa("Save: Do you want to save in a new file?");
                         return;
+                    case RLKey.Enter:
+                        if (Pelaaja.Elama <= 0) {
+                            Ohjelma.karttaGeneroija.LataaLinna();
+                            Pelaaja.Elama = 10;
+                            Pelaaja.Nalka = 25;
+                        }
+                        break;
                     case RLKey.Escape:
                         paaKonsoli.Close();
                         break;
@@ -531,21 +538,26 @@ namespace Ohjelmointiprojekti {
                         liikuttaja.LiikuKohtiPelaajaa(vastustaja);
                     }
                 }
-                liikkumislaskuri++;
-                if (liikkumislaskuri%3 == 0) {
+                if (peliKartta.id == 4) {
+                    liikkumislaskuri += 5;
+                }
+                else {
+                    liikkumislaskuri++;
+                }
+                if (liikkumislaskuri % 3 == 0 && peliKartta.id != 4) {
                     foreach (NPC hahmo in peliKartta.NPCs) {
                         if (hahmo.Liikkuu == true && dialogi == false) {
                             liikuttaja.LiikuRandom(hahmo);
                         }
                     }
                 }
-                else if (liikkumislaskuri == 25) {
+                if (liikkumislaskuri >= 25) {
                     Pelaaja.Nalka--;
                     if (Pelaaja.Nalka <= 0) {
                         ViestiLoki.Lisaa("You are starving!");
                         Pelaaja.Elama -= 1;
                         if (Pelaaja.Elama <= 0) {
-                            Pelaaja.KasitteleKuolema(peliKartta);
+                            Pelaaja.KasitteleKuolema();
                         }
                     }
                     liikkumislaskuri = 0;

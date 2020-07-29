@@ -291,8 +291,15 @@ namespace Ohjelmointiprojekti {
             };
             kartta.Initialize(karttaLeveys, karttaKorkeus);
             foreach (Cell solu in kartta.GetAllCells()) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, false, false);
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Blue, RLColor.Black, '~'));
+            }
+            foreach (Cell solu in kartta.GetCellsInDiamond(karttaLeveys / 2, karttaKorkeus / 2, karttaKorkeus - 40)) {
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.Green, RLColor.Black, '\''));
                 kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
             }
+            kartta.Solut.Add(new Solu(karttaLeveys / 2, karttaKorkeus / 2, false, false, true, RLColor.LightGray, RLColor.Black, 'M'));
+            kartta.SetCellProperties(karttaLeveys / 2, karttaKorkeus / 2, true, false, false);
             return kartta;
         }
 
@@ -304,14 +311,26 @@ namespace Ohjelmointiprojekti {
                 case 3:
                     Ohjelma.peliKartta = SaariKartta();
                     Ohjelma.Pelaaja.X = karttaLeveys / 2;
-                    Ohjelma.Pelaaja.Y = karttaKorkeus / 2;
+                    Ohjelma.Pelaaja.Y = karttaKorkeus / 2 +1;
                     Ohjelma.peliKartta.PaivitaNakoKentta();
                     break;
             }
         }
 
         /// <summary>
-        /// Metodi linnakartan lataamista varten
+        /// Lataa uuden kartan kun pelaaja menee tiettyyn kohtaan saarikartalla
+        /// </summary>
+        public void SiirrySaarella(int x, int y) {
+            if (x == karttaLeveys / 2 && y == karttaKorkeus / 2) {
+                Ohjelma.peliKartta = LinnaKartta();
+                Ohjelma.Pelaaja.X = karttaLeveys / 2;
+                Ohjelma.Pelaaja.Y = karttaKorkeus - 1;
+                Ohjelma.peliKartta.PaivitaNakoKentta();
+            }
+        }
+
+        /// <summary>
+        /// Metodi linnakartan lataamista varten viestien kera
         /// </summary>
         public void LataaLinna() {
             Ohjelma.ViestiLoki.Lisaa("You feel strange as your surroundings fade temporarily...");
