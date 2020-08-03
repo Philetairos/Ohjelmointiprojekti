@@ -263,6 +263,12 @@ namespace Ohjelmointiprojekti {
                                             case 3:
                                                 peliKartta = karttaGeneroija.LinnaKartta();
                                                 break;
+                                            case 4:
+                                                peliKartta = karttaGeneroija.SaariKartta();
+                                                break;
+                                            case 5:
+                                                peliKartta = karttaGeneroija.LuolastoKartta1();
+                                                break;
                                         }
                                     }
                                     else {
@@ -271,6 +277,9 @@ namespace Ohjelmointiprojekti {
                                     jsonString = sr.ReadLine();
                                     Pelaaja = JsonSerializer.Deserialize<Pelaaja>(jsonString);
                                     Pelaaja.Vari = RLColor.White;
+                                    if (Pelaaja.Inventaario.Capacity == 0) {
+                                        Pelaaja.Inventaario.Capacity = 4;
+                                    }
                                     sr.Close();
                                     paaKonsoli.Update -= PaivitaValikko;
                                     paaKonsoli.Render -= PiirraValikko;
@@ -350,7 +359,9 @@ namespace Ohjelmointiprojekti {
                     }
                     else if (num == 2) {
                         ViestiLoki.Lisaa("Which spell do you want to cast?");
-                        ViestiLoki.Lisaa("1. Heal (Moon mushroom)");
+                        ViestiLoki.Lisaa("1. Firebolts (Brimstone Dust & Black Pearl)");
+                        ViestiLoki.Lisaa("2. Quell Hunger (Moon Mushroom & Brimstone Dust)");
+                        ViestiLoki.Lisaa("3. Paralyze (Moon Mushroom & Black Pearl)");
                         magicMoodi = false;
                         circleTwo = true;
                     }
@@ -366,62 +377,153 @@ namespace Ohjelmointiprojekti {
                     int num = Int32.Parse(nappain.Char.ToString());
                     switch (num) {
                         case 1:
-                            foreach (Esine esine in Pelaaja.Inventaario) {
-                                if (esine.Nimi == "Moon Mushroom") {
-                                    if (esine.Maara == 1) {
-                                        Pelaaja.Inventaario.Remove(esine);
-                                    }
-                                    else {
-                                        esine.Maara--;
-                                    }
-                                    Pelaaja.Elama += 10;
-                                    if (Pelaaja.Elama > 10 + Pelaaja.Taso * 10) {
-                                        Pelaaja.Elama = 10 + Pelaaja.Taso * 10;
-                                    }
-                                    ViestiLoki.Lisaa("MANI!");
-                                    ViestiLoki.Lisaa("You cast Heal.");
-                                    circleOne = false;
-                                    return;
+                            Esine reagentti1 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Moon Mushroom"));
+                            if (reagentti1 != null) {
+                                if (reagentti1.Maara == 1) {
+                                    Pelaaja.Inventaario.Remove(reagentti1);
                                 }
+                                else {
+                                    reagentti1.Maara--;
+                                }
+                                Pelaaja.Elama += 10;
+                                if (Pelaaja.Elama > 10 + Pelaaja.Taso * 10)
+                                {
+                                    Pelaaja.Elama = 10 + Pelaaja.Taso * 10;
+                                }
+                                ViestiLoki.Lisaa("MANI!");
+                                ViestiLoki.Lisaa("You cast Heal.");
+                                circleOne = false;
+                                return;
                             }
                             ViestiLoki.Lisaa("You need 1 Moon Mushroom to cast this!");
                             break;
                         case 2:
-                            foreach (Esine esine in Pelaaja.Inventaario) {
-                                if (esine.Nimi == "Brimstone Dust") {
-                                    if (esine.Maara == 1) {
-                                        Pelaaja.Inventaario.Remove(esine);
-                                    }
-                                    else {
-                                        esine.Maara--;
-                                    }
-                                    Pelaaja.Nakoetaisyys = 25;
-                                    ViestiLoki.Lisaa("IN LOR!");
-                                    ViestiLoki.Lisaa("You cast Light.");
-                                    circleOne = false;
-                                    return;
+                            Esine reagentti2 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Brimstone Dust"));
+                            if (reagentti2 != null) {
+                                if (reagentti2.Maara == 1) {
+                                    Pelaaja.Inventaario.Remove(reagentti2);
                                 }
+                                else {
+                                    reagentti2.Maara--;
+                                }
+                                Pelaaja.Nakoetaisyys = 25;
+                                ViestiLoki.Lisaa("IN LOR!");
+                                ViestiLoki.Lisaa("You cast Light.");
+                                circleOne = false;
+                                return;
                             }
+                            ViestiLoki.Lisaa("You need 1 Brimstone Dust to cast this!");
                             break;
                         case 3:
-                            foreach (Esine esine in Pelaaja.Inventaario) {
-                                if (esine.Nimi == "Black Pearl") {
-                                    if (esine.Maara == 1) {
-                                        Pelaaja.Inventaario.Remove(esine);
-                                    }
-                                    else {
-                                        esine.Maara--;
-                                    }
-                                    karttaGeneroija.LataaLinna();
-                                    ViestiLoki.Lisaa("IN POR!");
-                                    ViestiLoki.Lisaa("You cast Blink.");
-                                    circleOne = false;
-                                    return;
+                            Esine reagentti3 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Black Pearl"));
+                            if (reagentti3 != null) {
+                                if (reagentti3.Maara == 1) {
+                                    Pelaaja.Inventaario.Remove(reagentti3);
                                 }
+                                else {
+                                    reagentti3.Maara--;
+                                }
+                                karttaGeneroija.LataaLinna();
+                                ViestiLoki.Lisaa("IN POR!");
+                                ViestiLoki.Lisaa("You cast Blink.");
+                                circleOne = false;
+                                return;
                             }
+                            ViestiLoki.Lisaa("You need 1 Black Pearl to cast this!");
+                            break;
+                        default:
+                            circleOne = false;
                             break;
                     }
                     circleOne = false;
+                }
+            }
+            else if (circleTwo == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3) {
+                    int num = Int32.Parse(nappain.Char.ToString());
+                    switch (num) {
+                        case 1:
+                            Esine reagentti1 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Brimstone Dust"));
+                            Esine reagentti2 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Black Pearl"));
+                            if (reagentti1 != null && reagentti2 != null) {
+                                if (reagentti1.Maara == 1) {
+                                    Pelaaja.Inventaario.Remove(reagentti1);
+                                }
+                                else {
+                                    reagentti1.Maara--;
+                                }
+                                if (reagentti2.Maara == 1) {
+                                    Pelaaja.Inventaario.Remove(reagentti2);
+                                }
+                                else {
+                                    reagentti2.Maara--;
+                                }
+                                KomentoKasittelija.Ammu(Suunta.Ylos, new Taikanuoli(1, Pelaaja.X, Pelaaja.Y));
+                                KomentoKasittelija.Ammu(Suunta.Alas, new Taikanuoli(1, Pelaaja.X, Pelaaja.Y));
+                                KomentoKasittelija.Ammu(Suunta.Oikea, new Taikanuoli(1, Pelaaja.X, Pelaaja.Y));
+                                KomentoKasittelija.Ammu(Suunta.Vasen, new Taikanuoli(1, Pelaaja.X, Pelaaja.Y));
+                                ViestiLoki.Lisaa("GRAV POR!");
+                                ViestiLoki.Lisaa("You cast Firebolts.");
+                                circleTwo = false;
+                                return;
+                            }
+                            ViestiLoki.Lisaa("You need 1 Brimstone Dust and 1 Black Pearl to cast this!");
+                            break;
+                        case 2:
+                            Esine reagentti3 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Brimstone Dust"));
+                            Esine reagentti4 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Moon Mushroom"));
+                            if (reagentti3 != null && reagentti4 != null) {
+                                if (reagentti3.Maara == 1) {
+                                    Pelaaja.Inventaario.Remove(reagentti3);
+                                }
+                                else {
+                                    reagentti3.Maara--;
+                                }
+                                if (reagentti4.Maara == 1) {
+                                    Pelaaja.Inventaario.Remove(reagentti4);
+                                }
+                                else {
+                                    reagentti4.Maara--;
+                                }
+                                Pelaaja.Nalka += 50;
+                                ViestiLoki.Lisaa("GRAV MANI!");
+                                ViestiLoki.Lisaa("You cast Quell Hunger.");
+                                circleTwo = false;
+                                return;
+                            }
+                            ViestiLoki.Lisaa("You need 1 Brimstone Dust and 1 Moon Mushroom to cast this!");
+                            break;
+                        case 3:
+                            Esine reagentti5 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Black Pearl"));
+                            Esine reagentti6 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Moon Mushroom"));
+                            if (reagentti5 != null && reagentti6 != null) {
+                                if (reagentti5.Maara == 1) {
+                                    Pelaaja.Inventaario.Remove(reagentti5);
+                                }
+                                else {
+                                    reagentti5.Maara--;
+                                }
+                                if (reagentti6.Maara == 1) {
+                                    Pelaaja.Inventaario.Remove(reagentti6);
+                                }
+                                else {
+                                    reagentti6.Maara--;
+                                }
+                                foreach (Vastustaja vastus in peliKartta.Vastustajat){
+                                    vastus.Liikkuu = false;
+                                }
+                                ViestiLoki.Lisaa("MANI POR!");
+                                ViestiLoki.Lisaa("You cast Paralyze.");
+                                circleTwo = false;
+                                return;
+                            }
+                            ViestiLoki.Lisaa("You need 1 Black Pearl and 1 Moon Mushroom to cast this!");
+                            break;
+                        default:
+                            circleTwo = false;
+                            break;
+                    }
+                    circleTwo = false;
                 }
             }
             else if (poistaVaruste == true) {
@@ -517,14 +619,15 @@ namespace Ohjelmointiprojekti {
                         return;
                     case RLKey.Z:
                         saveMoodi = true;
-                        ViestiLoki.Lisaa("Y - Yes, N - No, save in default file");
                         ViestiLoki.Lisaa("Save: Do you want to save in a new file?");
+                        ViestiLoki.Lisaa("Y - Yes, N - No, save in default file");
                         return;
                     case RLKey.Enter:
                         if (Pelaaja.Elama <= 0) {
                             Ohjelma.karttaGeneroija.LataaLinna();
                             Pelaaja.Elama = 10;
                             Pelaaja.Nalka = 25;
+                            Pelaaja.Inventaario.Clear();
                         }
                         break;
                     case RLKey.Escape:

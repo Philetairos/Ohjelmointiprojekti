@@ -1,2 +1,2 @@
-0
-{"Varusteet":[null,null,null,null,null],"Nalka":100,"Alykkyys":1,"Taso":1,"Nimi":"Player","Nakoetaisyys":25,"Vari":{},"Merkki":"@","X":60,"Y":32,"Napparyys":1,"Voimakkuus":1,"Puolustus":1,"Elama":20,"Inventaario":[]}
+3
+{"Varusteet":[null,null,null,null,null],"Nalka":99,"Alykkyys":3,"ViisausKarma":0,"KontrolliKarma":0,"SopuisuusKarma":0,"Taso":1,"Nimi":"Player","Nakoetaisyys":25,"Vari":{},"Merkki":"@","X":58,"Y":54,"Napparyys":2,"Voimakkuus":1,"Puolustus":1,"Elama":20,"Inventaario":[]}

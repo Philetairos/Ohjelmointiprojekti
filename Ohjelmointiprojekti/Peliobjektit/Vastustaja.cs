@@ -11,7 +11,7 @@ namespace Ohjelmointiprojekti {
     /// Luokka vihollishahmoja varten, jotka hyökkäävät pelaajaa vastaan
     /// </summary>
     public class Vastustaja : Hahmo {
-        public readonly bool Liikkuu;
+        public bool Liikkuu;
 
         /// <summary>
         /// Tyhjä konstruktori

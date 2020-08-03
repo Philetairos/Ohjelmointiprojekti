@@ -70,16 +70,7 @@ namespace Ohjelmointiprojekti {
         public void MyyEsine() {
             if (Inventaario[0] != null) {
                 if (Ohjelma.Pelaaja.MaksaRahat(1)) {
-                    Ohjelma.Pelaaja.Inventaario.Add(Inventaario[0]);
-                    if (Inventaario[0].Maara == 1) {
-                        Inventaario.RemoveAt(0);
-                    }
-                    else if(Inventaario[0].Maara > 1) {
-                        Inventaario[0].Maara--;
-                    }
-                    else {
-                        Ohjelma.ViestiLoki.Lisaa("Out of stock!");
-                    }
+                    Ohjelma.Pelaaja.LisaaEsine(Inventaario[0]);
                 }
             }
         }

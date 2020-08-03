@@ -230,7 +230,7 @@ namespace Ohjelmointiprojekti {
             kartta.LisaaNPC(new NPC((karttaLeveys / 2) - 18, karttaKorkeus - 11, "Amelina", 'a', RLColor.Yellow, palvelustyttodialogitaulukko, true));
 
             NPC maagi = new NPC((karttaLeveys / 2) - 18, (karttaKorkeus / 2) - 15, "Magnus", 'm', RLColor.Blue, new DialogiNoodi[] { }, true) {
-                Inventaario = new List<Esine> { new Kuusieni(5, 1, 1) }
+                Inventaario = new List<Esine> { new Kuusieni(1, 1, 1) }
             };
             DialogiNoodi velhoDialogi0 = new DialogiNoodi("Oh, greetings, stranger! I am Magnus, the court magician in service to the King.", "1. How does magic work?", new (int, Action)[] { (1, null) });
             DialogiNoodi velhoDialogi1 = new DialogiNoodi("That is a question I hear quite often. Magic in Brythonn requires reagents, which provide power for spells.", "1. Where can I get reagents?", new (int, Action)[] { (2, null) });
@@ -242,7 +242,7 @@ namespace Ohjelmointiprojekti {
             kartta.LisaaNPC(maagi);
 
             NPC kokki = new NPC((karttaLeveys / 2) + 18, (karttaKorkeus / 2) - 15, "Elthon", 'e', RLColor.LightRed, new DialogiNoodi[] { }, true) {
-                Inventaario = new List<Esine> { new Leipa(3, 1, 1) }
+                Inventaario = new List<Esine> { new Leipa(1, 1, 1) }
             };
             DialogiNoodi kokkiDialogi0 = new DialogiNoodi("Howdy, good to meet you. I am Elthon, the King's chef, responsible for feeding the court.", "1. What food do you make?", new (int, Action)[] { (1, null) });
             DialogiNoodi kokkiDialogi1 = new DialogiNoodi("Usually I bake bread, unless there is a celebration and fancier foods are needed. Would you like to buy some for a coin?", "1. Sure 2. No thanks", new (int, Action)[] { (2, kokki.MyyEsine), (2, null) });
@@ -285,6 +285,10 @@ namespace Ohjelmointiprojekti {
             return kartta;
         }
 
+        /// <summary>
+        /// Kartta jonka kautta pelaaja pääsee muihin karttoihin, eli maailmankartta
+        /// </summary>
+        /// <returns>Palauttaa valmiin saarikartan</returns>
         public PeliKartta SaariKartta() {
             kartta = new PeliKartta {
                 id = 4
@@ -300,6 +304,67 @@ namespace Ohjelmointiprojekti {
             }
             kartta.Solut.Add(new Solu(karttaLeveys / 2, karttaKorkeus / 2, false, false, true, RLColor.LightGray, RLColor.Black, 'M'));
             kartta.SetCellProperties(karttaLeveys / 2, karttaKorkeus / 2, true, false, false);
+            kartta.Solut.Add(new Solu(karttaLeveys / 2-15, karttaKorkeus / 2, false, false, true, RLColor.Gray, RLColor.Black, 'F'));
+            kartta.SetCellProperties(karttaLeveys / 2-15, karttaKorkeus / 2, true, false, false);
+            return kartta;
+        }
+
+        /// <summary>
+        /// Ensimmäinen luolasto
+        /// </summary>
+        /// <returns>Palauttaa valmiin luolastokartan</returns>
+        public PeliKartta LuolastoKartta1() {
+            kartta = new PeliKartta {
+                id = 5
+            };
+            kartta.Initialize(karttaLeveys, karttaKorkeus);
+            foreach (Cell solu in kartta.GetAllCells()) {
+                kartta.SetCellProperties(solu.X, solu.Y, false, false, false);
+            }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys - 1, karttaKorkeus / 2, karttaLeveys - 20, karttaKorkeus / 2)) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys - 20, karttaKorkeus / 2-10, karttaLeveys - 20, karttaKorkeus / 2+10)) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys - 20, karttaKorkeus / 2 - 10, karttaLeveys - 30, karttaKorkeus / 2 - 10)) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys - 20, karttaKorkeus / 2 + 10, karttaLeveys - 30, karttaKorkeus / 2 + 10)) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
+            foreach (Cell solu in kartta.GetCellsInRectangle(karttaKorkeus / 2 - 10, karttaLeveys -40, 10, 21)) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys - 40, karttaKorkeus / 2, karttaLeveys - 50, karttaKorkeus / 2)) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
+            foreach (Cell solu in kartta.GetCellsInSquare(karttaLeveys - 54, karttaKorkeus / 2, 4)) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
+            foreach (Cell solu in kartta.GetCellsAlongLine(karttaLeveys - 58, karttaKorkeus / 2, karttaLeveys - 70, karttaKorkeus / 2)) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
+            foreach (Cell solu in kartta.GetCellsInDiamond(karttaLeveys - 75, karttaKorkeus / 2, 5)) {
+                kartta.SetCellProperties(solu.X, solu.Y, true, true, false);
+                kartta.Solut.Add(new Solu(solu.X, solu.Y, false, false, true, RLColor.LightGray, RLColor.Black, '.'));
+            }
+
+            kartta.Esineet.Add(new Kolikko(3, karttaLeveys -39, karttaKorkeus / 2));
+            kartta.Esineet.Add(new Tulikivi(1, karttaLeveys - 54, karttaKorkeus / 2 -2));
+            kartta.Esineet.Add(new MustaHelmi(1, karttaLeveys - 54, karttaKorkeus / 2 + 2));
+
+            kartta.LisaaVastustaja(new Vastustaja(karttaLeveys -35, karttaKorkeus / 2, "Demon", 'D', RLColor.Red, 15, 4, 3, 3, true));
+            //kartta.LisaaVastustaja(new Vastustaja(karttaLeveys - 54, karttaKorkeus / 2, "Cultist", 'C', RLColor.Green, 5, 2, 2, 2, true));
+
             return kartta;
         }
 
@@ -314,6 +379,13 @@ namespace Ohjelmointiprojekti {
                     Ohjelma.Pelaaja.Y = karttaKorkeus / 2 +1;
                     Ohjelma.peliKartta.PaivitaNakoKentta();
                     break;
+                case 5:
+                    Ohjelma.peliKartta = SaariKartta();
+                    Ohjelma.Pelaaja.X = karttaLeveys / 2-14;
+                    Ohjelma.Pelaaja.Y = karttaKorkeus / 2;
+                    Ohjelma.Pelaaja.Nakoetaisyys = 25;
+                    Ohjelma.peliKartta.PaivitaNakoKentta();
+                    break;
             }
         }
 
@@ -322,9 +394,18 @@ namespace Ohjelmointiprojekti {
         /// </summary>
         public void SiirrySaarella(int x, int y) {
             if (x == karttaLeveys / 2 && y == karttaKorkeus / 2) {
+                Ohjelma.ViestiLoki.Lisaa("You enter Kingcastle");
                 Ohjelma.peliKartta = LinnaKartta();
                 Ohjelma.Pelaaja.X = karttaLeveys / 2;
                 Ohjelma.Pelaaja.Y = karttaKorkeus - 1;
+                Ohjelma.peliKartta.PaivitaNakoKentta();
+            }
+            else if (x == karttaLeveys / 2 -15 && y == karttaKorkeus / 2) {
+                Ohjelma.ViestiLoki.Lisaa("You enter the Dungeon of Folly");
+                Ohjelma.peliKartta = LuolastoKartta1();
+                Ohjelma.Pelaaja.X = karttaLeveys-1;
+                Ohjelma.Pelaaja.Y = karttaKorkeus/2;
+                Ohjelma.Pelaaja.Nakoetaisyys = 5;
                 Ohjelma.peliKartta.PaivitaNakoKentta();
             }
         }
@@ -337,6 +418,7 @@ namespace Ohjelmointiprojekti {
             Ohjelma.peliKartta = LinnaKartta();
             Ohjelma.Pelaaja.X = karttaLeveys / 2;
             Ohjelma.Pelaaja.Y = karttaKorkeus- 1;
+            Ohjelma.Pelaaja.Nakoetaisyys = 25;
             Ohjelma.peliKartta.PaivitaNakoKentta();
             Ohjelma.ViestiLoki.Lisaa("...Until you find yourself at an oddly familiar location.");
         }

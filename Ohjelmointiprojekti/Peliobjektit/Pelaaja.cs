@@ -72,7 +72,7 @@ namespace Ohjelmointiprojekti {
             if (Inventaario.Count < Inventaario.Capacity) {
                 foreach (Esine inv in Inventaario) {
                     if (inv.Nimi == esine.Nimi) {
-                        inv.Maara++;
+                        inv.Maara += esine.Maara;
                         Ohjelma.peliKartta.Esineet.Remove(esine);
                         return true;
                     }
