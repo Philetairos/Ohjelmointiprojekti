@@ -278,7 +278,7 @@ namespace Ohjelmointiprojekti {
                                     Pelaaja = JsonSerializer.Deserialize<Pelaaja>(jsonString);
                                     Pelaaja.Vari = RLColor.White;
                                     if (Pelaaja.Inventaario.Capacity == 0) {
-                                        Pelaaja.Inventaario.Capacity = 4;
+                                        Pelaaja.Inventaario.Capacity = 5;
                                     }
                                     sr.Close();
                                     paaKonsoli.Update -= PaivitaValikko;
@@ -347,14 +347,12 @@ namespace Ohjelmointiprojekti {
                     int num = Int32.Parse(nappain.Char.ToString());
                     if (num > Pelaaja.Alykkyys) {
                         ViestiLoki.Lisaa("You need higher intelligence for this Circle!");
-                        magicMoodi = false;
                     }
                     else if (num == 1) {
                         ViestiLoki.Lisaa("Which spell do you want to cast?");
                         ViestiLoki.Lisaa("1. Heal (Moon Mushroom)");
                         ViestiLoki.Lisaa("2. Light (Brimstone Dust)");
                         ViestiLoki.Lisaa("3. Blink (Black Pearl)");
-                        magicMoodi = false;
                         circleOne = true;
                     }
                     else if (num == 2) {
@@ -362,15 +360,17 @@ namespace Ohjelmointiprojekti {
                         ViestiLoki.Lisaa("1. Firebolts (Brimstone Dust & Black Pearl)");
                         ViestiLoki.Lisaa("2. Quell Hunger (Moon Mushroom & Brimstone Dust)");
                         ViestiLoki.Lisaa("3. Paralyze (Moon Mushroom & Black Pearl)");
-                        magicMoodi = false;
                         circleTwo = true;
                     }
                     else {
                         ViestiLoki.Lisaa("Which spell do you want to cast?");
-                        magicMoodi = false;
+                        ViestiLoki.Lisaa("1. Drain Life (Brimstone Dust & Black Pearl & Moon Mushroom)");
+                        ViestiLoki.Lisaa("2. Spellsword (Brimstone Dust & Black Pearl & Moon Mushroom)");
+                        ViestiLoki.Lisaa("3. Spellshield (Brimstone Dust & Black Pearl & Moon Mushroom)");
                         circleThree = true;
                     }
                 }
+                magicMoodi = false;
             }
             else if (circleOne == true) {
                 if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3) {
@@ -524,6 +524,65 @@ namespace Ohjelmointiprojekti {
                             break;
                     }
                     circleTwo = false;
+                }
+            }
+            else if (circleThree == true) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3) {
+                    int num = Int32.Parse(nappain.Char.ToString());
+                    Esine reagentti1 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Brimstone Dust"));
+                    Esine reagentti2 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Black Pearl"));
+                    Esine reagentti3 = Pelaaja.Inventaario.Find(x => x.Nimi.Contains("Moon Mushroom"));
+                    if (reagentti1 != null && reagentti2 != null && reagentti3 != null) {
+                        if (reagentti1.Maara == 1) {
+                            Pelaaja.Inventaario.Remove(reagentti1);
+                        }
+                        else {
+                            reagentti1.Maara--;
+                        }
+                        if (reagentti2.Maara == 1) {
+                            Pelaaja.Inventaario.Remove(reagentti2);
+                        }
+                        else {
+                            reagentti2.Maara--;
+                        }
+                        if (reagentti3.Maara == 1) {
+                            Pelaaja.Inventaario.Remove(reagentti3);
+                        }
+                        else {
+                            reagentti3.Maara--;
+                        }
+                        switch (num) {
+                            case 1:
+                                foreach (Vastustaja vastus in peliKartta.Vastustajat) {
+                                    vastus.Elama -= 5;
+                                    if (vastus.Elama <= 0) {
+                                        vastus.KasitteleKuolema();
+                                    }
+                                    Pelaaja.Elama += 5;
+                                }
+                                ViestiLoki.Lisaa("GRAV POR MANI!");
+                                ViestiLoki.Lisaa("You cast Drain Life.");
+                                circleThree = false;
+                                return;
+                            case 2:
+                                Pelaaja.LisaaEsine(new Taikamiekka(1, 1, 1));
+                                ViestiLoki.Lisaa("GRAV MANI POR!");
+                                ViestiLoki.Lisaa("You cast Spellsword.");
+                                circleThree = false;
+                                return;
+                            case 3:
+                                Pelaaja.LisaaEsine(new Taikakilpi(1, 1, 1));
+                                ViestiLoki.Lisaa("IN MANI GRAV!");
+                                ViestiLoki.Lisaa("You cast Spellshield.");
+                                circleThree = false;
+                                return;
+                            default:
+                                circleThree = false;
+                                break;
+                        }
+                    }
+                    ViestiLoki.Lisaa("You need 1 Brimstone Dust, 1 Black Pearl and 1 Moon Mushroom to cast this!");
+                    circleThree = false;
                 }
             }
             else if (poistaVaruste == true) {

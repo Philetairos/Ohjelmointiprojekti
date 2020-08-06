@@ -42,7 +42,7 @@ namespace Ohjelmointiprojekti {
             SopuisuusKarma = 0;
             Taso = 1;
             Inventaario = new List<Esine> {
-                Capacity = 4
+                Capacity = 5
             };
             Varusteet = new Varuste[5];
         }
@@ -157,32 +157,6 @@ namespace Ohjelmointiprojekti {
         }
 
         /// <summary>
-        /// Metodi joka lisää pelaajan tasoa
-        /// </summary>
-        public void LisaaTaso() {
-            if (Taso < 3) {
-                Taso += 1;
-                Ohjelma.ViestiLoki.Lisaa("Level up!");
-                Random rand = new Random();
-                int result = rand.Next(1,3);
-                switch (result) {
-                    case 1:
-                        Voimakkuus++;
-                        Ohjelma.ViestiLoki.Lisaa("Your Strength has improved!");
-                        break;
-                    case 2:
-                        Napparyys++;
-                        Ohjelma.ViestiLoki.Lisaa("Your Dexterity has improved!");
-                        break;
-                    case 3:
-                        Alykkyys++;
-                        Ohjelma.ViestiLoki.Lisaa("Your Intelligence has improved!");
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Vähentää tietyn määrän kolikoita pelaajalta, jos niitä on tarpeeksi
         /// </summary>
         /// <param name="maara">Kuinka paljon pitää maksaa</param>
@@ -230,45 +204,75 @@ namespace Ohjelmointiprojekti {
         }
 
         /// <summary>
-        /// Metodi joka lisää pelaajan viisauskarmaa
+        /// Metodi joka lisää pelaajan viisauskarmaa. Jos karma on -1, pelaaja on jo meditoinut eikä tarvitse enää karmaa
         /// </summary>
         public void LisaaViisausKarma() {
-            ViisausKarma++;
+            if (ViisausKarma >= 0) {
+                ViisausKarma++;
+            }
         }
 
         /// <summary>
-        /// Metodi joka lisää pelaajan kontrollikarmaa
+        /// Metodi joka lisää pelaajan kontrollikarmaa. Jos karma on -1, pelaaja on jo meditoinut eikä tarvitse enää karmaa
         /// </summary>
         public void LisaaKontrolliKarma() {
-            KontrolliKarma++;
+            if (KontrolliKarma >= 0) {
+                KontrolliKarma++;
+            }
         }
 
         /// <summary>
-        /// Metodi joka lisää pelaajan sopuisuuskarmaa
+        /// Metodi joka lisää pelaajan sopuisuuskarmaa. Jos karma on -1, pelaaja on jo meditoinut eikä tarvitse enää karmaa
         /// </summary>
         public void LisaaSopuisuusKarma() {
-            SopuisuusKarma++;
+            if (SopuisuusKarma >= 0) {
+                SopuisuusKarma++;
+            }
         }
 
         /// <summary>
-        /// Metodi joka vähentää pelaajan viisauskarmaa
+        /// Metodi joka vähentää pelaajan viisauskarmaa. Jos pelaaja on jo saavuttanut tason meditoimalla, se vähennetään
         /// </summary>
         public void VahennaViisausKarma() {
-            ViisausKarma--;
+            if (ViisausKarma > 0) {
+                ViisausKarma--;
+            }
+            else if (ViisausKarma < 0) {
+                Ohjelma.ViestiLoki.Lisaa("You have lost your Wisdom!");
+                ViisausKarma = 0;
+                Taso--;
+                Alykkyys--;
+            }
         }
 
         /// <summary>
-        /// Metodi joka vähentää pelaajan kontrollikarmaa
+        /// Metodi joka vähentää pelaajan kontrollikarmaa. Jos pelaaja on jo saavuttanut tason meditoimalla, se vähennetään
         /// </summary>
         public void VahennaKontrolliKarma() {
-            KontrolliKarma++;
+            if (KontrolliKarma > 0) {
+                KontrolliKarma--;
+            }
+            else if (KontrolliKarma < 0) {
+                Ohjelma.ViestiLoki.Lisaa("You have lost your Control!");
+                KontrolliKarma = 0;
+                Taso--;
+                Napparyys--;
+            }
         }
 
         /// <summary>
-        /// Metodi joka lisää pelaajan näppäryyttä
+        /// Metodi joka vähentää pelaajan sopuisuuskarmaa. Jos pelaaja on jo saavuttanut tason meditoimalla, se vähennetään
         /// </summary>
         public void VahennaSopuisuusKarma() {
-            SopuisuusKarma++;
+            if (SopuisuusKarma > 0) {
+                SopuisuusKarma--;
+            }
+            else if (SopuisuusKarma < 0) {
+                Ohjelma.ViestiLoki.Lisaa("You have lost your Amity!");
+                SopuisuusKarma = 0;
+                Taso--;
+                Voimakkuus--;
+            }
         }
     }
 }

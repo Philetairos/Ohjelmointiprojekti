@@ -8,9 +8,9 @@ using RogueSharp;
 
 namespace Ohjelmointiprojekti {
     /// <summary>
-    /// Miekkavaruste joka lisää pelaajan aiheuttamaa vahinkoa
+    /// Taikamiekka jonka pelaaja voi luoda
     /// </summary>
-    public class Miekka : Varuste {
+    public class Taikamiekka : Varuste {
 
         /// <summary>
         /// Konstruktori
@@ -18,12 +18,12 @@ namespace Ohjelmointiprojekti {
         /// <param name="maara">Kuinka monta esinettä</param>
         /// <param name="x">Sijainti kartan x-akselilla</param>
         /// <param name="y">Sijainti kartan y-akselilla</param>
-        public Miekka(int maara, int x, int y) {
+        public Taikamiekka(int maara, int x, int y) {
             X = x;
             Y = y;
-            Nimi = "Sword";
+            Nimi = "Spellsword";
             Maara = maara;
-            Vari = RLColor.LightGray;
+            Vari = RLColor.Cyan;
             Merkki = 'l';
             Lokero = 3;
             VoiAmpua = false;
@@ -39,9 +39,9 @@ namespace Ohjelmointiprojekti {
             if (Ohjelma.Pelaaja.Varusteet[Lokero] != null) {
                 Ohjelma.Pelaaja.PoistaVaruste(Lokero+1);
             }
-            Ohjelma.ViestiLoki.Lisaa("You equip the sword.");
+            Ohjelma.ViestiLoki.Lisaa("You equip the Spellsword.");
             Ohjelma.Pelaaja.Varusteet[Lokero] = this;
-            Ohjelma.Pelaaja.LisaaVoimakkuus();
+            Ohjelma.Pelaaja.Voimakkuus += 3;
             return false;
         }
 
@@ -49,8 +49,8 @@ namespace Ohjelmointiprojekti {
         /// Metodi sille, mitä tapahtuu kun pelaaja poistaa varusteen
         /// </summary>
         public override void PoistaVaruste() {
-            Ohjelma.ViestiLoki.Lisaa("You unequip the sword.");
-            Ohjelma.Pelaaja.Voimakkuus--;
+            Ohjelma.ViestiLoki.Lisaa("You unequip the Spellsword.");
+            Ohjelma.Pelaaja.Voimakkuus-=3;
         }
     }
 }

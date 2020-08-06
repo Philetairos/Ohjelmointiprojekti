@@ -8,9 +8,9 @@ using RogueSharp;
 
 namespace Ohjelmointiprojekti {
     /// <summary>
-    /// Miekkavaruste joka lisää pelaajan aiheuttamaa vahinkoa
+    /// Luokka taikakilpi-varustetta varten jonka pelaaja voi luoda
     /// </summary>
-    public class Miekka : Varuste {
+    public class Taikakilpi : Varuste {
 
         /// <summary>
         /// Konstruktori
@@ -18,20 +18,20 @@ namespace Ohjelmointiprojekti {
         /// <param name="maara">Kuinka monta esinettä</param>
         /// <param name="x">Sijainti kartan x-akselilla</param>
         /// <param name="y">Sijainti kartan y-akselilla</param>
-        public Miekka(int maara, int x, int y) {
+        public Taikakilpi(int maara, int x, int y) {
             X = x;
             Y = y;
-            Nimi = "Sword";
+            Nimi = "Spellshield";
             Maara = maara;
-            Vari = RLColor.LightGray;
-            Merkki = 'l';
-            Lokero = 3;
-            VoiAmpua = false;
-            LokeroNimi = "4. Right Hand";
+            Vari = RLColor.Cyan;
+            Merkki = '0';
+            Puolustus = 2;
+            Lokero = 4;
+            LokeroNimi = "5. Left Hand";
         }
 
         /// <summary>
-        /// Mitä tapahtuu kun pelaaja käyttää esinettä (pelaaja asettaa sen varusteeksi)
+        /// Mitä tapahtuu kun pelaaja käyttää huppua (pelaaja pukee sen)
         /// </summary>
         /// <returns>Palauttaa aina false</returns>
         public override bool KaytaEsine() {
@@ -39,9 +39,9 @@ namespace Ohjelmointiprojekti {
             if (Ohjelma.Pelaaja.Varusteet[Lokero] != null) {
                 Ohjelma.Pelaaja.PoistaVaruste(Lokero+1);
             }
-            Ohjelma.ViestiLoki.Lisaa("You equip the sword.");
+            Ohjelma.ViestiLoki.Lisaa("You equip the spellshield.");
             Ohjelma.Pelaaja.Varusteet[Lokero] = this;
-            Ohjelma.Pelaaja.LisaaVoimakkuus();
+            Ohjelma.Pelaaja.Puolustus += Puolustus;
             return false;
         }
 
@@ -49,8 +49,8 @@ namespace Ohjelmointiprojekti {
         /// Metodi sille, mitä tapahtuu kun pelaaja poistaa varusteen
         /// </summary>
         public override void PoistaVaruste() {
-            Ohjelma.ViestiLoki.Lisaa("You unequip the sword.");
-            Ohjelma.Pelaaja.Voimakkuus--;
+            Ohjelma.ViestiLoki.Lisaa("You remove the spellshield.");
+            Ohjelma.Pelaaja.Puolustus -= Puolustus;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Ohjelmointiprojekti {
         public List<Ovi> Ovet { get; set; }
         public List<Esine> Esineet { get; set; }
         public List<Solu> Solut { get; set; }
+        public Pyhakko Pyhakko { get; set; }
         public int id;
 
         /// <summary>
@@ -106,6 +107,9 @@ namespace Ohjelmointiprojekti {
             foreach (Ovi ovi in Ovet) {
                 ovi.Piirra(karttaKonsoli, this);
             }
+            if (Pyhakko != null){
+                Pyhakko.Piirra(karttaKonsoli, this);
+            }
             int i = 0;
             foreach (NPC npc in NPCs) {
                 npc.Piirra(karttaKonsoli, this);
@@ -171,12 +175,17 @@ namespace Ohjelmointiprojekti {
         /// <param name="y">Sijainti kartan y-akselilla</param>
         /// <returns>Onnistuiko siirtäminen? True jos kyllä, false jos ei</returns>
         public bool AsetaSijainti(Hahmo hahmo, int x, int y) {
-            if (x >= Width || y >= Height || x < 0 || y < 0) {
-                Ohjelma.karttaGeneroija.VaihdaKarttaa();
-                return false;
-            }
-            if (id == 4) {
-                Ohjelma.karttaGeneroija.SiirrySaarella(x, y);
+            if (hahmo is Pelaaja) {
+                if (x >= Width || y >= Height || x < 0 || y < 0) {
+                    Ohjelma.karttaGeneroija.VaihdaKarttaa();
+                    return false;
+                }
+                if (id == 4) {
+                    Ohjelma.karttaGeneroija.SiirrySaarella(x, y);
+                }
+                if (Pyhakko != null) {
+                    KaytaPyhakko(x, y);
+                }
             }
             if (GetCell(x, y).IsWalkable) {
                 AsetaWalkable(hahmo.X, hahmo.Y, true);
@@ -217,6 +226,34 @@ namespace Ohjelmointiprojekti {
                 SetCellProperties(x, y, true, true, solu.IsExplored);
                 Ohjelma.ViestiLoki.Lisaa($"{hahmo.Nimi} opened a door.");
                 PaivitaNakoKentta();
+            }
+        }
+
+        /// <summary>
+        /// Käytä pyhäkköä jos sellainen on pelaajan tiellä
+        /// </summary>
+        /// <param name="x">Avattavan oven sijainti kartan x-akselilla</param>
+        /// <param name="y">Avattavan oven sijainti kartan y-akselilla</param>
+        private void KaytaPyhakko(int x, int y) {
+            if (Pyhakko.X == x && Pyhakko.Y == y){
+                switch (id) {
+                    case 5:
+                        if (Ohjelma.Pelaaja.ViisausKarma > 10) {
+                            Ohjelma.ViestiLoki.Lisaa("You mediate on the shrine and learn the secrets of Wisdom.");
+                            Ohjelma.ViestiLoki.Lisaa("Level up!");
+                            Ohjelma.Pelaaja.Taso++;
+                            Ohjelma.Pelaaja.LisaaAlykkyys();
+                            Ohjelma.Pelaaja.ViisausKarma = -1;
+                        }
+                        else if (Ohjelma.Pelaaja.ViisausKarma == -1) {
+                            Ohjelma.ViestiLoki.Lisaa("You have already mastered the virtue of Wisdom.");
+                        }
+                        else {
+                            Ohjelma.ViestiLoki.Lisaa("You are not wise enough to use this shrine!");
+                        }
+                        break;
+
+                }
             }
         }
     }

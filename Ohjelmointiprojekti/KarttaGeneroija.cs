@@ -362,8 +362,10 @@ namespace Ohjelmointiprojekti {
             kartta.Esineet.Add(new Tulikivi(1, karttaLeveys - 54, karttaKorkeus / 2 -2));
             kartta.Esineet.Add(new MustaHelmi(1, karttaLeveys - 54, karttaKorkeus / 2 + 2));
 
-            kartta.LisaaVastustaja(new Vastustaja(karttaLeveys -35, karttaKorkeus / 2, "Demon", 'D', RLColor.Red, 15, 4, 3, 3, true));
-            //kartta.LisaaVastustaja(new Vastustaja(karttaLeveys - 54, karttaKorkeus / 2, "Cultist", 'C', RLColor.Green, 5, 2, 2, 2, true));
+            //kartta.LisaaVastustaja(new Vastustaja(karttaLeveys -35, karttaKorkeus / 2, "Demon", 'D', RLColor.Red, 15, 4, 3, 3, true));
+            kartta.LisaaVastustaja(new Vastustaja(karttaLeveys - 54, karttaKorkeus / 2, "Cultist", 'C', RLColor.Green, 5, 2, 2, 2, true));
+
+            kartta.Pyhakko = new Pyhakko { X = karttaLeveys - 75, Y = karttaKorkeus / 2 };
 
             return kartta;
         }
