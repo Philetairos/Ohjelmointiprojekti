@@ -31,7 +31,7 @@ namespace Ohjelmointiprojekti {
         }
 
         /// <summary>
-        /// Mitä tapahtuu kun pelaaja käyttää huppua (pelaaja pukee sen)
+        /// Mitä tapahtuu kun pelaaja käyttää takkia (pelaaja pukee sen)
         /// </summary>
         /// <returns>Palauttaa aina false</returns>
         public override bool KaytaEsine() {

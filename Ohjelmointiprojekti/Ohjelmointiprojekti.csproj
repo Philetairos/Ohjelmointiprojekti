@@ -92,7 +92,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Peliobjektit\Ammus.cs" />
+    <Compile Include="Peliobjektit\Kypara.cs" />
+    <Compile Include="Peliobjektit\Kakku.cs" />
+    <Compile Include="Peliobjektit\Panssari.cs" />
     <Compile Include="Peliobjektit\Pyhakko.cs" />
+    <Compile Include="Peliobjektit\Kilpi.cs" />
     <Compile Include="Peliobjektit\Taikakilpi.cs" />
     <Compile Include="Peliobjektit\Taikamiekka.cs" />
     <Compile Include="Peliobjektit\Miekka.cs" />

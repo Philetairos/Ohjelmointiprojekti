@@ -128,7 +128,7 @@ namespace Ohjelmointiprojekti {
                 getMoodi = false;
             }
             else if (shootMoodi == true) {
-                if(Pelaaja.Varusteet[4] != null && Pelaaja.Varusteet[4].VoiAmpua == true) {
+                if(Pelaaja.Varusteet[3] != null && Pelaaja.Varusteet[3].VoiAmpua == true) {
                     foreach (var ammus in Pelaaja.Inventaario.OfType<Ammus>()) {
                         if (ammus is Ammus) {
                             if (ammus.Maara == 1) {
@@ -211,7 +211,7 @@ namespace Ohjelmointiprojekti {
                         break;
                     case RLKey.Enter:
                         valittuVaihtoehto = 4;
-                        tiedostot = Directory.GetFiles("C:\\Users\\Daniel Juola\\Documents\\Yliopistotavaraa\\kurssit\\TIEA306\\Git\\Ohjelmointiprojekti\\Tallennukset");
+                        tiedostot = Directory.GetFiles("..\\..\\Tallennukset");
                         if (tiedostot.Length == 0) {
                             tiedostot = new string[] { "No journeys started yet!" };
                         }
@@ -268,6 +268,12 @@ namespace Ohjelmointiprojekti {
                                                 break;
                                             case 5:
                                                 peliKartta = karttaGeneroija.LuolastoKartta1();
+                                                break;
+                                            case 6:
+                                                peliKartta = karttaGeneroija.LuolastoKartta2();
+                                                break;
+                                            case 7:
+                                                peliKartta = karttaGeneroija.LuolastoKartta3();
                                                 break;
                                         }
                                     }
@@ -386,9 +392,8 @@ namespace Ohjelmointiprojekti {
                                     reagentti1.Maara--;
                                 }
                                 Pelaaja.Elama += 10;
-                                if (Pelaaja.Elama > 10 + Pelaaja.Taso * 10)
-                                {
-                                    Pelaaja.Elama = 10 + Pelaaja.Taso * 10;
+                                if (Pelaaja.Elama > 20 + Pelaaja.Taso * 10) {
+                                    Pelaaja.Elama = 20 + Pelaaja.Taso * 10;
                                 }
                                 ViestiLoki.Lisaa("MANI!");
                                 ViestiLoki.Lisaa("You cast Heal.");
@@ -606,15 +611,15 @@ namespace Ohjelmointiprojekti {
             else if (saveMoodi == true) {
                 switch (nappain.Key) {
                     case RLKey.Y:
-                        int id = Directory.GetFiles("C:\\Users\\Daniel Juola\\Documents\\Yliopistotavaraa\\kurssit\\TIEA306\\Git\\Ohjelmointiprojekti\\Tallennukset").Length;
+                        int id = Directory.GetFiles("..\\..\\Tallennukset").Length;
                         id++;
-                        using (StreamWriter sw = new StreamWriter("C:\\Users\\Daniel Juola\\Documents\\Yliopistotavaraa\\kurssit\\TIEA306\\Git\\Ohjelmointiprojekti\\Tallennukset\\" + "Journey" + id + ".json")) {
+                        using (StreamWriter sw = new StreamWriter("..\\..\\Tallennukset\\" + "Journey" + id + ".json")) {
                             Tallenna(sw);
                         }
                         ViestiLoki.Lisaa("Game saved!");
                         break;
                     case RLKey.N:
-                        using (StreamWriter sw = new StreamWriter("C:\\Users\\Daniel Juola\\Documents\\Yliopistotavaraa\\kurssit\\TIEA306\\Git\\Ohjelmointiprojekti\\Tallennukset\\" + "Journey.json")) {
+                        using (StreamWriter sw = new StreamWriter("..\\..\\Tallennukset\\" + "Journey.json")) {
                             Tallenna(sw);
                         }
                         ViestiLoki.Lisaa("Game saved!");
@@ -682,7 +687,7 @@ namespace Ohjelmointiprojekti {
                         ViestiLoki.Lisaa("Y - Yes, N - No, save in default file");
                         return;
                     case RLKey.Enter:
-                        if (Pelaaja.Elama <= 0) {
+                        if (peliKartta.id == 1) {
                             Ohjelma.karttaGeneroija.LataaLinna();
                             Pelaaja.Elama = 10;
                             Pelaaja.Nalka = 25;

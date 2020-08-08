@@ -74,5 +74,14 @@ namespace Ohjelmointiprojekti {
                 }
             }
         }
+
+        /// <summary>
+        /// Yksinkertainen metodi jolla NPC-hahmo antaa pelaajalle esineen inventaariosta
+        /// </summary>
+        public void AnnaEsine() {
+            if (Inventaario[0] != null) {
+                Ohjelma.Pelaaja.LisaaEsine(Inventaario[0]);
+            }
+        }
     }
 }

@@ -40,7 +40,7 @@ namespace Ohjelmointiprojekti {
             ViisausKarma = 0;
             KontrolliKarma = 0;
             SopuisuusKarma = 0;
-            Taso = 1;
+            Taso = 0;
             Inventaario = new List<Esine> {
                 Capacity = 5
             };
@@ -272,6 +272,30 @@ namespace Ohjelmointiprojekti {
                 SopuisuusKarma = 0;
                 Taso--;
                 Voimakkuus--;
+            }
+        }
+        /// <summary>
+        /// Metodi veren luovuttamista varten
+        /// </summary>
+        public void LuovutaVerta() {
+            if (Elama > 10) {
+                Elama -= 5;
+            }
+            else {
+                Ohjelma.ViestiLoki.Lisaa("You don't have enough blood to donate!");
+                VahennaSopuisuusKarma();
+            }
+        }
+        /// <summary>
+        /// Metodi tason lisäämistä varten
+        /// </summary>
+        public void LisaaTaso() {
+            Taso++;
+            if (Taso >= 3) {
+                Ohjelma.peliKartta = Ohjelma.karttaGeneroija.TyhjaKartta();
+                Ohjelma.ViestiLoki.Lisaa("You have mastered all three virtues and become a Paragon of Virtue!");
+                Ohjelma.ViestiLoki.Lisaa("Your quest is complete, but your journey may still continue if you wish.");
+                Ohjelma.ViestiLoki.Lisaa("Press Enter to keep playing, press Escape to quit the game...");
             }
         }
     }

@@ -127,6 +127,7 @@ namespace Ohjelmointiprojekti {
             DiceResult noppatulos = noppa.Roll();
             if (noppatulos.Value + ammus.Vahinko - vastustaja.Puolustus >= 3) {
                 vastustaja.Elama -= ammus.Vahinko;
+                Ohjelma.ViestiLoki.Lisaa($"{ammus.Nimi} hits {vastustaja.Nimi} for {ammus.Vahinko} damage!");
                 if (vastustaja.Elama <= 0) {
                     Ohjelma.ViestiLoki.Lisaa($"{vastustaja.Nimi} has been shot and killed.");
                     vastustaja.KasitteleKuolema();

@@ -23,9 +23,7 @@ namespace Ohjelmointiprojekti {
             kartta.AsetaWalkable(hahmo.X, hahmo.Y, true); 
             int suunta1 = satunnaisluku.Next(-1,1);
             int suunta2 = satunnaisluku.Next(-1, 1);
-            if (kartta.IsWalkable(hahmo.X+suunta1, hahmo.Y+suunta2)) {
-                kartta.AsetaSijainti(hahmo, hahmo.X + suunta1, hahmo.Y + suunta2);
-            }
+            kartta.AsetaSijainti(hahmo, hahmo.X + suunta1, hahmo.Y + suunta2);
             return true;
         }
 

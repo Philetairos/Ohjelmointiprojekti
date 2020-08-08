@@ -23,7 +23,7 @@ namespace Ohjelmointiprojekti {
             Maara = maara;
             Vari = RLColor.Brown;
             Merkki = 'I';
-            Vahinko = 1;
+            Vahinko = 3;
             Kantama = 15;
         }
 

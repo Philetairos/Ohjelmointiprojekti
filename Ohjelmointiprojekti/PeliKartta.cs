@@ -175,17 +175,17 @@ namespace Ohjelmointiprojekti {
         /// <param name="y">Sijainti kartan y-akselilla</param>
         /// <returns>Onnistuiko siirtäminen? True jos kyllä, false jos ei</returns>
         public bool AsetaSijainti(Hahmo hahmo, int x, int y) {
-            if (hahmo is Pelaaja) {
-                if (x >= Width || y >= Height || x < 0 || y < 0) {
+            if (x >= Width || y >= Height || x < 0 || y < 0) {
+                if (hahmo is Pelaaja) {
                     Ohjelma.karttaGeneroija.VaihdaKarttaa();
-                    return false;
                 }
-                if (id == 4) {
-                    Ohjelma.karttaGeneroija.SiirrySaarella(x, y);
-                }
-                if (Pyhakko != null) {
-                    KaytaPyhakko(x, y);
-                }
+                return false;
+            }
+            if (id == 4) {
+                Ohjelma.karttaGeneroija.SiirrySaarella(x, y);
+            }
+            else if (Pyhakko != null && hahmo is Pelaaja) {
+                KaytaPyhakko(x, y);
             }
             if (GetCell(x, y).IsWalkable) {
                 AsetaWalkable(hahmo.X, hahmo.Y, true);
@@ -241,7 +241,7 @@ namespace Ohjelmointiprojekti {
                         if (Ohjelma.Pelaaja.ViisausKarma > 10) {
                             Ohjelma.ViestiLoki.Lisaa("You mediate on the shrine and learn the secrets of Wisdom.");
                             Ohjelma.ViestiLoki.Lisaa("Level up!");
-                            Ohjelma.Pelaaja.Taso++;
+                            Ohjelma.Pelaaja.LisaaTaso();
                             Ohjelma.Pelaaja.LisaaAlykkyys();
                             Ohjelma.Pelaaja.ViisausKarma = -1;
                         }
@@ -249,7 +249,70 @@ namespace Ohjelmointiprojekti {
                             Ohjelma.ViestiLoki.Lisaa("You have already mastered the virtue of Wisdom.");
                         }
                         else {
-                            Ohjelma.ViestiLoki.Lisaa("You are not wise enough to use this shrine!");
+                            Ohjelma.Pelaaja.LisaaViisausKarma();
+                            Ohjelma.ViestiLoki.Lisaa("You meditate on the shrine for a long time and feel wiser.");
+                            Ohjelma.ViestiLoki.Lisaa("You also feel very hungry...");
+                            if (Ohjelma.Pelaaja.Nalka > 0) {
+                                Ohjelma.Pelaaja.Nalka = 0;
+                            }
+                            else {
+                                Ohjelma.Pelaaja.Elama -= 10;
+                                if (Ohjelma.Pelaaja.Elama <= 0) {
+                                    Ohjelma.Pelaaja.KasitteleKuolema();
+                                }
+                            }
+                        }
+                        break;
+                    case 6:
+                        if (Ohjelma.Pelaaja.KontrolliKarma > 10) {
+                            Ohjelma.ViestiLoki.Lisaa("You mediate on the shrine and learn the secrets of Control.");
+                            Ohjelma.ViestiLoki.Lisaa("Level up!");
+                            Ohjelma.Pelaaja.LisaaTaso();
+                            Ohjelma.Pelaaja.LisaaNapparyys();
+                            Ohjelma.Pelaaja.KontrolliKarma = -1;
+                        }
+                        else if (Ohjelma.Pelaaja.KontrolliKarma == -1) {
+                            Ohjelma.ViestiLoki.Lisaa("You have already mastered the virtue of Control.");
+                        }
+                        else {
+                            Ohjelma.Pelaaja.LisaaKontrolliKarma();
+                            Ohjelma.ViestiLoki.Lisaa("You meditate on the shrine for a long time and control your feelings better.");
+                            Ohjelma.ViestiLoki.Lisaa("You also feel very hungry...");
+                            if (Ohjelma.Pelaaja.Nalka > 0) {
+                                Ohjelma.Pelaaja.Nalka = 0;
+                            }
+                            else {
+                                Ohjelma.Pelaaja.Elama -= 10;
+                                if (Ohjelma.Pelaaja.Elama <= 0) {
+                                    Ohjelma.Pelaaja.KasitteleKuolema();
+                                }
+                            }
+                        }
+                        break;
+                    case 7:
+                        if (Ohjelma.Pelaaja.SopuisuusKarma > 10) {
+                            Ohjelma.ViestiLoki.Lisaa("You mediate on the shrine and learn the secrets of Amity.");
+                            Ohjelma.ViestiLoki.Lisaa("Level up!");
+                            Ohjelma.Pelaaja.LisaaTaso();
+                            Ohjelma.Pelaaja.LisaaVoimakkuus();
+                            Ohjelma.Pelaaja.SopuisuusKarma = -1;
+                        }
+                        else if (Ohjelma.Pelaaja.SopuisuusKarma == -1) {
+                            Ohjelma.ViestiLoki.Lisaa("You have already mastered the virtue of Amity.");
+                        }
+                        else {
+                            Ohjelma.Pelaaja.LisaaSopuisuusKarma();
+                            Ohjelma.ViestiLoki.Lisaa("You meditate on the shrine for a long time and feel unity with humankind.");
+                            Ohjelma.ViestiLoki.Lisaa("You also feel very hungry...");
+                            if (Ohjelma.Pelaaja.Nalka > 0) {
+                                Ohjelma.Pelaaja.Nalka = 0;
+                            }
+                            else {
+                                Ohjelma.Pelaaja.Elama -= 10;
+                                if (Ohjelma.Pelaaja.Elama <= 0) {
+                                    Ohjelma.Pelaaja.KasitteleKuolema();
+                                }
+                            }
                         }
                         break;
 
