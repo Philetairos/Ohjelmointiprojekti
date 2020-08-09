@@ -15,15 +15,17 @@ namespace Ohjelmointiprojekti
         public bool Auki;
         public RLColor Vari { get; set; }
         public char Merkki { get; set; }
+        public string Nimi { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
 
         /// <summary>
         /// Konstruktori
         /// </summary>
-        public Pyhakko() {
+        public Pyhakko(string nimi) {
             Merkki = '§';
             Vari = RLColor.White;
+            Nimi = nimi;
         }
 
         /// <summary>

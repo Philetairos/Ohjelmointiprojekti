@@ -253,7 +253,7 @@ namespace Ohjelmointiprojekti {
             kartta.LisaaNPC(kokki);
 
             DialogiNoodi soturiDialogi0 = new DialogiNoodi("Who's this weakling? Some stranger? Haven't seen you before.", "1. Can I have a sword?", new (int, Action)[] { (1, null) });
-            DialogiNoodi soturiDialogi1 = new DialogiNoodi("You're unarmed? Sure, it is dangerous to go alone. Grab one, though your arms seem too weak to lift it.", "1. How dare you! 2. Thank you, good bye", new (int, Action)[] { (2, Ohjelma.Pelaaja.VahennaKontrolliKarma), (-1, Ohjelma.Pelaaja.LisaaKontrolliKarma) });
+            DialogiNoodi soturiDialogi1 = new DialogiNoodi("You're unarmed? Sure, it is dangerous to go alone. Grab one, though your arms seem too weak to lift it.", "1. How dare you! 2. Thank you, good bye", new (int, Action)[] { (2, Ohjelma.Pelaaja.VahennaKontrolliKarma), (-1, null) });
             DialogiNoodi soturiDialogi2 = new DialogiNoodi("What, you want a fight? I am the head of the King's guard, so it's a bad idea. Besides, I was just warning you.", "1. Oh, my apologies... good bye", new (int, Action)[] { (-1, null) });
             DialogiNoodi[] soturidialogitaulukko = new DialogiNoodi[] { soturiDialogi0, soturiDialogi1, soturiDialogi2 };
             kartta.LisaaNPC(new NPC((karttaLeveys / 2) + 27, karttaKorkeus/2, "Jorg", 'j', RLColor.Red, soturidialogitaulukko, true));
@@ -373,10 +373,10 @@ namespace Ohjelmointiprojekti {
             kartta.Esineet.Add(new Tulikivi(3, karttaLeveys - 54, karttaKorkeus / 2 -2));
             kartta.Esineet.Add(new MustaHelmi(3, karttaLeveys - 54, karttaKorkeus / 2 + 2));
 
-            kartta.LisaaVastustaja(new Vastustaja(karttaLeveys -35, karttaKorkeus / 2, "Demon", 'D', RLColor.Red, 15, 4, 4, 4, true));
+            kartta.LisaaVastustaja(new Vastustaja(karttaLeveys -35, karttaKorkeus / 2, "Demon", 'D', RLColor.Red, 15, 5, 4, 4, true));
             kartta.LisaaVastustaja(new Vastustaja(karttaLeveys - 54, karttaKorkeus / 2, "Cultist", 'C', RLColor.Green, 5, 2, 2, 2, true));
 
-            kartta.Pyhakko = new Pyhakko { X = karttaLeveys - 75, Y = karttaKorkeus / 2 };
+            kartta.Pyhakko = new Pyhakko("Shrine of Wisdom") { X = karttaLeveys - 75, Y = karttaKorkeus / 2 };
 
             return kartta;
         }
@@ -446,8 +446,8 @@ namespace Ohjelmointiprojekti {
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 - 13, Y = karttaKorkeus - 40, Auki = false });
 
             kartta.Esineet.Add(new Kakku(1, karttaLeveys / 2, karttaKorkeus - 19));
-            kartta.Esineet.Add(new Kolikko(2, karttaLeveys / 2 - 25, karttaKorkeus - 19));
-            kartta.Esineet.Add(new Kuusieni(2, karttaLeveys / 2 + 25, karttaKorkeus - 19));
+            kartta.Esineet.Add(new Kolikko(3, karttaLeveys / 2 - 25, karttaKorkeus - 19));
+            kartta.Esineet.Add(new Kuusieni(1, karttaLeveys / 2 + 25, karttaKorkeus - 19));
 
             kartta.LisaaVastustaja(new Vastustaja(karttaLeveys / 2, karttaKorkeus - 13, "Cultist", 'C', RLColor.Magenta, 5, 2, 2, 2, true));
             kartta.LisaaVastustaja(new Vastustaja(karttaLeveys / 2 -3, karttaKorkeus - 16, "Cultist", 'C', RLColor.Magenta, 5, 2, 2, 2, true));
@@ -455,7 +455,7 @@ namespace Ohjelmointiprojekti {
             kartta.LisaaVastustaja(new Vastustaja(karttaLeveys / 2 - 25, karttaKorkeus - 19, "Satyr", 'S', RLColor.Brown, 10, 3, 4, 1, true));
             kartta.LisaaVastustaja(new Vastustaja(karttaLeveys / 2 + 25, karttaKorkeus - 19, "Siren", 'S', RLColor.LightCyan, 10, 4, 2, 2, true));
 
-            kartta.Pyhakko = new Pyhakko { X = karttaLeveys /2, Y = karttaKorkeus - 45 };
+            kartta.Pyhakko = new Pyhakko ("Shrine of Control") { X = karttaLeveys /2, Y = karttaKorkeus - 45 };
 
             return kartta;
         }
@@ -517,7 +517,7 @@ namespace Ohjelmointiprojekti {
             kartta.LisaaVastustaja(new Vastustaja(63, karttaKorkeus / 2 + 3, "Ghoul", 'G', RLColor.Gray, 10, 4, 3, 2, true));
             kartta.LisaaVastustaja(new Vastustaja(63, karttaKorkeus / 2 - 3, "Vampire", 'V', RLColor.Red, 20, 3, 3, 3, true));
 
-            kartta.Pyhakko = new Pyhakko { X = 86, Y = karttaKorkeus / 2 };
+            kartta.Pyhakko = new Pyhakko("Shrine of Amity") { X = 86, Y = karttaKorkeus / 2 };
 
             return kartta;
         }

@@ -70,7 +70,12 @@ namespace Ohjelmointiprojekti {
         public void MyyEsine() {
             if (Inventaario[0] != null) {
                 if (Ohjelma.Pelaaja.MaksaRahat(1)) {
-                    Ohjelma.Pelaaja.LisaaEsine(Inventaario[0]);
+                    if (!Ohjelma.Pelaaja.LisaaEsine(Inventaario[0])) {
+                        Ohjelma.ViestiLoki.Lisaa("The bought item is dropped on the floor.");
+                        Inventaario[0].X = X;
+                        Inventaario[0].Y = Y;
+                        Ohjelma.peliKartta.Esineet.Add(Inventaario[0]);
+                    }
                 }
             }
         }

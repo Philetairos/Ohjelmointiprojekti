@@ -69,14 +69,14 @@ namespace Ohjelmointiprojekti {
         /// <param name="esine">Esine joka lisätään</param>
         /// <returns>Palauttaa aina false</returns>
         public bool LisaaEsine(Esine esine) {
-            if (Inventaario.Count < Inventaario.Capacity) {
-                foreach (Esine inv in Inventaario) {
-                    if (inv.Nimi == esine.Nimi) {
-                        inv.Maara += esine.Maara;
-                        Ohjelma.peliKartta.Esineet.Remove(esine);
-                        return true;
-                    }
+            foreach (Esine inv in Inventaario) {
+                if (inv.Nimi == esine.Nimi) {
+                    inv.Maara += esine.Maara;
+                    Ohjelma.peliKartta.Esineet.Remove(esine);
+                    return true;
                 }
+            }
+            if (Inventaario.Count < Inventaario.Capacity) {
                 Inventaario.Add(esine);
                 Ohjelma.peliKartta.Esineet.Remove(esine);
                 return true;

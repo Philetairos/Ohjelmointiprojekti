@@ -79,6 +79,19 @@ namespace Ohjelmointiprojekti {
         }
 
         /// <summary>
+        /// Tarkista, sijaitseeko tiilellä pyhäkkö
+        /// </summary>
+        /// <param name="x">Sijainti kartan x-akselilla</param>
+        /// <param name="y">Sijainti kartan y-akselilla</param>
+        /// <returns>Pyhäkkö joka sijaitsee tiilellä, jos ei ole niin palauttaa null</returns>
+        public Pyhakko PyhakkoSijainti(int x, int y) {
+            if (Pyhakko.X == x && Pyhakko.Y == y) {
+                return Pyhakko;
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Tarkista, sijaitseeko tiilellä ovi
         /// </summary>
         /// <param name="x">Sijainti kartan x-akselilla</param>

@@ -33,7 +33,12 @@ namespace Ohjelmointiprojekti {
         public override bool KaytaEsine() {
             Ohjelma.ViestiLoki.Lisaa("You eat the cake.");
             Ohjelma.Pelaaja.Nalka += 50;
-            Ohjelma.Pelaaja.Inventaario.Remove(this);
+            if (Maara == 1) {
+                Ohjelma.Pelaaja.Inventaario.Remove(this);
+            }
+            else {
+                Maara--;
+            }
             return false;
         }
     }

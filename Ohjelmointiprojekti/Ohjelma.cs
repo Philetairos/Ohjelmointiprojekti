@@ -159,6 +159,9 @@ namespace Ohjelmointiprojekti {
                 else if (KomentoKasittelija.GetVastustaja(suunta) != null) {
                     ViestiLoki.Lisaa($"You see a {KomentoKasittelija.GetVastustaja(suunta).Nimi}.");
                 }
+                else if (KomentoKasittelija.GetPyhakko(suunta) != null ) {
+                    ViestiLoki.Lisaa($"You see the {KomentoKasittelija.GetPyhakko(suunta).Nimi}.");
+                }
                 else {
                     ViestiLoki.Lisaa($"You see nothing of note.");
                 }
@@ -335,8 +338,8 @@ namespace Ohjelmointiprojekti {
                     dialogi = dialogiNPC.Dialogi(Int32.Parse(nappain.Char.ToString()));
                 }
             }
-            else if (kaytaEsine == true) {
-                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
+            else if (kaytaEsine == true) { 
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4 || nappain.Key == RLKey.Number5) {
                     int num = Int32.Parse(nappain.Char.ToString());
                     if (num > Pelaaja.Inventaario.Count) {
                         ViestiLoki.Lisaa("No item in that slot!");
@@ -597,7 +600,7 @@ namespace Ohjelmointiprojekti {
                 }
             }
             else if (poistaEsine == true) {
-                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4) {
+                if (nappain.Key == RLKey.Number1 || nappain.Key == RLKey.Number2 || nappain.Key == RLKey.Number3 || nappain.Key == RLKey.Number4 || nappain.Key == RLKey.Number5) {
                     int num = Int32.Parse(nappain.Char.ToString());
                     if (num > Pelaaja.Inventaario.Count) {
                         ViestiLoki.Lisaa("No item in that slot!");

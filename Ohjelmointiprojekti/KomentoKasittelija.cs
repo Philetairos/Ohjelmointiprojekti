@@ -173,6 +173,17 @@ namespace Ohjelmointiprojekti {
         }
 
         /// <summary>
+        /// Palauttaa pyhäkön halutusta suunnasta
+        /// </summary>
+        /// <param name="suunta">Suunta jota tarkastellaan</param>
+        /// <returns>Pyhäkkö jos sellainen on, muutoin null</returns>
+        public Pyhakko GetPyhakko(Suunta suunta) {
+            Tuple<int, int> koord = GetSuunta(suunta);
+            Pyhakko esine = Ohjelma.peliKartta.PyhakkoSijainti(koord.Item1, koord.Item2);
+            return esine;
+        }
+
+        /// <summary>
         /// Metodi joka käsittelee lähitaistelun pelaajan ja vastustajan välillä
         /// </summary>
         /// <param name="hyokkaaja">Hahmo joka hyökkää</param>
