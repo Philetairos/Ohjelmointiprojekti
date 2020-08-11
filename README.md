@@ -3,7 +3,7 @@ Kurssin TIEA306 ohjelmointityö, kevät 2020
 
 Paragon of Virtue-peli
 
-#Käyttöohje
+# Käyttöohje
 
 Kuinka käynnistää peli:
 1. lataa repo ZIP-tiedostona tai kloonaa se (https://github.com/Philetairos/Ohjelmointiprojekti)
