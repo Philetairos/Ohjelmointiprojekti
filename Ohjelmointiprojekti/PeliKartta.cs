@@ -8,7 +8,7 @@ using RLNET;
 
 namespace Ohjelmointiprojekti {
     /// <summary>
-    /// Tämä on luokka pelin karttojen luomiseen, joilla pelaaja liikkuu
+    /// Tämä on luokka pelin karttoja varten, joilla pelaaja liikkuu
     /// Tekijä: Daniel Juola (perustuu osittain Faron Bracyn esimerkkikoodiin)
     /// Luotu: 24.2.20
     /// </summary>
@@ -330,7 +330,6 @@ namespace Ohjelmointiprojekti {
                             }
                         }
                         break;
-
                 }
             }
         }

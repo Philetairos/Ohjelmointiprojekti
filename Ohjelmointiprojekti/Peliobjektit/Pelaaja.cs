@@ -133,8 +133,9 @@ namespace Ohjelmointiprojekti {
             int i;
             for (i = 0; i < Inventaario.Count; i++)  {
                 if (!(Inventaario[i] is null)) {
-                    inventaarioKonsoli.Print(1, 2+i, Inventaario[i].Merkki.ToString(), Inventaario[i].Vari);
-                    inventaarioKonsoli.Print(3, 2+i, $"{Inventaario[i].Nimi}  {Inventaario[i].Maara}", RLColor.White);
+                    inventaarioKonsoli.Print(1, 2 + i, (i + 1) + ". ", RLColor.White);
+                    inventaarioKonsoli.Print(4, 2+i, Inventaario[i].Merkki.ToString(), Inventaario[i].Vari);
+                    inventaarioKonsoli.Print(6, 2+i, $"{Inventaario[i].Nimi}  {Inventaario[i].Maara}", RLColor.White);
                 }
             }
             inventaarioKonsoli.Print(1, 3+i, "Equipment:", RLColor.White);
