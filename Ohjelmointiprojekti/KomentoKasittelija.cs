@@ -22,6 +22,8 @@ namespace Ohjelmointiprojekti {
     }
     /// <summary>
     /// Luokka pelaajan toiminnoille, kuten liikumiselle ja interaktiolle
+    /// Tekijä: Daniel Juola (perustuu osittain Faron Bracyn esimerkkikoodiin)
+    /// Luotu: 28.2.20
     /// </summary>
     public class KomentoKasittelija {
         /// <summary>

@@ -92,27 +92,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Peliobjektit\Ammus.cs" />
-    <Compile Include="Peliobjektit\Kypara.cs" />
-    <Compile Include="Peliobjektit\Kakku.cs" />
-    <Compile Include="Peliobjektit\Panssari.cs" />
+    <Compile Include="Peliobjektit\Ase.cs" />
+    <Compile Include="Peliobjektit\Reagentti.cs" />
+    <Compile Include="Peliobjektit\Ruoka.cs" />
     <Compile Include="Peliobjektit\Pyhakko.cs" />
-    <Compile Include="Peliobjektit\Kilpi.cs" />
-    <Compile Include="Peliobjektit\Taikakilpi.cs" />
-    <Compile Include="Peliobjektit\Taikamiekka.cs" />
-    <Compile Include="Peliobjektit\Miekka.cs" />
-    <Compile Include="Peliobjektit\KangasHousut.cs" />
-    <Compile Include="Peliobjektit\KangasTakki.cs" />
-    <Compile Include="Peliobjektit\Huppu.cs" />
-    <Compile Include="Peliobjektit\Jousi.cs" />
+    <Compile Include="Peliobjektit\Suojausvaruste.cs" />
     <Compile Include="Peliobjektit\Kolikko.cs" />
     <Compile Include="KomentoKasittelija.cs" />
     <Compile Include="DialogiNoodi.cs" />
-    <Compile Include="Peliobjektit\MustaHelmi.cs" />
-    <Compile Include="Peliobjektit\Taikanuoli.cs" />
-    <Compile Include="Peliobjektit\Tulikivi.cs" />
-    <Compile Include="Peliobjektit\Kuusieni.cs" />
-    <Compile Include="Peliobjektit\Nuoli.cs" />
-    <Compile Include="Peliobjektit\Leipa.cs" />
     <Compile Include="Peliobjektit\Ovi.cs" />
     <Compile Include="PeliKartta.cs" />
     <Compile Include="Peliobjektit\Hahmo.cs" />

@@ -9,6 +9,8 @@ using RLNET;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// //Luokka viestien lisäämiselle ja piirtämiselle dialogikonsoliin
+    /// Tekijä: Daniel Juola (perustuu Faron Bracyn esimerkkikoodiin)
+    /// Luotu: 9.3.20.
     /// </summary>
     public class Viestiloki {
         private readonly Queue<string> rivit;

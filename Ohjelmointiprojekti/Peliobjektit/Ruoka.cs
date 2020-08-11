@@ -8,31 +8,39 @@ using RogueSharp;
 
 namespace Ohjelmointiprojekti {
     /// <summary>
-    /// Luokka leipä-esineelle, jonka pelaaja voi syödä
+    /// Luokka ruoka-esineelle, jonka pelaaja voi syödä
+    /// Tekijä: Daniel Juola
+    /// Luotu: 11.8.20
     /// </summary>
-    public class Leipa : Esine {
+    public class Ruoka : Esine {
+        public int Ravinto { get; set; }
         /// <summary>
         /// Konstruktori
         /// </summary>
         /// <param name="maara">Kuinka monta esinettä</param>
         /// <param name="x">Sijainti kartan x-akselilla</param>
         /// <param name="y">Sijainti kartan y-akselilla</param>
-        public Leipa (int maara, int x, int y) {
+        /// <param name="nimi">Esineen nimi</param>
+        /// <param name="vari">Esineen väri</param>
+        /// <param name="merkki">Esineen merkki</param>
+        /// <param name="ravinto">Kuinka paljon pelaaja saa ravinteita syömällä ruoka-esineen</param>
+        public Ruoka(int maara, int x, int y, string nimi, RLColor vari, char merkki, int ravinto) {
             X = x;
             Y = y;
-            Nimi = "Loaf of bread";
+            Nimi = nimi;
             Maara = maara;
-            Vari = RLColor.Brown;
-            Merkki = 'b';
+            Vari = vari;
+            Merkki = merkki;
+            Ravinto = ravinto;
         }
 
         /// <summary>
-        /// Mitä tapahtuu kun pelaaja käyttää esinettä (pelaaja syö leivän)
+        /// Mitä tapahtuu kun pelaaja käyttää esinettä (pelaaja syö ruoan)
         /// </summary>
         /// <returns>Palauttaa aina false</returns>
         public override bool KaytaEsine() {
-            Ohjelma.ViestiLoki.Lisaa("You eat the bread.");
-            Ohjelma.Pelaaja.Nalka += 25;
+            Ohjelma.ViestiLoki.Lisaa($"You eat the {Nimi}.");
+            Ohjelma.Pelaaja.Nalka += Ravinto;
             if (Maara == 1) {
                 Ohjelma.Pelaaja.Inventaario.Remove(this);
             }

@@ -9,6 +9,8 @@ using RLNET;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Hahmo-luokka, jota kaikki pelin hahmot käyttävät. Hyödyntää hahmo- ja piirrä-rajapintoja
+    /// Tekijä: Daniel Juola (Perustuu Faron Bracyn koodiin)
+    /// Luotu: 8.6.20
     /// </summary>
     public class Hahmo : IPiirra, IHahmo {
         public string Nimi { get; set; }

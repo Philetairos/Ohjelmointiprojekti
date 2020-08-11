@@ -10,6 +10,8 @@ using RogueSharp.Random;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Tämä luokka siirtää hahmoa, välttäen seiniin törmäämistä
+    /// Tekijä: Daniel Juola (perustuu osittain Faron Bracyn esimerkkikoodiin)
+    /// Luotu: 12.3.20
     /// </summary>
     public class SiirraHahmo {
         /// <summary>

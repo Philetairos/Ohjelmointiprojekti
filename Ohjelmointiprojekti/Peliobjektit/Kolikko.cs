@@ -9,6 +9,8 @@ using RogueSharp.Random;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka kolikko-esinettä varten. Kolikoita voi käyttää kaupankäynnissä, ja sen voi myös heittää.
+    /// Tekijä: Daniel juola
+    /// Luotu: 8.6.20.
     /// </summary>
     public class Kolikko : Esine {
 

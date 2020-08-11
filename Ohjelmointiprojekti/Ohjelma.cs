@@ -10,9 +10,10 @@ using RLNET;
 
 namespace Ohjelmointiprojekti {
     /// <summary>
-    ///  Ohjelman päätiedosto. Ohjelman tekijä: Daniel Juola 
-    ///  Perustuu Faron Bracyn esimerkkikoodiin
+    ///  Ohjelman päätiedosto. Koko ohjelman tekijä: Daniel Juola 
+    ///  Perustuu osittain Faron Bracyn esimerkkikoodiin
     ///  Projektissa käytetyt kirjastot: RLNet (Travis M. Clark, 2014) ja RogueSharp (Faron Bracy, 2014-2019), MIT-lisenssi
+    ///  Luotu: 19.2.20
     /// </summary>
     class Ohjelma {
         //Pääkonsolin koko tiileinä, ei pikseleinä
@@ -466,10 +467,10 @@ namespace Ohjelmointiprojekti {
                                 else {
                                     reagentti2.Maara--;
                                 }
-                                KomentoKasittelija.Ammu(Suunta.Ylos, new Taikanuoli(1, Pelaaja.X, Pelaaja.Y));
-                                KomentoKasittelija.Ammu(Suunta.Alas, new Taikanuoli(1, Pelaaja.X, Pelaaja.Y));
-                                KomentoKasittelija.Ammu(Suunta.Oikea, new Taikanuoli(1, Pelaaja.X, Pelaaja.Y));
-                                KomentoKasittelija.Ammu(Suunta.Vasen, new Taikanuoli(1, Pelaaja.X, Pelaaja.Y));
+                                KomentoKasittelija.Ammu(Suunta.Ylos, new Ammus(1, Pelaaja.X, Pelaaja.Y, "Firebolt", RLColor.Red, '>', 5, 15));
+                                KomentoKasittelija.Ammu(Suunta.Alas, new Ammus(1, Pelaaja.X, Pelaaja.Y, "Firebolt", RLColor.Red, '>', 5, 15));
+                                KomentoKasittelija.Ammu(Suunta.Oikea, new Ammus(1, Pelaaja.X, Pelaaja.Y, "Firebolt", RLColor.Red, '>', 5, 15));
+                                KomentoKasittelija.Ammu(Suunta.Vasen, new Ammus(1, Pelaaja.X, Pelaaja.Y, "Firebolt", RLColor.Red, '>', 5, 15));
                                 ViestiLoki.Lisaa("GRAV POR!");
                                 ViestiLoki.Lisaa("You cast Firebolts.");
                                 circleTwo = false;
@@ -573,13 +574,13 @@ namespace Ohjelmointiprojekti {
                                 circleThree = false;
                                 return;
                             case 2:
-                                Pelaaja.LisaaEsine(new Taikamiekka(1, 1, 1));
+                                Pelaaja.LisaaEsine(new Ase(1, 1, 1, "Spellsword", RLColor.Cyan, 'l', 3, false));
                                 ViestiLoki.Lisaa("GRAV MANI POR!");
                                 ViestiLoki.Lisaa("You cast Spellsword.");
                                 circleThree = false;
                                 return;
                             case 3:
-                                Pelaaja.LisaaEsine(new Taikakilpi(1, 1, 1));
+                                Pelaaja.LisaaEsine(new Suojausvaruste(1, 1, 1, "Spellshield", RLColor.Cyan, '0', 2, 5));
                                 ViestiLoki.Lisaa("IN MANI GRAV!");
                                 ViestiLoki.Lisaa("You cast Spellshield.");
                                 circleThree = false;

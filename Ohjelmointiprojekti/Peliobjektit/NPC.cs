@@ -9,6 +9,8 @@ using RLNET;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka pelin hahmoille, joita vastaan pelaaja ei voi taistella, mutta joiden kanssa pelaaja voi keskustella
+    /// Tekijä: Daniel Juola
+    /// Luotu: 8.6.20.
     /// </summary>
     public class NPC : Hahmo {
         public DialogiNoodi[] HahmonDialogi;

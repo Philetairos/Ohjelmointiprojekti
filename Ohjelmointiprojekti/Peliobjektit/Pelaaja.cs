@@ -9,6 +9,8 @@ using RLNET;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka pelaajan hahmolle, jota hän hallitsee
+    /// Tekijä: Daniel Juola (Perustuu osittain Farob Bracyn esimerkkikoodiin)
+    /// Luotu: 8.6.20.
     /// </summary>
     public class Pelaaja : Hahmo {
         public Varuste[] Varusteet { get; set; }

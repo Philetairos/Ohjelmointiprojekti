@@ -9,6 +9,8 @@ using RogueSharp;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka pelin varusteita varten, joilla pelaaja voi varustautua
+    /// Tekijä: Daniel Juola
+    /// Luotu: 8.6.20
     /// </summary>
     public class Varuste : Esine {
         public int Puolustus { get; set; }

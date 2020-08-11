@@ -9,6 +9,8 @@ using RLNET;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Dialogin osio, hahmon dialogi koostuu näistä
+    /// Tekijä: Daniel Juola
+    /// Luotu: 11.3.20.
     /// </summary>
     public class DialogiNoodi {
         public readonly string dialogi;

@@ -7,6 +7,12 @@ using RogueSharp;
 using RLNET;
 
 namespace Ohjelmointiprojekti {
+    /// <summary>
+    /// Ohjelman eri rajapinnat
+    /// Tekijä: Daniel Juola
+    /// Luotu: 26.2.20
+    /// </summary>
+
     //Hahmojen rajapinta, sisältää nimen ja näköetäisyyden (kuinka monen ruudun päähän hahmo näkee)
     public interface IHahmo {
         string Nimi { get; set; }

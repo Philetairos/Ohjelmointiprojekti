@@ -10,7 +10,9 @@ namespace Ohjelmointiprojekti
 {
     /// <summary>
     /// Luokka oville, joita hahmot voivat aukaista
-    /// TODO: lukitut ovet
+    /// TODO: lukitut ovet?
+    /// Tekijä: Daniel Juola (Perustuu Faron Bracyn esimerkkikoodiin)
+    /// Luotu: 8.6.20
     /// </summary>
     public class Ovi : IPiirra {
         public bool Auki;

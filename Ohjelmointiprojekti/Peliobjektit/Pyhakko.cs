@@ -10,6 +10,8 @@ namespace Ohjelmointiprojekti
 {
     /// <summary>
     /// Luokka pyhäkölle, josta pelaaja saa tason
+    /// Tekijä: Daniel Juola
+    /// Luotu: 6.8.20
     /// </summary>
     public class Pyhakko : IPiirra {
         public bool Auki;

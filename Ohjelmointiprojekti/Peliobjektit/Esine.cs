@@ -9,6 +9,8 @@ using RogueSharp;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka pelin esineitä varten. Pelaaja voi kerätä ja käyttää esineitä.
+    /// Tekijä: Daniel Juola (Perustuu Faron Bracyn koodiin)
+    /// Luotu: 8.6.20
     /// </summary>
     public class Esine : IPiirra, IEsine {
         public string Nimi { get; set; }

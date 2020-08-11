@@ -9,6 +9,8 @@ using RLNET;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Tämä on luokka pelin karttojen luomiseen, joilla pelaaja liikkuu
+    /// Tekijä: Daniel Juola (perustuu osittain Faron Bracyn esimerkkikoodiin)
+    /// Luotu: 24.2.20
     /// </summary>
     public class PeliKartta : Map {
         public List<NPC> NPCs { get; set; }

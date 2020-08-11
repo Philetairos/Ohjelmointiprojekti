@@ -9,6 +9,8 @@ using RLNET;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Tämä luokka luo erilaisia karttoja, käyttäen GameMap-luokkaa
+    /// Tekijä: Daniel Juola
+    /// Luotu: 24.2.20
     /// </summary>
     public class KarttaGeneroija {
         private readonly int karttaLeveys;
@@ -47,11 +49,11 @@ namespace Ohjelmointiprojekti {
             kartta.SetCellProperties(karttaLeveys / 2, karttaKorkeus-14, false, false, true);
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 , Y = ((karttaKorkeus / 2) - 12), Auki = false});
             kartta.Esineet.Add(new Kolikko(1, (karttaLeveys / 2)-3, (karttaKorkeus/2)-3));
-            kartta.Esineet.Add(new Huppu(1, (karttaLeveys / 2) + 3, (karttaKorkeus / 2) - 7));
-            kartta.Esineet.Add(new Leipa(1, (karttaLeveys / 2) + 5, (karttaKorkeus / 2) - 5));
-            kartta.Esineet.Add(new Kuusieni(2, (karttaLeveys / 2) + 7, ((karttaKorkeus / 2) + 10)));
-            kartta.Esineet.Add(new Jousi(1, (karttaLeveys / 2) - 5, (karttaKorkeus / 2) - 8));
-            kartta.Esineet.Add(new Nuoli(1, (karttaLeveys / 2) - 2, (karttaKorkeus / 2) -10));
+            kartta.Esineet.Add(new Suojausvaruste(1, (karttaLeveys / 2) + 3, (karttaKorkeus / 2) - 7, "Woolen hood", RLColor.Brown, 'h', 1, 0));
+            kartta.Esineet.Add(new Ruoka(1, (karttaLeveys / 2) + 5, (karttaKorkeus / 2) - 5, "Loaf of bread", RLColor.Brown, 'b', 25));
+            kartta.Esineet.Add(new Reagentti(2, (karttaLeveys / 2) + 7, (karttaKorkeus / 2) + 10, "Moon Mushroom", RLColor.LightBlue, 'm'));
+            kartta.Esineet.Add(new Ase(1, (karttaLeveys / 2) - 5, (karttaKorkeus / 2) - 8, "Bow", RLColor.Brown, ')', 0, true));
+            kartta.Esineet.Add(new Ammus(1, (karttaLeveys / 2) - 2, (karttaKorkeus / 2) -10, "Arrow", RLColor.Brown, 'I', 3, 15));
             DialogiNoodi testidialogi1 = new DialogiNoodi("Hello how are you", "1. I am fine 2. I am not fine", new (int, Action)[] { (1, null), (2, null) });
             DialogiNoodi testidialogi2 = new DialogiNoodi("Well good.", "1. Good bye.", new (int, Action)[] { (-1, null) });
             DialogiNoodi testidialogi3 = new DialogiNoodi("Well that's unfortunate.", "1. Good bye", new (int, Action)[] { (-1, null) });
@@ -207,12 +209,12 @@ namespace Ohjelmointiprojekti {
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 - 40, Y = karttaKorkeus / 2, Auki = false });
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 + 40, Y = karttaKorkeus / 2, Auki = false });
 
-            kartta.Esineet.Add(new Huppu(1, (karttaLeveys / 2) -15, (karttaKorkeus / 2) +22));
-            kartta.Esineet.Add(new KangasTakki(1, (karttaLeveys / 2) - 14, (karttaKorkeus / 2) + 22));
-            kartta.Esineet.Add(new KangasHousut(1, (karttaLeveys / 2) - 13, (karttaKorkeus / 2) + 22));
-            kartta.Esineet.Add(new Miekka(1, (karttaLeveys / 2) +32, karttaKorkeus / 2));
-            kartta.Esineet.Add(new Jousi(1, (karttaLeveys / 2) - 25, (karttaKorkeus / 2) + 10));
-            kartta.Esineet.Add(new Nuoli(5, (karttaLeveys / 2) - 25, (karttaKorkeus / 2) - 10));
+            kartta.Esineet.Add(new Suojausvaruste(1, (karttaLeveys / 2) - 15, (karttaKorkeus / 2) + 22, "Woolen hood", RLColor.Brown, 'h', 1, 0));
+            kartta.Esineet.Add(new Suojausvaruste(1, (karttaLeveys / 2) - 14, (karttaKorkeus / 2) + 22, "Gambeson", RLColor.Brown, 'g', 1, 1));
+            kartta.Esineet.Add(new Suojausvaruste(1, (karttaLeveys / 2) - 13, (karttaKorkeus / 2) + 22, "Woolen pants", RLColor.Brown, 'p', 1, 2));
+            kartta.Esineet.Add(new Ase(1, (karttaLeveys / 2) +32, karttaKorkeus / 2, "Sword", RLColor.LightGray,'l', 1, false));
+            kartta.Esineet.Add(new Ase(1, (karttaLeveys / 2) - 25, (karttaKorkeus / 2) + 10, "Bow", RLColor.Brown, ')', 0, true));
+            kartta.Esineet.Add(new Ammus(5, (karttaLeveys / 2) - 25, (karttaKorkeus / 2) - 10, "Arrow", RLColor.Brown, 'I', 3, 15));
 
             DialogiNoodi narriDialogi0 = new DialogiNoodi("Ho eyo he hum, I am Chuckles! Everyone's favourite court jester! Wanna hear a joke?", "1. Yes 2. No thank you", new (int, Action)[] { (1, null), (1, Ohjelma.Pelaaja.VahennaSopuisuusKarma) });
             DialogiNoodi narriDialogi1 = new DialogiNoodi("What do you call two witches who live together? Broom mates!", "1. That was funny 2. No more jokes please", new (int, Action)[] { (2, null), (2, null) });
@@ -220,17 +222,17 @@ namespace Ohjelmointiprojekti {
             DialogiNoodi narriDialogi3 = new DialogiNoodi("I tried reading a book about a castle with the drawbridge up... but it was impossible to get into!", "1. Guards! This man has gone mad!", new (int, Action)[] { (4, null) });
             DialogiNoodi narriDialogi4 = new DialogiNoodi("Ho eyo he hum! It is my job to be mad! Maddeningly funny! Haha!", "1. I think I've had enough of you.", new (int, Action)[] { (-1, null) });
             DialogiNoodi[] narridialogitaulukko = new DialogiNoodi[] { narriDialogi0, narriDialogi1, narriDialogi2, narriDialogi3, narriDialogi4 };
-            kartta.LisaaNPC(new NPC((karttaLeveys / 2) -2, karttaKorkeus - 16, "Chuckles", 'c', RLColor.LightGreen, narridialogitaulukko, true));
+            kartta.LisaaNPC(new NPC((karttaLeveys / 2) -2, karttaKorkeus - 16, "Chuckles", 'C', RLColor.LightGreen, narridialogitaulukko, true));
 
             DialogiNoodi palvelustyttoDialogi0 = new DialogiNoodi("Hello there, I am the King's maid, Amelina. How may I serve you?", "1. Can I borrow these clothes?", new (int, Action)[] { (1, null) });
             DialogiNoodi palvelustyttoDialogi1 = new DialogiNoodi("Oh, of course. Your current clothes look very strange. Are you from another land?", "1. Yes 2. No", new (int, Action)[] { (2, null), (3, Ohjelma.Pelaaja.VahennaViisausKarma) });
             DialogiNoodi palvelustyttoDialogi2 = new DialogiNoodi("Well then, you should talk to the King. He can provide you guidance.", "1. Alright, thank you", new (int, Action)[] { (-1, null) });
             DialogiNoodi palvelustyttoDialogi3 = new DialogiNoodi("Really? Then you must be a jester. Talk to Chuckles, you two should get along well.", "1. Uh, okay...", new (int, Action)[] { (-1, null) });
             DialogiNoodi[] palvelustyttodialogitaulukko = new DialogiNoodi[] { palvelustyttoDialogi0, palvelustyttoDialogi1, palvelustyttoDialogi2, palvelustyttoDialogi3 };
-            kartta.LisaaNPC(new NPC((karttaLeveys / 2) - 18, karttaKorkeus - 11, "Amelina", 'a', RLColor.Yellow, palvelustyttodialogitaulukko, true));
+            kartta.LisaaNPC(new NPC((karttaLeveys / 2) - 18, karttaKorkeus - 11, "Amelina", 'A', RLColor.Yellow, palvelustyttodialogitaulukko, true));
 
-            NPC maagi = new NPC((karttaLeveys / 2) - 18, (karttaKorkeus / 2) - 15, "Magnus", 'm', RLColor.Blue, new DialogiNoodi[] { }, true) {
-                Inventaario = new List<Esine> { new Kuusieni(1, 1, 1) }
+            NPC maagi = new NPC((karttaLeveys / 2) - 18, (karttaKorkeus / 2) - 15, "Magnus", 'M', RLColor.Blue, new DialogiNoodi[] { }, true) {
+                Inventaario = new List<Esine> { new Reagentti(1, 1, 1, "Moon Mushroom", RLColor.LightBlue, 'm') }
             };
             DialogiNoodi velhoDialogi0 = new DialogiNoodi("Oh, greetings, stranger! I am Magnus, the court magician in service to the King.", "1. How does magic work?", new (int, Action)[] { (1, null) });
             DialogiNoodi velhoDialogi1 = new DialogiNoodi("That is a question I hear quite often. Magic in Brythonn requires reagents, which provide power for spells.", "1. Where can I get reagents?", new (int, Action)[] { (2, null) });
@@ -241,8 +243,8 @@ namespace Ohjelmointiprojekti {
             maagi.HahmonDialogi = velhodialogitaulukko;
             kartta.LisaaNPC(maagi);
 
-            NPC kokki = new NPC((karttaLeveys / 2) + 18, (karttaKorkeus / 2) - 15, "Elthon", 'e', RLColor.LightRed, new DialogiNoodi[] { }, true) {
-                Inventaario = new List<Esine> { new Leipa(1, 1, 1) }
+            NPC kokki = new NPC((karttaLeveys / 2) + 18, (karttaKorkeus / 2) - 15, "Nelthon", 'N', RLColor.LightRed, new DialogiNoodi[] { }, true) {
+                Inventaario = new List<Esine> { new Ruoka(1, 1, 1, "Loaf of bread", RLColor.Brown, 'b', 25) }
             };
             DialogiNoodi kokkiDialogi0 = new DialogiNoodi("Howdy, good to meet you. I am Elthon, the King's chef, responsible for feeding the court.", "1. What food do you make?", new (int, Action)[] { (1, null) });
             DialogiNoodi kokkiDialogi1 = new DialogiNoodi("Usually I bake bread, unless there is a celebration and fancier foods are needed. Would you like to have some for free?", "1. Sure 2. No, I must pay", new (int, Action)[] { (2, Ohjelma.Pelaaja.VahennaKontrolliKarma), (3, Ohjelma.Pelaaja.LisaaKontrolliKarma) });
@@ -256,18 +258,18 @@ namespace Ohjelmointiprojekti {
             DialogiNoodi soturiDialogi1 = new DialogiNoodi("You're unarmed? Sure, it is dangerous to go alone. Grab one, though your arms seem too weak to lift it.", "1. How dare you! 2. Thank you, good bye", new (int, Action)[] { (2, Ohjelma.Pelaaja.VahennaKontrolliKarma), (-1, null) });
             DialogiNoodi soturiDialogi2 = new DialogiNoodi("What, you want a fight? I am the head of the King's guard, so it's a bad idea. Besides, I was just warning you.", "1. Oh, my apologies... good bye", new (int, Action)[] { (-1, null) });
             DialogiNoodi[] soturidialogitaulukko = new DialogiNoodi[] { soturiDialogi0, soturiDialogi1, soturiDialogi2 };
-            kartta.LisaaNPC(new NPC((karttaLeveys / 2) + 27, karttaKorkeus/2, "Jorg", 'j', RLColor.Red, soturidialogitaulukko, true));
+            kartta.LisaaNPC(new NPC((karttaLeveys / 2) + 27, karttaKorkeus/2, "Jorg", 'J', RLColor.Red, soturidialogitaulukko, true));
 
             DialogiNoodi metsastajaDialogi0 = new DialogiNoodi("Hello, stranger. I am Elfkind, the King's hunter and master of the bow.", "1. Can I borrow a bow and some arrows?", new (int, Action)[] { (1, null) });
             DialogiNoodi metsastajaDialogi1 = new DialogiNoodi("Yes, of course. You may also do target practice in the room behind me if you wish.", "1. Thank you and good bye", new (int, Action)[] { (-1, null) });
             DialogiNoodi[] metsastajadialogitaulukko = new DialogiNoodi[] { metsastajaDialogi0, metsastajaDialogi1 };
-            kartta.LisaaNPC(new NPC((karttaLeveys / 2) - 27, karttaKorkeus / 2, "Elfkind", 'e', RLColor.Green, metsastajadialogitaulukko, true));
+            kartta.LisaaNPC(new NPC((karttaLeveys / 2) - 27, karttaKorkeus / 2, "Elfkind", 'E', RLColor.Green, metsastajadialogitaulukko, true));
 
             DialogiNoodi hoitajaDialogi0 = new DialogiNoodi("Pleasure to meet you, stranger. I am Helene the Healer. Would you be interesting in donating blood for my patients?", "1. Sure, I can donate some 2. Unfortunately I cannot", new (int, Action)[] { (1, Ohjelma.Pelaaja.LisaaSopuisuusKarma), (2, Ohjelma.Pelaaja.VahennaSopuisuusKarma) });
             DialogiNoodi hoitajaDialogi1 = new DialogiNoodi("Ah, thank you so much! Your kindness will save human lives.", "1. You're welcome, good bye", new (int, Action)[] { (-1, Ohjelma.Pelaaja.LuovutaVerta) });
             DialogiNoodi hoitajaDialogi2 = new DialogiNoodi("Oh, a shame. I am afraid some of my patients will die without blood...", "1. I am sorry. Good bye.", new (int, Action)[] { (-1, null) });
             DialogiNoodi[] hoitajadialogitaulukko = new DialogiNoodi[] { hoitajaDialogi0, hoitajaDialogi1, hoitajaDialogi2 };
-            kartta.LisaaNPC(new NPC((karttaLeveys / 2) + 45, karttaKorkeus / 2, "Helene", 'h', RLColor.LightRed, hoitajadialogitaulukko, true));
+            kartta.LisaaNPC(new NPC((karttaLeveys / 2) + 45, karttaKorkeus / 2, "Helene", 'H', RLColor.LightRed, hoitajadialogitaulukko, true));
 
             DialogiNoodi kuningasDialogi0 = new DialogiNoodi("Ah, at last you have arrived, stranger! I have been waiting for you. Your quest shall now begin.", "1. What quest? 2. Who are you?", new (int, Action)[] { (1, null), (2, null) });
             DialogiNoodi kuningasDialogi1 = new DialogiNoodi("The Quest to become a Paragon of Virtue! The demon Ea has been slain, and a Paragon will prevent him from returning.", "1. What's a Paragon?", new (int, Action)[] { (3, null) });
@@ -370,8 +372,8 @@ namespace Ohjelmointiprojekti {
             }
 
             kartta.Esineet.Add(new Kolikko(3, karttaLeveys -39, karttaKorkeus / 2));
-            kartta.Esineet.Add(new Tulikivi(3, karttaLeveys - 54, karttaKorkeus / 2 -2));
-            kartta.Esineet.Add(new MustaHelmi(3, karttaLeveys - 54, karttaKorkeus / 2 + 2));
+            kartta.Esineet.Add(new Reagentti(3, karttaLeveys - 54, karttaKorkeus / 2 -2, "Brimstone Dust", RLColor.Red, 'b'));
+            kartta.Esineet.Add(new Reagentti(3, karttaLeveys - 54, karttaKorkeus / 2 + 2, "Black Pearl", RLColor.Gray, 'p'));
 
             kartta.LisaaVastustaja(new Vastustaja(karttaLeveys -35, karttaKorkeus / 2, "Demon", 'D', RLColor.Red, 15, 5, 4, 4, true));
             kartta.LisaaVastustaja(new Vastustaja(karttaLeveys - 54, karttaKorkeus / 2, "Cultist", 'C', RLColor.Green, 5, 2, 2, 2, true));
@@ -445,9 +447,9 @@ namespace Ohjelmointiprojekti {
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 + 13, Y = karttaKorkeus - 40, Auki = false });
             kartta.Ovet.Add(new Ovi { X = karttaLeveys / 2 - 13, Y = karttaKorkeus - 40, Auki = false });
 
-            kartta.Esineet.Add(new Kakku(1, karttaLeveys / 2, karttaKorkeus - 19));
+            kartta.Esineet.Add(new Ruoka(1, karttaLeveys / 2, karttaKorkeus - 19, "Cake", RLColor.White, 'c', 50));
             kartta.Esineet.Add(new Kolikko(3, karttaLeveys / 2 - 25, karttaKorkeus - 19));
-            kartta.Esineet.Add(new Kuusieni(1, karttaLeveys / 2 + 25, karttaKorkeus - 19));
+            kartta.Esineet.Add(new Reagentti(1, karttaLeveys / 2 + 25, karttaKorkeus - 19, "Moon Mushroom", RLColor.LightBlue, 'm'));
 
             kartta.LisaaVastustaja(new Vastustaja(karttaLeveys / 2, karttaKorkeus - 13, "Cultist", 'C', RLColor.Magenta, 5, 2, 2, 2, true));
             kartta.LisaaVastustaja(new Vastustaja(karttaLeveys / 2 -3, karttaKorkeus - 16, "Cultist", 'C', RLColor.Magenta, 5, 2, 2, 2, true));
@@ -508,9 +510,9 @@ namespace Ohjelmointiprojekti {
             kartta.Ovet.Add(new Ovi { X = 63, Y = karttaKorkeus / 2, Auki = false });
             kartta.Ovet.Add(new Ovi { X = 81, Y = karttaKorkeus /2, Auki = false });
 
-            kartta.Esineet.Add(new Kilpi(1, 40, karttaKorkeus / 2));
-            kartta.Esineet.Add(new Panssari(1, 63, (karttaKorkeus / 2) -3));
-            kartta.Esineet.Add(new Kypara(1, 63, (karttaKorkeus / 2) + 3));
+            kartta.Esineet.Add(new Suojausvaruste(1, 40, karttaKorkeus / 2, "Shield", RLColor.Brown, '0', 1, 4));
+            kartta.Esineet.Add(new Suojausvaruste(1, 63, (karttaKorkeus / 2) - 3, "Chainmail", RLColor.LightGray, 'c', 1, 1));
+            kartta.Esineet.Add(new Suojausvaruste(1, 63, (karttaKorkeus / 2) + 3, "Helmet", RLColor.LightGray, 'h', 1, 0));
 
             kartta.LisaaVastustaja(new Vastustaja(37, karttaKorkeus /2 -3, "Revenant", 'R', RLColor.LightRed, 10, 4, 1, 2, true));
             kartta.LisaaVastustaja(new Vastustaja(37, karttaKorkeus / 2 + 3, "Revenant", 'R', RLColor.LightRed, 10, 4, 1, 2, true));

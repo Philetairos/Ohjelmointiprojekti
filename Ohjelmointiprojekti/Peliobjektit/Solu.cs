@@ -9,6 +9,8 @@ using RLNET;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Cell-luokan laajennos joka sisältää värin ja merkin. Käytetään kartan osina
+    /// Tekijä: Daniel Juola
+    /// Luotu: 21.6.20
     /// </summary>
     public class Solu : Cell, IPiirra {
         public RLColor Vari { get; set; }

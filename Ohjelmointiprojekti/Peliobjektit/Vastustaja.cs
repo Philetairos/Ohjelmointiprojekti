@@ -9,6 +9,8 @@ using RLNET;
 namespace Ohjelmointiprojekti {
     /// <summary>
     /// Luokka vihollishahmoja varten, jotka hyökkäävät pelaajaa vastaan
+    /// Tekijä: Daniel Juola
+    /// Luotu: 6.8.20
     /// </summary>
     public class Vastustaja : Hahmo {
         public bool Liikkuu;
