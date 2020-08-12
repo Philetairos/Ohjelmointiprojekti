@@ -692,7 +692,7 @@ namespace Ohjelmointiprojekti {
                         return;
                     case RLKey.Enter:
                         if (peliKartta.id == 1) {
-                            Ohjelma.karttaGeneroija.LataaLinna();
+                            karttaGeneroija.LataaLinna();
                             Pelaaja.Elama = 10;
                             Pelaaja.Nalka = 25;
                             Pelaaja.Inventaario.Clear();
